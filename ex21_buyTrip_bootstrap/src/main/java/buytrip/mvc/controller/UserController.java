@@ -4,18 +4,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import buytrip.mvc.model.user.dto.UserDTO;
+import buytrip.mvc.model.user.service.UserService;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
 	//@Autowired
-	//private UserService userService;
+	private UserService userService;
 	
 	/**
 	 * 회원가입 폼 띄우기
 	 */
 	@RequestMapping("/signupForm")
-	public void signupForm() {}
+	public String signupForm(UserDTO userDTO) {
+		userService.signup(userDTO);
+		
+		return "redirect:/";
+	}
 	
 	/**
 	 * 회원가입하기

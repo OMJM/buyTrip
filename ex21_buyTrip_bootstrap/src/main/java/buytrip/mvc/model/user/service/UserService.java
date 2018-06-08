@@ -1,11 +1,13 @@
 package buytrip.mvc.model.user.service;
 
+import buytrip.mvc.model.user.dto.UserDTO;
+
 public interface UserService {
 
 	/**
 	 * 회원가입하기
 	 */
-	public void signup();
+	public int signup(UserDTO userDTO);
 	
 	/**
 	 * 로그인하기
