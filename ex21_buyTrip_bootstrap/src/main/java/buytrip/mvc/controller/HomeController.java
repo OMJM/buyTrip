@@ -8,11 +8,14 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String index() {
-		return "index"; //WEB-INF/views/index.jsp
+		return "user/index"; //WEB-INF/views/index.jsp
 	}
 	
 	@RequestMapping("/{url}")
 	public void url() {} //WEB-INF/views/{url}.jsp
+	
+	@RequestMapping("/{url}/{url}")
+	public void url2() {} //WEB-INF/views/{url}.jsp
 }
 
 
