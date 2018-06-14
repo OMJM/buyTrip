@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="userMapper">
-	<sql id="selectuser">
- 		select member_id,member_name,member_password,temp_email,mobile from member
- 	</sql>
- 	
- 	
- 	<insert id="registerUser" parameterType="userDTO">
-		insert into member(member_id,member_name,member_password,temp_email,mobile)
-		values(#{memberId},#{memberName},#{memberPassword},#{tempEmail},#{mobile})
+	<sql id="selectUser">
+		select member_id,member_name,member_password,mobile from member
+	</sql>
+	
+	<resultMap type="userDTO" id="userSelectMap">
+  		<id column="member_id" property="memberId"/>
+  		<result column="member_password" property="memberPassword"/>
+  		<result column="member_name" property="memberName"/>
+  		<result column="mobile" property="mobile"/>
+	</resultMap>
+
+	<!-- id에 해당하는 정보 검색 -->
+	<select id="selectUserById" parameterType="string" resultMap="userSelectMap">
+		<include refid="selectUser" />
+		where member_id=#{_parameter}
+	</select>
+
+	<insert id="registerUser" parameterType="userDTO">
+		insert into
+		member(member_id,member_name,member_password,mobile)
+		values(#{memberId},#{memberName},#{memberPassword},#{mobile})
 	</insert>
-	
-	
- 	<!-- <select id="getAddressList" resultType="string">
- 		select distinct address from security_member
- 	</select>
- 	<select id="findMemberListByAddress" resultType="member">
- 		select id,name from security_member
- 		where address=#{value}
- 	</select>
- 	
- 	<select id="login" resultType="member" parameterType="member">
- 		<include refid="selectMember"></include>
- 		where id=#{id} and password=#{password}
- 	</select>
- 	<select id="getMemberCount" resultType="int">
- 		select count(*) from security_member
- 	</select>
- 	<update id="updateMember" parameterType="member">
-		update security_member set password=#{password},name=#{name},address=#{address}
-		where id=#{id}
+
+	<select id="login" resultType="userDTO" parameterType="userDTO">
+		<include refid="selectUser"></include>
+		where member_id=#{memberId} and member_password=#{memberPassword}
+	</select>
+
+	<update id="updateMember" parameterType="userDTO"> 
+		update member
+		set member_password=#{memberPassword},member_name=#{memberName},mobile=#{mobile}
+		where member_id=#{memberId}
 	</update>
 	
-	<select id="idcheck" resultType="int">
-		select count(*) from security_member where id=#{value}
-	</select>
-	
-	<select id="findMemberById" resultType="member">
- 		SELECT	id,	password,	name, address
-		FROM	security_member
-		WHERE 	id=#{value}				
- 	</select> -->
+ <!-- 삭제 --> 
+ <delete id="delete" parameterType="userDTO">
+  delete from member 
+  where member_id=#{memberId} and member_password=#{memberPassword}
+ </delete>
  	
 </mapper>

@@ -1,6 +1,6 @@
 package buytrip.mvc.model.user.dao;
 
-import buytrip.mvc.model.user.dto.UserDTO;
+import buytrip.mvc.model.dto.UserDTO;
 
 public interface UserDAO {
 	
@@ -12,8 +12,13 @@ public interface UserDAO {
 	/**
 	 * 로그인하기
 	 */
-	public void login();
+	public UserDTO login(UserDTO userDTO2);
 	
+	
+	public UserDTO selectUserById(String id);
+	
+	public void updateMember(UserDTO userDTO);
+		
 	/**
 	 * 비밀번호 재설정하기
 	 */
@@ -32,6 +37,6 @@ public interface UserDAO {
 	/**
 	 * 회원 탈퇴하기
 	 */
-	public void withdraw();	
+	public int withdraw(String memberId, String memberPassword);	
 	
 }

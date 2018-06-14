@@ -228,6 +228,20 @@
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-taglibs</artifactId>
 		    <version>4.2.2.RELEASE</version>
+		</dependency>
+		
+		<!-- 메일발송 지원 기능 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		 
+		<!-- Java Mail API -->
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.7</version>
 		</dependency>		
 		
 		<!-- Test -->

@@ -1,6 +1,6 @@
 package buytrip.mvc.model.user.service;
 
-import buytrip.mvc.model.user.dto.UserDTO;
+import buytrip.mvc.model.dto.UserDTO;
 
 public interface UserService {
 
@@ -12,12 +12,16 @@ public interface UserService {
 	/**
 	 * 로그인하기
 	 */
-	public void login();
+	public UserDTO login(UserDTO uesrDTO);
+	
+	public UserDTO findMemberById(String id);
 	
 	/**
 	 * 비밀번호 재설정하기
 	 */
 	public void updatePassword();
+	
+	public void updateMember(UserDTO userDTO);
 	
 	/**
 	 * 프로필 보기
@@ -32,6 +36,6 @@ public interface UserService {
 	/**
 	 * 회원 탈퇴하기
 	 */
-	public void withdraw();	
+	public int withdraw(String memberId, String memberPassword);
 	
 }

@@ -73,6 +73,25 @@
 	<!-- aop annotation설정하기 -->
 	<aop:aspectj-autoproxy/>
 	
+	<beans:bean id="buytrip.mvc.mail" 
+    class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <beans:property name="host" value="smtp.gmail.com"/>
+    <beans:property name="port" value="465"/>        
+    <beans:property name="username" value="bytrip.kosta"/>
+    <beans:property name="password" value="kosta184"/>
+    <beans:property name="protocol" value="smtp"/>        
+    <beans:property name="defaultEncoding" value="utf-8"/>
+    <beans:property name="javaMailProperties">
+        <beans:props>
+            <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+            <beans:prop key="mail.smtp.ssl.enable">true</beans:prop>
+            <beans:prop key="mail.smtp.auth">true</beans:prop>
+            <beans:prop key="mail.smtp.ssl.checkserveridentity">true</beans:prop>
+            <beans:prop key="mail.smtp.ssl.trust">*</beans:prop>
+        </beans:props>
+    </beans:property>        
+</beans:bean>
+	
 </beans:beans>
 
 
