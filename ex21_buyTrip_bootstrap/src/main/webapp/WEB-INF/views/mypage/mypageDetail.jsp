@@ -301,10 +301,10 @@ scale
 							<div class="tab-pane active">
 								<img src="${pageContext.request.contextPath}/resources/images/sun.jpg" />
 							</div>
-							<h3 class="product-title">마몽드 썬크림</h3>
-							<p class="product-description">헤라 선 메이트 레포츠 선크림 SPF50+ PA++++, 70ml</p>
+							<h3 class="product-title">${productDTO.productName}</h3>
+							<p class="product-description">${productDTO.productDesc}</p>
 							<div class="well" style="font-size: 15px">
-								<a href="https://www.coupang.com/np/search?q=%ED%97%A4%EB%9D%BC%EC%8D%AC%ED%81%AC%EB%A6%BC&channel=relate" class="link">
+								<a href="${productDTO.productUrl}" class="link">
 									url 바로가기
 								</a>
 							</div>
@@ -318,30 +318,30 @@ scale
 								style="width: 80px; height: auto;">
 						</div>
 						<div style="align-self: center;">
-							<p class="product-description">userName</p>
+							<p class="product-description">${productDTO.proposerId}</p>
 						</div>
 						<div style="align-self: center;">
-							<p class="product-description">요청 날짜 2018-06-01</p>
+							<p class="product-description">요청 날짜 : ${productDTO.requestedDate}</p>
 						</div>
-						<button type="button" class="btn">userName에게 메세지 요청</button>
+						<button type="button" class="btn">${productDTO.proposerId}에게 메세지 요청</button>
 
 						<br>
 
 						<h3 class="price product-title">
-							제안 금액 <span>$180</span>
+											제안 금액 <span>${productDTO.productPrice}</span>
 						</h3>
-						<p><h4>갯수 <strong>3</strong></h4></p>
+						<p><h4>갯수 <strong>${productDTO.productQty} </strong></h4></p>
 						<br>
 
 						<div class="well" style="font-size: 15px">
-							<strong>도착지</strong> 서울
+							<strong>도착지</strong> ${productDTO.departNation}
 							<hr>
-							<strong>출발지</strong> 도쿄
+							<strong>출발지</strong> ${productDTO.arrivalNation}
 						</div>
 						<div>
-							<a href="#" class="btn btn-primary" role="button"
+					<a href="${pageContext.request.contextPath}/udateOrder" class="btn btn-primary" role="button"
 								style="width: 150px; margin: 5px;">수정하기</a>
-							<a href="#" class="btn btn-primary" role="button"
+							<a href="${pageContext.request.contextPath}/order/deleteOrder" class="btn btn-primary" role="button"
 								style="width: 150px; margin: 5px;">삭제하기</a>
 						</div>
 

@@ -153,7 +153,7 @@ body {
 								<li><a href="travelList"> <i class="glyphicon glyphicon-user"></i>
 										여행 관리
 								</a></li>
-								<li><a href="${pageContext.request.contextPath}/mypage/mypageProductList" > <i
+								<li><a href="${pageContext.request.contextPath}/order/readOrders" > <i
 										class="glyphicon glyphicon-ok"></i> 주문 관리
 								</a></li>
 								<li><a href="${pageContext.request.contextPath}/mypage/chatList"> <i class="glyphicon glyphicon-flag"></i>

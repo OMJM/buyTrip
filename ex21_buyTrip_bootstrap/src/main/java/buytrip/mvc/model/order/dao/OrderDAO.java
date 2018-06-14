@@ -1,31 +1,35 @@
 package buytrip.mvc.model.order.dao;
 
+import java.util.List;
+
+import buytrip.mvc.model.dto.ProductDTO;
+
 public interface OrderDAO {
 
 	/**
 	 * 상품 등록하기
 	 */
-	public void insertOrder();
+	public int insertOrder(ProductDTO productDTO);
 	
 	/**
 	 * [mypage] 등록한 상품 lsit 보기
 	 */
-	public void readOrder();
+	public List<ProductDTO> readOrder(String proposerId);
 	
 	/**
 	 * [mypage] 등록한 상품 상세보기
 	 */
-	public void readOrderDetail();
+	public ProductDTO readOrderDetail(String proposerId, String productCode);
 	
 	/**
 	 * [mypage] 등록한 상품 수정하기
 	 */
-	public void updateOrder();
+	public int updateOrder(String proposerId, ProductDTO productDTO);
 	
 	/**
 	 * [mypage] 등록한 상품 삭제하기
 	 */
-	public void deleteOrder();
+	public int deleteOrder(String proposerId, String productCode);
 	
 	/**
 	 * [mypage] 등록한 상품 거래완료 처리하기
@@ -40,7 +44,7 @@ public interface OrderDAO {
 	/**
 	 * 여행지 검색에 따른 직구자의 등록상품 list 보기
 	 */
-	public void searchTripOrders();
+	public List<ProductDTO> searchTripOrders(String arrivalNation);
 	
 	/**
 	 * 직구자가 등록한 상품 상세보기 (1.상품정보, 2.직구자정보, 3.여행자의 제안정보)

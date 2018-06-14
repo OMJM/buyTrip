@@ -1,5 +1,6 @@
 package buytrip.mvc.controller;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,62 +8,106 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
-import buytrip.mvc.model.dto.TravelDTO;
-import buytrip.mvc.model.travel.service.TravelService;
+import buytrip.mvc.model.dto.ProductDTO;
+import buytrip.mvc.model.order.service.OrderService;
 
 @Controller
 @RequestMapping("/order")
 public class OrderController {
-	
-	@Autowired
-	private TravelService travelService;
 
-	//@Autowired
-	//private OrderService orderService;
+	@Autowired
+	private OrderService orderService;
 	
+	private String savePath = "${pageContext.request.contextPath}/img";
 	/**
 	 * 상품 등록하기 폼 띄우기
 	 */
-	@RequestMapping("/insertOrderForm")
-	public void insertOrderForm() {}
+	@RequestMapping("/orderForm")
+	public String insertOrderForm() {
+      return "orderForm";
+	}
 	
 	/**
 	 * 상품 등록하기
 	 */
 	@RequestMapping("/insertOrder")
-	public void insertOrder() {}
+	public String insertOrder(ProductDTO productDTO) throws Exception {
+		//파일첨부여부를 확인해서 첨부되었을때 파일저장.
+		System.out.println(productDTO.getProposerId()+"컨트롤러");
+				MultipartFile file = productDTO.getFile();
+				if(file.getSize()>0){
+					String fileName = file.getOriginalFilename();
+					long fileSize = file.getSize();
+					productDTO.setFname(fileName);
+					productDTO.setFsize((int)fileSize);
+					
+					file.transferTo(new File(savePath+"/"+fileName));
+				}
+				
+				
+				orderService.insertOrder(productDTO);
+				
+				
+				return "redirect: / ";
+			}
+		
+
 	
 	/**
 	 * [mypage] 등록한 상품 lsit 보기
 	 */
 	@RequestMapping("/readOrders")
-	public void readOrder() {}
+	
+	public String readOrder(Model model,String proposerId) {
+		List<ProductDTO> list=orderService.readOrder(proposerId);
+	
+		
+		model.addAttribute("list", list);
+		return "mypage/mypageProductList";
+	}
 	
 	/**
 	 * [mypage] 등록한 상품 상세보기
 	 */
 	@RequestMapping("/readOrderDetail")
-	public void readOrderDetail(){}
+	@ResponseBody
+	public ModelAndView readOrderDetail(String proposerId, String productCode){
+		
+			ProductDTO productDTO=
+				orderService.readOrderDetail(proposerId, productCode);
+			
+			System.out.println(productDTO.getProductName());
+		return new ModelAndView("mypage/mypageDetail","productDTO",productDTO);
+	}
 	
 	/**
 	 * [mypage] 등록한 상품 수정하기 폼 띄우기
 	 */
-	@RequestMapping("/updateOrderFom")
-	public void updateOrderFom() {}
-	
+	@RequestMapping("/updateOrderForm")
+	public String updateOrderFom() {
+		return "mypage/updateOrder";
+	}
 	
 	/**
 	 * [mypage] 등록한 상품 수정하기
 	 */
 	@RequestMapping("/updateOrder")
-	public void updateOrder() {}
+	public String updateOrder(String proposerId, ProductDTO productDTO) {
+		orderService.updateOrder(proposerId, productDTO);
+		return "mypage/mypageDeatil";
+	}
 	
 	/**
 	 * [mypage] 등록한 상품 삭제하기
 	 */
 	@RequestMapping("/deleteOrder")
-	public void deleteOrder() {}
+	public String  deleteOrder(String proposerId, String productCode) {
+		orderService.deleteOrder(proposerId, productCode);
+		return "redirect:order";
+	}
 	
 	/**
 	 * [mypage] 등록한 상품 거래완료 처리하기
@@ -89,19 +134,7 @@ public class OrderController {
 	 * 직구자가 등록한 상품 상세보기 (1.상품정보, 2.직구자정보, 3.여행자의 제안정보)
 	 */
 	@RequestMapping("/readUserOrder")
-	public void readUserOrder() {
-	}
-	
-	
-	/**
-	 * [mypage] 등록한 여행일정 중 전체 list 보기
-	 */
-	@RequestMapping("order")
-	public void selectAll(Model model){
-		
-		List<TravelDTO> list = travelService.selectAll();
-		model.addAttribute("currentList", list);
-		
+	public void  readUserOrder() {
 	}
 	
 	

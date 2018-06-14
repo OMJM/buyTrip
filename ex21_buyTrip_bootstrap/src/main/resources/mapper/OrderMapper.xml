@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orderMapper">
+
+<resultMap type="productDTO" id="orderSelectMap">
+  <id column="product_code" property="productCode"/>
+  <result column="proposer_id" property="proposerId"/>
+  <result column="product_name" property="productName"/>
+  <result column="product_img" property="productImg"/>
+  <result column="product_url" property="productUrl"/>
+  <result column="product_qty" property="productQty"/>
+  <result column="product_price" property="productPrice"/>
+ <result column="requirement" property="requirement"/>
+   <result column="product_desc" property="productDesc"/>
+ <result column="requested_date" property="requestedDate"/>
+  <result column="deadline_date" property="deadlineDate"/>
+  <result column="depart_nation" property="departNation"/>
+  <result column="arrival_nation" property="arrivalNation"/>
+  <result column="trade_state" property="tradeState"/> 
+</resultMap>
+
+<insert id="insert" parameterType="productDTO">
+insert into product (product_code, proposer_id, product_name, product_img, product_url, product_qty, product_price, 
+requirement, product_desc, requested_date, deadline_date, arrival_nation)
+values('p'||lpad(product_seq.nextval,10,'0'),'yd@yd',#{productName},#{productImg},#{productUrl},#{productQty},#{productPrice},#{productDesc}
+#{requirement},sysdate,#{deadlineDate},#{departNation},#{arrivalNation} )
+</insert>
+
+
+
+ <delete id="delete"  parameterType="map">
+DELETE  from product
+where proposer_id='yd@yd' and product_code=#{productCode}
+</delete> 
+
+<select id="mySelect" resultMap="orderSelectMap"> 
+select product_code, proposer_id, product_name, product_img, product_price, deadline_date, depart_nation, arrival_nation, trade_state
+ from product
+where proposer_id='yd@yd'
+</select>
+
+<update id="myUpdate" parameterType="map">
+update product set 
+product_code=#{productCode}, proposer_id=#{proposerId}, product_name=#{productName}, product_img=#{productImg}, product_url=#{productUrl}, product_qty=#{productQty}, product_price=#{productPrice}, 
+requirement=#{requirement}, product_desc=#{productDesc}, requested_date=#{requestedDate}, deadline_date=#{deadlineDate}, depart_nation=#{departNation}, arrival_nation=#{arrivalNation}
+where proposer_id='yd@yd' and product_code=#{productCode}
+</update>
+
+<select id="myDetail" parameterType="map" resultMap="orderSelectMap">
+select product_code, proposer_id, product_name, product_img, product_qty, product_price, product_desc, deadline_date,depart_nation, arrival_nation
+from product
+where proposer_id='yd@yd' and product_code=#{productCode}
+</select>
+
+
+</mapper>
