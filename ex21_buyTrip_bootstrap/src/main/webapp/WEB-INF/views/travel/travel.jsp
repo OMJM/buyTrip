@@ -20,52 +20,12 @@ height: 500px;"
     padding: 0px;
     margin-bottom: 0px;
 }
+.col-xs-4{
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
 
 </style>
-<script type="text/javascript">
-$(function(){
-	  $("#departNation").keyup(function(){
-		   if($(this).val()==""){
-			   $("#suggest").hide();
-			   return;
-		   }
-		   
-		   $.ajax({
-			   type:"post" ,
-			   url: "${pageContext.request.contextPath}/travel/suggest",
-			   data:"keyWord="+ $(this).val(),
-			   dataType:"json",
-		       success: function(result){//개수|단어,단어,단어,...
-		    	   
-		    	   var str="";
-		          $.each(result,function(index, item){
-		        	  str+="<a href='#'>"+item+"</a><br>";
-		          });
-		          
-		          $("#suggest").html(str);
-		          $("#suggest").show();
-		    	   
-		       } , 
-		       error:function(err){
-		    	   console.log("에러 발생 : " + err);
-		    	  
-		       }
-			   
-		   });
-	   });
-	   
-	   $("#suggest").on("click","a" ,function(){
-		   
-		   $("#departNation").val($(this).text());
-		   $("#suggest").hide();
-		   
-	   });
-	   
-})
-</script>
-
-
-
 </head>
 
 <body>
@@ -82,11 +42,10 @@ $(function(){
 				<br>직구자가 당신의 여행지에서 상품을 기다리고 있습니다.<br> <br>여행지를 검색해보고
 				판매자가 되어보세요.<br>
 			</h5>
-			<form class="form-inline">
+			<form class="form-inline" action="travel/searchList">
 				<div class="form-group">
 					<label for="">출발지</label> <input type="text" class="form-control"
-						name="departNation" id="departNation" placeholder="출발나라" size="17">
-						<div id="suggest"></div>
+						placeholder="출발나라" size="17">
 				</div>
 				<div class="form-group">
 					<label for="">도착지</label> <input type="text" class="form-control"
@@ -102,83 +61,84 @@ $(function(){
 		</div>
 	</div>
 
-		<div class="row" style="background-color: #f6f6f6;margin-top: 50px; text-align: center; height:auto">
-			<div class="container" style="margin: 25px;">
-				<h1>여행지를 등록해보세요</h1>
-				<h5>
-					<br>
-					<p>여러분의 여행할 장소들을 등록해보세요
-				</h5>
-				<button type="button" class="btn btn-info" style="width:20%;"
-					onclick="location.href='${pageContext.request.contextPath}/travel/addTrip'">여행지 등록</button>
-			</div>
+	<div class="row" style="background-color: #f6f6f6;margin-top: 50px; text-align: center; height:auto">
+		<div style="margin: 25px;">
+			<h1>여행지를 등록해보세요</h1>
+			<h5>
+				<br>
+				<p>여러분의 여행할 장소들을 등록해보세요
+			</h5>
+			<button type="button" class="btn btn-info" style="width:20%;"
+				onclick="location.href='${pageContext.request.contextPath}/travel/addTrip'">여행지 등록</button>
 		</div>
-
-
-		<!-- 거래율이 가장 높은 여행지 -->
-	<div class="container">
-		<div class="row">
-			<div style="text-align: center; margin-top: 50px;">
-				<h1>거래율이 가장 높은 여행지, Top 3</h1>
-				<h5>
-					</br><p>당신의 다음 여행지는 어디인가요?</p>
-					<p>거래율이 가장 높은 여행지는 이곳입니다.</p></br>
-				</h5>
-			</div>
+	</div>
+	
+	
+	<!-- 거래율이 가장 높은 여행지 -->
+	<c:if test="${!empty list}">
 			
-			<!-- 여행지 list -->
-			<div class="col-md-4">
+			<div class="container" style="padding: 40px;">
 				<div class="row">
-					<div class="well well-lg" onclick="location.href='${pageContext.request.contextPath}/detail'"
-					style="background-color: white; margin:10px;">
-						<div class="row">
-							<div class="col-sm-1"></div>
-							<div class="col-sm-11"><h2>한국</h2></div>
-						</div>
-						<img alt="" src="${pageContext.request.contextPath}/resources/images/korea.jpg" style="width: 100%;">
-						<div class="row" style="height: 15px;"></div>
-						<div class="row" style="text-align: center;">
-							<div class="col-md-1"></div>
-							<div class="col-md-3">
-								<span>주문수</span>
-							</div>
-							<div class="col-md-3">
-								<span>체택수</span>
-							</div>
-							<div class="col-md-4">
-								<span>거래율</span>
-							</div>
-							<div class="col-md-1"></div>
-						</div>	
-						<div class="row" style="text-align: center;">
-							<div class="col-md-1"></div>
-							<div class="col-md-3">
-								<h3><span>200</span></h3>
-							</div>
-							<div class="col-md-3">
-								<h3><span>100</span></h3>
-							</div>
-							<div class="col-md-4">
-								<h3><span>50%</span></h3>
-							</div>
-							<div class="col-md-1"></div>
-						</div>	
+					<div style="text-align: center; margin-top: 100px; margin-bottom: 50px">
+						<h1>상품등록수가 가장 높은 여행지, Top 3</h1>
+						<h5>
+							<br><br>
+							<p>당신의 다음 여행지는 어디인가요?</p>
+							<br>
+							<p>상품등록수가 가장 높은 여행지는 이곳입니다!</p>
+						</h5>
 					</div>
 				</div>
-			</div>
-			<!-- / 여행지 list -->
-			
-			<div class="col-md-4">
-				<div class="well">
+				
+				<div class="row">	
+					<!-- 여행지 list -->
+					<c:forEach items="${list}" var="highestDealDTO">
+						<div class="col-md-4">
+							<div class="row">
+								<div class="well well-lg" onclick="location.href='${pageContext.request.contextPath}/detail'"
+								style="background-color: white; margin:10px;">
+									<div class="row">
+										<div class="col-sm-1"></div>
+										<div class="col-sm-11" style="margin: 10px;"><h2>${highestDealDTO.arrivalNation}</h2></div>
+									</div>
+									<div class="row">
+										<img alt="" src="${pageContext.request.contextPath}/resources/images/" style="width: 100%;">
+									</div>
+									<div class="row" style="height: 15px;"></div>
+									<div class="row" style="text-align: center;">
+										<div class="col-xs-4">
+											<span>상품등록수</span>
+										</div>
+										<div class="col-xs-4">
+											<span>완료된 거래수</span>
+										</div>
+										<div class="col-xs-4">
+											<span>거래율</span>
+										</div>
+									</div>	
+									<div class="row" style="text-align: center;">
+										<div class="col-xs-4">
+											<h3><span>${highestDealDTO.orderNumber}</span></h3>
+										</div>
+										<div class="col-xs-4">
+											<h3><span>${highestDealDTO.completedDealNumber}</span></h3>
+										</div>
+										<div class="col-xs-4">
+											<h3><span>${highestDealDTO.deal} %</span></h3>
+										</div>
+									</div>
+									<div class="row" style="height: 15px;"></div>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+					<!-- / 여행지 list -->
+						
 				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="well">
-				</div>
-			</div>
-		</div>
-	</div>	
+			</div>			
+	</c:if>	
 	<!-- / 거래율이 가장 높은 여행지 -->
+	
 	
 	<!-- 여백 -->
 	<div style="height: 50px; margin-top: 50px; "></div>		

@@ -1,5 +1,9 @@
 package buytrip.mvc.model.run.service;
 
+import java.util.List;
+
+import buytrip.mvc.model.dto.HighestDealDTO;
+
 public interface RunService {
 
 	/**
@@ -19,8 +23,9 @@ public interface RunService {
 	
 	/**
 	 * [main page] 거래성사율 Top3나라 보여주기(등록수 대비 거래완료수)
+	 * @return 
 	 */
-	public void highestDeal();
+	public List<HighestDealDTO> highestDeal();
 	
 	/**
 	 * 회원 강퇴시키기
