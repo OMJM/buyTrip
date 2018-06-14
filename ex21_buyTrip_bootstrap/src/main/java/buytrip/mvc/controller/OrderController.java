@@ -1,12 +1,22 @@
 package buytrip.mvc.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import buytrip.mvc.model.dto.TravelDTO;
+import buytrip.mvc.model.travel.service.TravelService;
 
 @Controller
 @RequestMapping("/order")
 public class OrderController {
+	
+	@Autowired
+	private TravelService travelService;
 
 	//@Autowired
 	//private OrderService orderService;
@@ -80,6 +90,18 @@ public class OrderController {
 	 */
 	@RequestMapping("/readUserOrder")
 	public void readUserOrder() {
+	}
+	
+	
+	/**
+	 * [mypage] 등록한 여행일정 중 전체 list 보기
+	 */
+	@RequestMapping("order")
+	public void selectAll(Model model){
+		
+		List<TravelDTO> list = travelService.selectAll();
+		model.addAttribute("currentList", list);
+		
 	}
 	
 	

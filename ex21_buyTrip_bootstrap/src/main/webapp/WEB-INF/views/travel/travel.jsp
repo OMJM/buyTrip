@@ -22,6 +22,50 @@ height: 500px;"
 }
 
 </style>
+<script type="text/javascript">
+$(function(){
+	  $("#departNation").keyup(function(){
+		   if($(this).val()==""){
+			   $("#suggest").hide();
+			   return;
+		   }
+		   
+		   $.ajax({
+			   type:"post" ,
+			   url: "${pageContext.request.contextPath}/travel/suggest",
+			   data:"keyWord="+ $(this).val(),
+			   dataType:"json",
+		       success: function(result){//개수|단어,단어,단어,...
+		    	   
+		    	   var str="";
+		          $.each(result,function(index, item){
+		        	  str+="<a href='#'>"+item+"</a><br>";
+		          });
+		          
+		          $("#suggest").html(str);
+		          $("#suggest").show();
+		    	   
+		       } , 
+		       error:function(err){
+		    	   console.log("에러 발생 : " + err);
+		    	  
+		       }
+			   
+		   });
+	   });
+	   
+	   $("#suggest").on("click","a" ,function(){
+		   
+		   $("#departNation").val($(this).text());
+		   $("#suggest").hide();
+		   
+	   });
+	   
+})
+</script>
+
+
+
 </head>
 
 <body>
@@ -38,10 +82,11 @@ height: 500px;"
 				<br>직구자가 당신의 여행지에서 상품을 기다리고 있습니다.<br> <br>여행지를 검색해보고
 				판매자가 되어보세요.<br>
 			</h5>
-			<form class="form-inline" action="travel/searchList">
+			<form class="form-inline">
 				<div class="form-group">
 					<label for="">출발지</label> <input type="text" class="form-control"
-						placeholder="출발나라" size="17">
+						name="departNation" id="departNation" placeholder="출발나라" size="17">
+						<div id="suggest"></div>
 				</div>
 				<div class="form-group">
 					<label for="">도착지</label> <input type="text" class="form-control"

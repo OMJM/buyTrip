@@ -61,6 +61,9 @@ ${pageContext.request.contextPath}/resources/
 			</div>
 			<div class="agileinfo_services_grids">
 			
+			
+			
+<c:forEach items="${currentList}" var="list">			
 			<!-- 최근 등록된 여행계획 필드 -->
 			<div class="col-md-4 w3_agile_services_grid">
 					<div class="well" style="background:white;">
@@ -68,14 +71,14 @@ ${pageContext.request.contextPath}/resources/
 						<div class="w3_agileits_services_grid1">
 							<div class="w3_agileits_services_grid1l">
 								<img
-								src="${pageContext.request.contextPath}/resources/images/159.jpg"
+								src="${list.memberImg }"
 								class="img-circle"alt="" style=" width: 80px; height: 80px;"/>
 							</div>
 							<div class="w3_agileits_services_grid1r">
 									<h4>
-							<a href="#" data-toggle="modal" data-target="#myModal">일본<i class="fa fa-plane"></i> 한국</a>
+							<a href="#" data-toggle="modal" data-target="#myModal">${list.departNation}<i class="fa fa-plane"></i> ${list.arrivalNation}</a>
 						</h4>
-						<p>도착일 : 2018-07-01.</p>
+						<p>도착일 : ${list.arrivalDate}.</p>
 							</div>
 							<div class="clearfix"></div>
 						</div>
@@ -84,95 +87,8 @@ ${pageContext.request.contextPath}/resources/
 					</div>
 				</div>
 				<!-- 최근 등록된 여행계획 필드 끝 -->
+</c:forEach>			
 				
-				<div class="col-md-4 w3_agile_services_grid">
-					<div class="well" style="background:white;">
-					<div class="agileits_w3layouts_services_grid1">
-						<div class="w3_agileits_services_grid1">
-							<div class="w3_agileits_services_grid1l">
-								<img
-								src="${pageContext.request.contextPath}/resources/images/159.jpg"
-								class="img-circle"alt="" style=" width: 80px; height: 80px;"/>
-							</div>
-							<div class="w3_agileits_services_grid1r">
-									<h4>
-							<a href="#" data-toggle="modal" data-target="#myModal">일본<i class="fa fa-plane"></i> 한국</a>
-						</h4>
-						<p>도착일 : 2018-07-01.</p>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-					
-					</div>
-					</div>
-				</div>
-				
-				<div class="col-md-4 w3_agile_services_grid">
-					<div class="well" style="background:white;">
-					<div class="agileits_w3layouts_services_grid1">
-						<div class="w3_agileits_services_grid1">
-							<div class="w3_agileits_services_grid1l">
-								<img
-								src="${pageContext.request.contextPath}/resources/images/159.jpg"
-								class="img-circle"alt="" style=" width: 60px; height: 60px;"/>
-							</div>
-							<div class="w3_agileits_services_grid1r">
-									<h4>
-							<a href="#" data-toggle="modal" data-target="#myModal">일본<i class="fa fa-plane"></i> 한국</a>
-						</h4>
-						<p>도착일 : 2018-07-01.</p>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-					
-					</div>
-					</div>
-				</div>
-				
-				<div class="col-md-4 w3_agile_services_grid">
-					<div class="well" style="background:white;">
-					<div class="agileits_w3layouts_services_grid1">
-						<div class="w3_agileits_services_grid1">
-							<div class="w3_agileits_services_grid1l">
-								<img
-								src="${pageContext.request.contextPath}/resources/images/159.jpg"
-								class="img-circle"alt="" style=" width: 60px; height: 60px;"/>
-							</div>
-							<div class="w3_agileits_services_grid1r">
-									<h4>
-							<a href="#" data-toggle="modal" data-target="#myModal">일본<i class="fa fa-plane"></i> 한국</a>
-						</h4>
-						<p>도착일 : 2018-07-01.</p>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-					
-					</div>
-					</div>
-				</div>
-				
-				
-				<div class="col-md-4 w3_agile_services_grid">
-					<div class="well" style="background:white;">
-					<div class="agileits_w3layouts_services_grid1">
-						<div class="w3_agileits_services_grid1">
-							<div class="w3_agileits_services_grid1l">
-								<img
-								src="${pageContext.request.contextPath}/resources/images/159.jpg"
-								class="img-circle"alt="" style=" width: 60px; height: 60px;"/>
-							</div>
-							<div class="w3_agileits_services_grid1r">
-									<h4>
-							<a href="#" data-toggle="modal" data-target="#myModal">일본<i class="fa fa-plane"></i> 한국</a>
-						</h4>
-						<p>도착일 : 2018-07-01.</p>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-					
-					</div>
-					</div>
-				</div>
 				
 				
 		</div>

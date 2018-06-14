@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TravelMapper">
+
+	<resultMap type="travelDTO" id="travelMap">
+		<id column="travel_no" property="travelNo"/>
+		<result column="member_id" property="memberId"/>
+		<result column="depart_nation" property="departNation"/>
+		<result column="arrival_nation" property="arrivalNation"/>
+		<result column="arrival_date" property="arrivalDate"/>
+		<result column="input_date" property="inputDate"/>
+		<result column="notification" property="notification"/>
+		<result column="nation_name" property="nationName"/>
+		<result column="member_img" property="memberImg"/>
+	</resultMap>
+	
+
+	<insert id="insertTravel" parameterType="travelDTO" >
+		insert into travel(travel_no, member_id, depart_nation, arrival_nation, arrival_date, notification) 
+		values('t'||lpad(travel_seq.nextval,4,'0'), #{memberId},#{departNation},#{arrivalNation},#{arrivalDate},#{notification})
+	</insert>
+	
+	<select id="selectTravel" parameterType="string" resultMap="travelMap">
+		select travel_no, member_id, member_img, depart_nation, arrival_nation, arrival_date, notification
+		from member_travel
+		where arrival_date &gt; sysdate
+		order by input_date desc
+	</select>
+	
+	
+	<select id="selectTravelPast" parameterType="string" resultMap="travelMap">
+		select travel_no, member_id, member_img, depart_nation, arrival_nation, arrival_date, notification
+		from member_travel
+		where arrival_date &lt; sysdate
+		order by arrival_date desc
+	</select>
+	
+	<delete id="deleteTravel" parameterType="String" >
+		delete from travel where travel_no=#{travelNo}
+	</delete>
+	
+	<!-- 인수로 전달된 단어로 시작되는 모든 단어 검색하기 -->
+	<select id="selectSuggest" parameterType="string" resultType="string">
+	  select nation_name from nation 
+	  where lower(nation_name) like lower(#{value}) || '%'
+	</select>
+ 	
+</mapper>
