@@ -32,4 +32,5 @@ public interface TravelDAO {
 	List<String> suggest(String word);
 
 
+
 }

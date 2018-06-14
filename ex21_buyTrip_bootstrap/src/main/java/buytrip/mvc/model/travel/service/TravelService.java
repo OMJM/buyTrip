@@ -33,4 +33,5 @@ public interface TravelService {
 	 */
 	List<String> suggest(String word);
 
+
 }
