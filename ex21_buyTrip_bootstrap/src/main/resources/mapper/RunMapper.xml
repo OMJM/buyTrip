@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="runMapper">	
+	
+	
+	<!-- 상품등록수 Top3 나라 (상품등록수, 거래완료수, 거래율) -->
+	<select id="highestDeal" resultType="highestDealDTO">
+		select arrivalNation, orderNumber, CompletedDealNumber, deal
+		from (
+		select arrivalNation, orderNumber, CompletedDealNumber, deal, rank() over(order by orderNumber desc) rank
+		from (
+		select arrival_nation arrivalNation, sum(decode(trade_state, 'complete', 1, 0)) CompletedDealNumber,
+		count(*) orderNumber, round(sum(decode(trade_state, 'complete', 1, 0))/count(*)*100) deal
+		from product
+		group by arrival_nation))
+		where rank &lt;= 3
+		order by orderNumber desc
+	</select>
+
+
+
+</mapper>
+
