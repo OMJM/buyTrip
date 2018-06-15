@@ -39,11 +39,11 @@ select product_code, proposer_id, product_name, product_img, product_price, dead
 where proposer_id='yd@yd'
 </select>
 
-<update id="myUpdate" parameterType="map">
+<update id="myUpdate" parameterType="productDTO">
 update product set 
-product_code=#{productCode}, proposer_id=#{proposerId}, product_name=#{productName}, product_img=#{productImg}, product_url=#{productUrl}, product_qty=#{productQty}, product_price=#{productPrice}, 
-requirement=#{requirement}, product_desc=#{productDesc}, requested_date=#{requestedDate}, deadline_date=#{deadlineDate}, depart_nation=#{departNation}, arrival_nation=#{arrivalNation}
-where proposer_id='yd@yd' and product_code=#{productCode}
+product_name=#{productName}, product_img=#{productImg}, product_url=#{productUrl}, product_qty=#{productQty}, product_price=#{productPrice}, 
+requirement=#{requirement}, product_desc=#{productDesc}, deadline_date=#{deadlineDate}, depart_nation=#{departNation}, arrival_nation=#{arrivalNation}
+where product_code=#{productCode}
 </update>
 
 <select id="myDetail" parameterType="map" resultMap="orderSelectMap">

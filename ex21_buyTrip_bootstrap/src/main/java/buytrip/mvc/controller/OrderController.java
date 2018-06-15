@@ -36,7 +36,7 @@ public class OrderController {
 	@RequestMapping("/insertOrder")
 	public String insertOrder(ProductDTO productDTO) throws Exception {
 		//파일첨부여부를 확인해서 첨부되었을때 파일저장.
-		System.out.println(productDTO.getProposerId()+"컨트롤러");
+		
 				MultipartFile file = productDTO.getFile();
 				if(file.getSize()>0){
 					String fileName = file.getOriginalFilename();
@@ -51,7 +51,7 @@ public class OrderController {
 				orderService.insertOrder(productDTO);
 				
 				
-				return "redirect: / ";
+				return "redirect: order ";
 			}
 		
 
@@ -74,12 +74,11 @@ public class OrderController {
 	 */
 	@RequestMapping("/readOrderDetail")
 	@ResponseBody
-	public ModelAndView readOrderDetail(String proposerId, String productCode){
+	public ModelAndView readOrderDetail( String productCode){
 		
-			ProductDTO productDTO=
-				orderService.readOrderDetail(proposerId, productCode);
+			ProductDTO productDTO=orderService.readOrderDetail(productCode);
+			orderService.readOrderDetail( productCode);
 			
-			System.out.println(productDTO.getProductName());
 		return new ModelAndView("mypage/mypageDetail","productDTO",productDTO);
 	}
 	
@@ -87,24 +86,29 @@ public class OrderController {
 	 * [mypage] 등록한 상품 수정하기 폼 띄우기
 	 */
 	@RequestMapping("/updateOrderForm")
-	public String updateOrderFom() {
-		return "mypage/updateOrder";
+	public ModelAndView updateOrderFom(String productCode) {
+		ProductDTO productDTO = orderService.readOrderDetail(productCode);
+		return new ModelAndView("mypage/updateOrder","productDTO",productDTO);
 	}
 	
 	/**
 	 * [mypage] 등록한 상품 수정하기
 	 */
 	@RequestMapping("/updateOrder")
-	public String updateOrder(String proposerId, ProductDTO productDTO) {
-		orderService.updateOrder(proposerId, productDTO);
-		return "mypage/mypageDeatil";
+	public ModelAndView updateOrder(ProductDTO productDTO) {
+	orderService.updateOrder(productDTO);
+	ProductDTO proDTO=orderService.readOrderDetail(productDTO.getProductCode());
+		System.out.println(proDTO);
+		return new ModelAndView("mypage/mypageDetail", "proDTO", proDTO);
 	}
 	
 	/**
 	 * [mypage] 등록한 상품 삭제하기
 	 */
 	@RequestMapping("/deleteOrder")
+	
 	public String  deleteOrder(String proposerId, String productCode) {
+		
 		orderService.deleteOrder(proposerId, productCode);
 		return "redirect:order";
 	}

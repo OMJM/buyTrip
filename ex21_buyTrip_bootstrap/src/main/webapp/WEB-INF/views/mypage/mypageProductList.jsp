@@ -246,7 +246,7 @@ body {
 														<!-- 상품 한개 템플릿 -->
 														<div class="panel panel-default  panel--styled"
 															style="padding: 10px;" 
-															onclick="location.href='${pageContext.request.contextPath}/order/readOrderDetail?productCode=${productDTO.productCode}'">
+															onclick="location.href='${pageContext.request.contextPath}/order/readOrderDetail?proposerId=${productDTO.proposerId}&productCode=${productDTO.productCode}'">
 															<div align="right">
 																<h4>마감날짜 : ${productDTO.deadlineDate}</h4>
 															</div>
@@ -276,7 +276,7 @@ body {
 																		</div>
 																		<div class="col-sm-7" align="right">
 																			<button type="button" class="btn btn-info"
-																				onclick="location.href='${pageContext.request.contextPath}/order/readOrderDetail?productCode=${productDTO.productCode}'">상세보기</button>
+																				onclick="location.href='${pageContext.request.contextPath}/order/readOrderDetail?proposerId=${productDTO.proposerId}&productCode=${productDTO.productCode}'">상세보기</button>
 																		</div>
 																	</div>
 

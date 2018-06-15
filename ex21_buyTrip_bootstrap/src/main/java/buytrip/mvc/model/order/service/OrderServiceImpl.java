@@ -25,15 +25,16 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public ProductDTO readOrderDetail(String proposerId, String productCode) {
+	public ProductDTO readOrderDetail(String productCode) {
 		
-		return orderDAO.readOrderDetail(proposerId, productCode);
+		return orderDAO.readOrderDetail(productCode);
 	}
 
 	@Override
-	public int updateOrder(String proposerId, ProductDTO productDTO) {
-		
-		return orderDAO.updateOrder(proposerId, productDTO);
+	public int updateOrder(ProductDTO productDTO) {
+		int i=orderDAO.updateOrder(productDTO);
+		System.out.println(i);
+		return i;
 	}
 
 	@Override

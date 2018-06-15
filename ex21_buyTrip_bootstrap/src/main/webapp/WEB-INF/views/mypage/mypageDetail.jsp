@@ -334,14 +334,14 @@ scale
 						<br>
 
 						<div class="well" style="font-size: 15px">
-							<strong>도착지</strong> ${productDTO.departNation}
-							<hr>
 							<strong>출발지</strong> ${productDTO.arrivalNation}
+							<hr>
+							<strong>도착지</strong> ${productDTO.departNation}
 						</div>
 						<div>
-					<a href="${pageContext.request.contextPath}/udateOrder" class="btn btn-primary" role="button"
+					<a href="${pageContext.request.contextPath}/order/updateOrderForm?productCode=${productDTO.productCode}" class="btn btn-primary" role="button"
 								style="width: 150px; margin: 5px;">수정하기</a>
-							<a href="${pageContext.request.contextPath}/order/deleteOrder" class="btn btn-primary" role="button"
+							<a href="${pageContext.request.contextPath}/order/deleteOrder?productCode=${productDTO.productCode}" class="btn btn-primary" role="button"
 								style="width: 150px; margin: 5px;">삭제하기</a>
 						</div>
 

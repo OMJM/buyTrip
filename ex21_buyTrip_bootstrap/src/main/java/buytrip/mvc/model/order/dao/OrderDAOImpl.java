@@ -33,28 +33,28 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public ProductDTO readOrderDetail(String proposerId, String productCode) {
-		Map<String, String> map= new HashMap<>();
-		map.put("proposerId", proposerId);	
-		map.put("productCode", productCode);
-		 session.selectOne("orderMapper.myDetail", map);
+	public ProductDTO readOrderDetail(String productCode) {
+		//Map<String, String> map= new HashMap<>();
+		
+		 
 	
-		return session.selectOne("orderMapper.myDetail", map);
+		return session.selectOne("orderMapper.myDetail", productCode);
 	}
 
 	@Override
-	public int updateOrder(String proposerId, ProductDTO productDTO) {
-		Map<String, Object> map= new HashMap<>();
-		map.put("proposerId", proposerId);
-		map.put("productDTO", productDTO);
-		return session.delete("orderMapper.update", map);
+	public int updateOrder(ProductDTO productDTO) {
+		int i=session.update("orderMapper.myUpdate", productDTO);
+		System.out.println(productDTO.getProductCode());
+		return i;
 	}
+		
 
 	@Override
 	public int deleteOrder(String proposerId, String productCode) {
 		Map<String, String> map =new HashMap<>();
 		map.put("proposerId", proposerId);
 		map.put("productCode", productCode);
+		
 		return session.delete("orderMapper.delete", map);
 	}
 

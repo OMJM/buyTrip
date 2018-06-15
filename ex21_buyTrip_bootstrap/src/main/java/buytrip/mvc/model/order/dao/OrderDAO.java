@@ -19,12 +19,12 @@ public interface OrderDAO {
 	/**
 	 * [mypage] 등록한 상품 상세보기
 	 */
-	public ProductDTO readOrderDetail(String proposerId, String productCode);
+	public ProductDTO readOrderDetail(String productCode);
 	
 	/**
 	 * [mypage] 등록한 상품 수정하기
 	 */
-	public int updateOrder(String proposerId, ProductDTO productDTO);
+	public int updateOrder(ProductDTO productDTO);
 	
 	/**
 	 * [mypage] 등록한 상품 삭제하기
