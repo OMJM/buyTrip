@@ -45,4 +45,9 @@
 	  where lower(nation_name) like lower(#{value}) || '%'
 	</select>
  	
+ 	<!-- make an offer -->
+ 	<insert id="offerDeal" parameterType="offerDTO">
+		insert into offer(offer_code,proposer_id,offer_id,product_code,offer_date)
+		values(#{offerCode},#{proposerId},#{offerId},#{productCode},sysdate)
+	</insert>
 </mapper>
