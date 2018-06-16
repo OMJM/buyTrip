@@ -1,17 +1,15 @@
 package buytrip.mvc.controller;
 
 import java.io.File;
-import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import buytrip.mvc.model.dto.ProductDTO;
@@ -24,44 +22,68 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
+
+	//등록 상품이미지 저장경로 (임다영 폴더 기준)
+	private String savePath = "C:\\Users\\ldy\\git\\buyTrip\\ex21_buyTrip_bootstrap\\src\\main\\webapp\\resources\\proImg";
 	
-	private String savePath = "${pageContext.request.contextPath}/img";
 	/**
 	 * 상품 등록하기 폼 띄우기
 	 */
 	@RequestMapping("/orderForm")
 	public String insertOrderForm() {
-      return "orderForm";
+      return "order/orderForm"; 
 	}
 	
 	/**
-	 * 상품 등록하기
+	 * 상품 등록하기 - 다중 이미지
 	 */
 	@RequestMapping("/insertOrder")
-	public String insertOrder(ProductDTO productDTO) throws Exception {
-		//파일첨부여부를 확인해서 첨부되었을때 파일저장.
+	public String insertOrder(ProductDTO productDTO, MultipartHttpServletRequest mtRequest,
+			Model model, Authentication auth) throws Exception {
 		
-				MultipartFile file = productDTO.getFile();
-				if(file.getSize()>0){
-					String fileName = file.getOriginalFilename();
-					long fileSize = file.getSize();
-					productDTO.setFname(fileName);
-					productDTO.setFsize((int)fileSize);
-					
-					file.transferTo(new File(savePath+"/"+fileName));
-				}
+		UserDTO userDTO = (UserDTO)auth.getPrincipal();
+		String memberId = userDTO.getMemberId();
+		
+		//test
+		System.out.println("memberId : "+memberId); 
+		
+		//productDTO에 로그인된 id 저장
+		productDTO.setProposerId(memberId);
+
+		//파일list 가져오기
+		List<MultipartFile> flist = mtRequest.getFiles("file");
+		String fileName = "";
+		
+		//파일list가 1이상이라면
+		if(flist.size()>0) {
+			for(MultipartFile mpf : flist) {
+				//원본 파일명
+				String fName = System.currentTimeMillis()+"_"+mpf.getOriginalFilename();
 				
+				//지정한 폴더로 파일 복사
+				mpf.transferTo(new File(savePath+"/"+fName));
 				
-				orderService.insertOrder(productDTO);
-				
-				
-				return "redirect: order ";
+				//productDTO의 ProductImg에 저장할 파일이름(들)
+				fileName += fName+"|";
+
 			}
+		}
+		//test
+		System.out.println("dto의 fileName : "+fileName); 
+		
+		//productDTO에 1개이상의 파일명 저장
+		productDTO.setProductImg(fileName);
+		
+		//상품 등록하기
+		orderService.insertOrder(productDTO);
+
+		return "redirect:readOrders";
+	}
 		
 
 	
 	/**
-	 * [mypage] 등록한 상품 lsit 보기
+	 * [mypage] 등록한 상품 list 보기
 	 */
 	@RequestMapping("/readOrders")
 	public String readOrder(Model model, Authentication auth) {
@@ -73,8 +95,6 @@ public class OrderController {
 		List<ProductDTO> list=orderService.readOrder(memberId);
 		List<ProductDTO> list2=orderService.letedOrder(memberId);
 		
-		
-	
 		model.addAttribute("list", list);
 		model.addAttribute("list2", list2);
 		
@@ -82,16 +102,32 @@ public class OrderController {
 	}
 	
 	/**
-	 * [mypage] 등록한 상품 상세보기
+	 * [mypage] 등록한 상품 상세보기 - 다중 이미지
 	 */
 	@RequestMapping("/readOrderDetail")
-	@ResponseBody
-	public ModelAndView readOrderDetail(String productCode){
+	public String readOrderDetail(String productCode, Model model){
 		
-			ProductDTO productDTO=orderService.readOrderDetail(productCode);
+			ProductDTO productDTO = orderService.readOrderDetail(productCode);
+
+			//이미지 뿌려주기
+			String imgName = productDTO.getProductImg();
+			System.out.println("imgName"+imgName);
 			
+			String [] imgArr = imgName.split("\\|");
+			List<String> imgList = new ArrayList<>();  
+			for(String a : imgArr) {
+				System.out.println(a);
+				imgList.add(a);
+			}
 			
-		return new ModelAndView("mypage/mypageDetail","productDTO",productDTO);
+			//test
+			System.out.println("list 사이즈 : "+imgList.size());
+			
+			//이미지list & dto 저장
+			model.addAttribute("imgList", imgList);
+			model.addAttribute("productDTO",productDTO);
+			
+		return "mypage/mypageDetail";
 	}
 	
 	/**

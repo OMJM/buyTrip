@@ -102,33 +102,37 @@ input, textarea{
 				<div class="clearfix"></div>
 			</div>
 			<!-- 다영 -->
-			<form action="#" method="post">
+			<form id="fileUploadForm" name="orderForm" method="post" enctype="multipart/form-data"
+			action="${pageContext.request.contextPath}/order/insertOrder?${_csrf.parameterName}=${_csrf.token}">
+			  <%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
 				<div class="col-sm-6 contact-left">
-				   <div align="center">
-					<img src="${pageContext.request.contextPath}/resources/images/159.jpg" class="img-circle" alt="Cinque Terre">
+				  <div align="center">
+					<%-- <img src="${pageContext.request.contextPath}/resources/images/159.jpg" class="img-circle" alt="Cinque Terre"> --%>
 					
 					<p>상품 이미지 (적어도 한장이상)</p>
-					<input type="file" name="" required="">
+					<input multiple="multiple" type="file" name="file" required="required">
 					</div>
 					 상품이름 
-					 <input type="text" name="" placeholder="상품 이름을 입력해주세요." required="">
+					 <input type="text" name="productName" placeholder="상품 이름을 입력해주세요." required="required">
 					<p>상품 상세 설명</p>
-					<textarea name="" placeholder="상품 상세설명을 입력해주세요.(예. 크기, 색상 등)"
-						required=""></textarea>
+					<textarea name="productDesc" placeholder="상품 상세설명을 입력해주세요.(예. 크기, 색상 등)"
+						required="required"></textarea>
 					<p>상품 URL</p>
-					<input type="text" name="" placeholder="상품 웹 주소를 입력해주세요. (선택사항)">
+					<input type="text" name="productUrl" placeholder="상품 웹 주소를 입력해주세요. (선택사항)">
 					<p>상품가격+커미션</p>
-					<input type="number" name="" placeholder="상품+커미션 가격을 입력해주세요."
-						required="">
+					<input type="number" name="productPrice" placeholder="상품+커미션 가격을 입력해주세요."
+						required="required">
 					<p>상품 수량</p>
-					<input type="number" name="" placeholder="1" required="">
+					<input type="number" name="productQty" placeholder="1" required="required">
 					<p>출발/도착나라</p>
-					<input type="text" name="" placeholder="출발나라를 입력해주세요." required="">
-					<input type="text" name="" placeholder="도착나라를 입력해주세요." required="">
+					<input type="text" name="arrivalNation" placeholder="출발나라를 입력해주세요." required="required">
+					<input type="text" name="departNation" placeholder="도착나라를 입력해주세요." required="required">
 					<p>희망 날짜</p>
-					<input type="date" name="" required="">
+					<input type="date" name="deadlineDate" required="required">
 					<p>요청사항</p>
-					<input type="submit" value="다음">
+					<textarea name="requirement" placeholder="요청사항을 적어주세요."
+						required="required"></textarea>
+					<input type="submit" value="다음" onclick="fileSubmit();">
 				</div>
 				<div class="clearfix"></div>
 			</form>
