@@ -1,9 +1,12 @@
 package buytrip.mvc.controller;
 
 import java.io.File;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import buytrip.mvc.model.dto.ProductDTO;
+import buytrip.mvc.model.dto.UserDTO;
 import buytrip.mvc.model.order.service.OrderService;
 
 @Controller
@@ -60,12 +64,20 @@ public class OrderController {
 	 * [mypage] 등록한 상품 lsit 보기
 	 */
 	@RequestMapping("/readOrders")
-	
-	public String readOrder(Model model,String proposerId) {
-		List<ProductDTO> list=orderService.readOrder(proposerId);
-	
+	public String readOrder(Model model, Authentication auth) {
 		
+		UserDTO userDTO = (UserDTO)auth.getPrincipal();
+		
+		String memberId = userDTO.getMemberId();
+		
+		List<ProductDTO> list=orderService.readOrder(memberId);
+		List<ProductDTO> list2=orderService.letedOrder(memberId);
+		
+		
+	
 		model.addAttribute("list", list);
+		model.addAttribute("list2", list2);
+		
 		return "mypage/mypageProductList";
 	}
 	
@@ -74,10 +86,10 @@ public class OrderController {
 	 */
 	@RequestMapping("/readOrderDetail")
 	@ResponseBody
-	public ModelAndView readOrderDetail( String productCode){
+	public ModelAndView readOrderDetail(String productCode){
 		
 			ProductDTO productDTO=orderService.readOrderDetail(productCode);
-			orderService.readOrderDetail( productCode);
+			
 			
 		return new ModelAndView("mypage/mypageDetail","productDTO",productDTO);
 	}
@@ -96,9 +108,10 @@ public class OrderController {
 	 */
 	@RequestMapping("/updateOrder")
 	public ModelAndView updateOrder(ProductDTO productDTO) {
-	orderService.updateOrder(productDTO);
+	
+	
 	ProductDTO proDTO=orderService.readOrderDetail(productDTO.getProductCode());
-		System.out.println(proDTO);
+		
 		return new ModelAndView("mypage/mypageDetail", "proDTO", proDTO);
 	}
 	
@@ -107,9 +120,11 @@ public class OrderController {
 	 */
 	@RequestMapping("/deleteOrder")
 	
-	public String  deleteOrder(String proposerId, String productCode) {
+	public String  deleteOrder(Authentication auth, String productCode) {
 		
-		orderService.deleteOrder(proposerId, productCode);
+		UserDTO userDTO = (UserDTO)auth.getPrincipal();
+		String memberId = userDTO.getMemberId();
+		orderService.deleteOrder(memberId, productCode);
 		return "redirect:order";
 	}
 	
@@ -120,13 +135,8 @@ public class OrderController {
 	public void completeOrder() {
 	}
 	
-	/**
-	 * [mypage] 등록한 상품 중 거래완료/기한만료된 상품 list 보기
-	 */
-	@RequestMapping("/readCompletedOrder")
-	public void readCompletedOrder() {
-	}
 	
+
 	/**
 	 * 여행지 검색에 따른 직구자의 등록상품 list 보기
 	 */

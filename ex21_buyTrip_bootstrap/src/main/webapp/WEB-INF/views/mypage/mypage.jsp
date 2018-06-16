@@ -165,7 +165,10 @@ body {
 						</div>
 						<!-- END SIDEBAR BUTTONS -->
 						<!-- SIDEBAR MENU -->
+						
 						<div class="profile-usermenu">
+						<
+
 							<ul class="nav">
 								<li class="active"><a href="${pageContext.request.contextPath}/mypage/mypage"  data-toggle="tab"> <i
 										class="glyphicon glyphicon-home"></i> 회원 수정
@@ -173,8 +176,9 @@ body {
 								<li><a href="travelList"> <i class="glyphicon glyphicon-user"></i>
 										여행 관리
 								</a></li>
-								<li><a href="${pageContext.request.contextPath}/order/readOrders" > <i
-										class="glyphicon glyphicon-ok"></i> 주문 관리
+								<li><a href="${pageContext.request.contextPath}/order/readOrders" >
+								 <i class="glyphicon glyphicon-ok"></i>
+								 		주문 관리
 								</a></li>
 								<li><a href="${pageContext.request.contextPath}/mypage/chatList"> <i class="glyphicon glyphicon-flag"></i>
 										메세지
@@ -183,6 +187,7 @@ body {
 										알림
 								</a></li>
 							</ul>
+							
 						</div>
 						<!-- END MENU -->
 					</div>

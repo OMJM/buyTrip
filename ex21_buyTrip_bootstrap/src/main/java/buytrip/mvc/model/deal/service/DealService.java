@@ -2,7 +2,7 @@ package buytrip.mvc.model.deal.service;
 
 import org.springframework.stereotype.Service;
 
-import buytrip.mvc.model.deal.dto.OfferDTO;
+import buytrip.mvc.model.dto.OfferDTO;
 
 @Service
 public interface DealService {

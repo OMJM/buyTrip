@@ -26,7 +26,7 @@ public class OrderDAOImpl implements OrderDAO {
 	public List<ProductDTO> readOrder(String proposerId) {
 		
 		List<ProductDTO>list= session.selectList("orderMapper.mySelect", proposerId);
-		System.out.println(proposerId);
+		
 		return list;
 				
 		
@@ -34,9 +34,6 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Override
 	public ProductDTO readOrderDetail(String productCode) {
-		//Map<String, String> map= new HashMap<>();
-		
-		 
 	
 		return session.selectOne("orderMapper.myDetail", productCode);
 	}
@@ -59,15 +56,16 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public void completeOrder() {
-		// TODO Auto-generated method stub
+	public List<ProductDTO> completeOrder(String proposerId, String tradeState) {
 
+		return null;
 	}
 
-	@Override
-	public void readCompletedOrder() {
-		// TODO Auto-generated method stub
-
+	
+	public List<ProductDTO> letedOrder(String proposerId) {
+	
+		
+		return session.selectList("orderMapper.myDeadline", proposerId);
 	}
 
 	@Override
@@ -76,8 +74,9 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public void readUserOrder() {
-		// TODO Auto-generated method stub
+	public ProductDTO readUserOrder() {
+
+		return null;
 
 	}
 

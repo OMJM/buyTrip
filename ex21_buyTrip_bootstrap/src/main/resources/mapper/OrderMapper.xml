@@ -22,7 +22,7 @@
 <insert id="insert" parameterType="productDTO">
 insert into product (product_code, proposer_id, product_name, product_img, product_url, product_qty, product_price, 
 requirement, product_desc, requested_date, deadline_date, arrival_nation)
-values('p'||lpad(product_seq.nextval,10,'0'),'yd@yd',#{productName},#{productImg},#{productUrl},#{productQty},#{productPrice},#{productDesc}
+values('p'||lpad(product_seq.nextval,10,'0'),#{proposerId} ,#{productName},#{productImg},#{productUrl},#{productQty},#{productPrice},#{productDesc}
 #{requirement},sysdate,#{deadlineDate},#{departNation},#{arrivalNation} )
 </insert>
 
@@ -30,26 +30,32 @@ values('p'||lpad(product_seq.nextval,10,'0'),'yd@yd',#{productName},#{productImg
 
  <delete id="delete"  parameterType="map">
 DELETE  from product
-where proposer_id='yd@yd' and product_code=#{productCode}
+where proposer_id=#{proposerId}  and product_code=#{productCode}
 </delete> 
 
-<select id="mySelect" resultMap="orderSelectMap"> 
+<select id="mySelect" resultMap="orderSelectMap" parameterType="String"> 
 select product_code, proposer_id, product_name, product_img, product_price, deadline_date, depart_nation, arrival_nation, trade_state
  from product
-where proposer_id='yd@yd'
+where proposer_id=#{_parameter} and deadline_date &gt; sysdate
 </select>
 
 <update id="myUpdate" parameterType="productDTO">
 update product set 
 product_name=#{productName}, product_img=#{productImg}, product_url=#{productUrl}, product_qty=#{productQty}, product_price=#{productPrice}, 
 requirement=#{requirement}, product_desc=#{productDesc}, deadline_date=#{deadlineDate}, depart_nation=#{departNation}, arrival_nation=#{arrivalNation}
-where product_code=#{productCode}
+where product_code=#{productCode} 
 </update>
 
-<select id="myDetail" parameterType="map" resultMap="orderSelectMap">
+<select id="myDetail" parameterType="String" resultMap="orderSelectMap">
 select product_code, proposer_id, product_name, product_img, product_qty, product_price, product_desc, deadline_date,depart_nation, arrival_nation
 from product
-where proposer_id='yd@yd' and product_code=#{productCode}
+where product_code=#{_parameter}
+</select>
+
+<select id="myDeadline" resultMap="orderSelectMap" parameterType="String">
+select product_code, proposer_id, product_name, product_img, product_price, deadline_date, depart_nation, arrival_nation, trade_state
+ from product
+where proposer_id=#{_parameter} and deadline_date &lt; sysdate
 </select>
 
 

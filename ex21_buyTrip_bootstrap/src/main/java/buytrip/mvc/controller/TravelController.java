@@ -22,13 +22,19 @@ public class TravelController {
    /**
     * addTrip 폼에 정보 기입하여 여행일정 즐겨찾기 추가하기 (알림기능:메세지,여행지의새상품)
     */
-   @RequestMapping(value="/insert",produces="application/json;charset=UTF-8")
+ /*  @RequestMapping(value="/insert",produces="application/json;charset=UTF-8")
    @ResponseBody
    public int insertTravel(TravelDTO travelDTO) {
-      
+	   
       return travelService.insert(travelDTO);
-   }
+   }*/
    
+   @RequestMapping("insert")
+   
+   public String insertTravel(TravelDTO travelDTO) {
+	   travelService.insert(travelDTO);
+      return "travel/addTrip";
+ }
    /**
     * [mypage] 등록한 여행일정 삭제하기
     */
@@ -40,6 +46,8 @@ public class TravelController {
       return travelService.delete(travelNo);
       
    }
+   
+  
    
    
    /**

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import buytrip.mvc.model.deal.dao.DealDAO;
-import buytrip.mvc.model.deal.dto.OfferDTO;
+import buytrip.mvc.model.dto.OfferDTO;
 
 @Service
 public class DealServiceImpl implements DealService {

@@ -4,7 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import buytrip.mvc.model.deal.dto.OfferDTO;
+import buytrip.mvc.model.dto.OfferDTO;
 
 @Repository
 public class DealDAOImpl implements DealDAO {

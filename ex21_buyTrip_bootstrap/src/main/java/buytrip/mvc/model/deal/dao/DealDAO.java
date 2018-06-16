@@ -1,6 +1,6 @@
 package buytrip.mvc.model.deal.dao;
 
-import buytrip.mvc.model.deal.dto.OfferDTO;
+import buytrip.mvc.model.dto.OfferDTO;
 
 public interface DealDAO {
 	

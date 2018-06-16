@@ -301,7 +301,7 @@ scale
 							<div class="tab-pane active">
 								<img src="${pageContext.request.contextPath}/resources/images/sun.jpg" />
 							</div>
-							<h3 class="product-title">${productDTO.productName}</h3>
+							<h3 class="product-title">${ productDTO.productName}</h3>
 							<p class="product-description">${productDTO.productDesc}</p>
 							<div class="well" style="font-size: 15px">
 								<a href="${productDTO.productUrl}" class="link">
