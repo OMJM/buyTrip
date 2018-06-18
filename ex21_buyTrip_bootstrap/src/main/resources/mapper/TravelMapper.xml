@@ -14,6 +14,26 @@
 		<result column="member_img" property="memberImg"/>
 	</resultMap>
 	
+	<resultMap type="offerJoinProductDTO" id="offerListMap">
+		<id column="offer_code" property="offerCode"/>
+		<association property="productDTO" javaType="ProductDTO">
+			<id column="product_code" property="productCode"/>
+			<result column="proposer_id" property="proposerId"/>
+			<result column="product_img" property="productImg"/>
+			<result column="requested_date" property="requestedDate"/>
+			<result column="product_url" property="productUrl"/>
+			<result column="product_qty" property="productQty"/>
+			<result column="requirement" property="requirement"/>
+			<result column="product_desc" property="productDesc"/>
+			<result column="trade_state" property="tradeState"/>
+			<result column="deadline_date" property="deadlineDate"/>
+			<result column="product_name" property="productName"/>
+			<result column="arrival_nation" property="arrivalNation"/>
+			<result column="depart_nation" property="departNation"/>
+			<result column="product_price" property="productPrice"/>
+		</association>
+	</resultMap>
+	
 
 	<insert id="insertTravel" parameterType="travelDTO" >
 		insert into travel(travel_no, member_id, depart_nation, arrival_nation, arrival_date, notification) 
@@ -50,4 +70,41 @@
 		insert into offer(offer_code,proposer_id,offer_id,product_code,offer_date)
 		values(#{offerCode},#{proposerId},#{offerId},#{productCode},sysdate)
 	</insert>
+	
+	<!-- update product state -->
+	<update id="updateProductState" parameterType="offerDTO">
+		update product 
+		set trade_state='in deal'
+		where product_code=#{productCode}
+	</update>
+	
+	<!-- 마이페이지에서 배달 신청 목록 읽어오기 -->
+	<select id="readDeals" parameterType="string" resultMap="offerListMap">
+		select offer.offer_code as offer_code, deadline_date, product_name, arrival_nation, depart_nation, product_price, offer.product_code
+		from offer join product
+		on offer.product_code=product.product_code and offer_id=#{_parameter}
+		order by offer_date desc
+	</select>
+	
+	<!-- DB에서 배달 신청 기록 삭제하기 -->
+	<delete id="deleteDeal" parameterType="string">
+		delete from offer
+		where offer_code=#{_parameter}
+	</delete>
+	
+	<!-- 해당 product 배달을 신청한 사람 수 뽑아내기 -->
+	<select id="countDeal" parameterType="string" resultType="string">
+		select offer_id
+		from offer
+		where product_code=
+			(select product_code from offer where offer_code=#{_parameter})
+	</select>
+	
+	<!-- 해당 product를 no offer 상태로 업데이트하기 -->
+	<update id="updateProductStateToNoOffer" parameterType="string">
+		update product 
+		set trade_state='no offer'
+		where product_code=
+			(select product_code from offer where offer_code=#{_parameter})
+	</update>
 </mapper>

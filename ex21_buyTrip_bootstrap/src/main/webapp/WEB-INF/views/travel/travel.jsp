@@ -242,9 +242,10 @@ $(function(){
 										</div>
 										<div class="col-sm-5" align="right">
 											<input type="hidden" name="offerCode" value="a01"/>
-											<input type="hidden" name="proposerId" value="yd@yd"/>
-											<input type="hidden" name="offerId" value="jy@jy"/>
-											<input type="hidden" name="productCode" value="p0000000001"/>
+											<input type="hidden" name="proposerId" value="ydf@buytrip"/>
+											<input type="hidden" name="offerId" value="jurywnsdud@gmail.com"/>
+											<input type="hidden" name="productCode" value="p0000000021"/>
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 											<button type="submit" class="btn btn-info">제안하기</button>
 										</div>
 									</div>

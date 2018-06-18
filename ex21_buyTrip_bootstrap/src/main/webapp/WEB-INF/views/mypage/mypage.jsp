@@ -176,6 +176,9 @@ body {
 								<li><a href="${pageContext.request.contextPath}/order/readOrders" > <i
 										class="glyphicon glyphicon-ok"></i> 주문 관리
 								</a></li>
+								<li><a href="${pageContext.request.contextPath}/deal/readDeals" > <i
+										class="glyphicon glyphicon-ok"></i> 배달 관리
+								</a></li>
 								<li><a href="${pageContext.request.contextPath}/mypage/chatList"> <i class="glyphicon glyphicon-flag"></i>
 										메세지
 								</a></li>
