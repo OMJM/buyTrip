@@ -26,7 +26,7 @@ public class OrderDAOImpl implements OrderDAO {
 	public List<ProductDTO> readOrder(String proposerId) {
 		
 		List<ProductDTO>list= session.selectList("orderMapper.mySelect", proposerId);
-		
+		System.out.println(proposerId);
 		return list;
 				
 		
@@ -40,18 +40,16 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Override
 	public int updateOrder( ProductDTO productDTO) {
-		
-		
+
 		return session.update("orderMapper.myUpdate", productDTO);
+
 	}
-		
 
 	@Override
 	public int deleteOrder(String proposerId, String productCode) {
-		Map<String, String> map =new HashMap<>();
+		Map<String, String> map =new HashMap();
 		map.put("proposerId", proposerId);
 		map.put("productCode", productCode);
-		
 		return session.delete("orderMapper.delete", map);
 	}
 

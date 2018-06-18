@@ -37,7 +37,7 @@
 	
  <!-- 삭제 --> 
  <delete id="delete" parameterType="userDTO">
-  delete from member 
+  delete from member
   where member_id=#{memberId} and member_password=#{memberPassword}
  </delete>
  	

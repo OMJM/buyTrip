@@ -2,6 +2,7 @@ package buytrip.mvc.model.travel.service;
 
 import java.util.List;
 
+import buytrip.mvc.model.dto.ProductDTO;
 import buytrip.mvc.model.dto.TravelDTO;
 
 public interface TravelService {
@@ -33,5 +34,17 @@ public interface TravelService {
 	 */
 	List<String> suggest(String word);
 
+	/**
+	 * [mypage] 여행관리 기간만료탭
+	 */
+	List<TravelDTO> finishAll();
+	
+	/**
+	 * mypage 저장한 여행지 상품 list
+	 * @return
+	 */
+	public List<ProductDTO> searchList(String nation);
+	
+	
 
 }

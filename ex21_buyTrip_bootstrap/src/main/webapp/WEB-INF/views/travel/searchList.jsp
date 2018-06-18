@@ -51,7 +51,7 @@ body {
 	<div class="row">
         <div class="span12">
             <form method="#" action="/" class="form-inline" >
-               <label for="" style="width: 10%;">출발지</label> <input type="text" class="form-control" placeholder="출발나라" size="30">
+               <label for="" style="width: 10%;">출발지</label> <input type="text" class="form-control" placeholder="${requestScope.departNation}" size="30">
                <i class="fa fa-refresh" style="width: 10%;"></i>
                 <label for="" style="width: 10%;">도착지</label> <input type="text" class="form-control"placeholder="한국"  size="30">
                 <button type="submit" class="btn btn-primary" value="검색하기">검색하기</button>
@@ -71,45 +71,72 @@ body {
 		<div class="row" align="center">
 			<div class="col-md-10">
 			
-			<!-- 리스트 아이템 -->
-				<div class="well well-sm"  onclick="location.href='${pageContext.request.contextPath}/detail'">
-					<div class="row">
-						<div class="col-sm-1" style="margin-bottom: 15px;">
-							<img src="${pageContext.request.contextPath}/resources/images/159.jpg" class="avatar img-circle" alt="avatar"
-								style="width: 50px; height: auto;">
-						</div>
-						<div class="col-sm-5">
-							username<br>요청날짜 : 2018-06-01
-						</div>
-						<div class="col-sm-6" align="right">
-						<h5>마감날자 : 2018-07-02</h5>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-3 col-md-3 text-center">
-							<img
-								src="${pageContext.request.contextPath}/resources/images/159.jpg"
-								alt="bootsnipp" class="img-rounded img-responsive"
-								style=" width:189px; height:auto;" />
-						</div>
-						<div class="col-xs-9 col-md-9 section-box"
-							style="align-self: center;" >
-							<h2>
-								제품 제목 <a href="http://bootsnipp.com/" target="_blank"><span
-									class="glyphicon glyphicon-new-window"> </span></a>
-							</h2>
-							<div class="well well-sm">
-							<div class="col-sm-6" style="font-size: 15px;"><small>출발지 </small> 토쿄</div>
-							  <small>도착지 : </small>서울<br>
+			<c:choose>
+					<c:when test="${empty requestScope.searchProductList}">
+						<tr>
+							<td colspan="5">
+								<p align="center">
+									<b><span style="font-size: 9pt;">등록된 상품이 없습니다.</span></b>
+								</p>
+							</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${requestScope.searchProductList}" var="productDTO">
+							<!-- 주문 list -->
+							<div class="col-sm-12">
+								<div class="well well-sm"
+									onclick="location.href='${pageContext.request.contextPath}/travel/detail?productCode=${productDTO.productCode}'"
+									style="background-color: white; padding: 10px; margin: 20px">
+									<div class="row">
+										<div class="col-sm-2" style="margin-bottom: 15px;">
+											<img
+												src="${productDTO.memberImg}"
+												class="avatar img-circle" alt="avatar"
+												style="width: 50px; height: auto;">
+										</div>
+										<div class="col-sm-4">
+											<span>${productDTO.proposerId}</span></br> <span>요청날짜 :${productDTO.requestedDate}</span>
+										</div>
+										<div class="col-sm-6" align="right">
+											<h5>마감날짜 : ${productDTO.deadlineDate}</h5>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xs-3 col-md-3 text-center">
+											<img
+												src="${productDTO.productImg}"
+												alt="bootsnipp" class="img-rounded img-responsive"
+												style="width: 189px; height: auto;" />
+										</div>
+										<div class="col-xs-9 col-md-9 section-box"
+											style="align-self: center;">
+											<h2>
+												${productDTO.productName} <a href="http://bootsnipp.com/" target="_blank"><span
+													class="glyphicon glyphicon-new-window"> </span></a>
+											</h2>
+											<div class="well well-sm">
+												<div class="col-sm-6" style="font-size: 15px;">
+													<small>출발지 : </small> ${productDTO.arrivalNation}
+												</div>
+												<small>도착지 : </small>${productDTO.departNation}<br>
+											</div>
+											<div class="row">
+												<div class="col-sm-7" style="font-size: 20px;">
+													금 액 : ${productDTO.productPrice} <small>원</small>
+												</div>
+												<div class="col-sm-5" align="right">
+													<button type="button" class="btn btn-info">제안하기</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
-							<div class="row">
-							<div class="col-sm-5" style="font-size: 20px;">금 액 : 25000<small>원</small></div>
-							<div class="col-sm-7" align="right"><button type="button" class="btn btn-info">제안하기</button></div>	
-							</div>						
-							
-						</div>
-					</div>
-				</div>
+							<!-- / 주문 list -->
+								</c:forEach>
+													</c:otherwise>
+												</c:choose>
 				
 				
 			</div>

@@ -1,10 +1,16 @@
 package buytrip.mvc.model.deal.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import buytrip.mvc.model.dto.OfferDTO;
+
+import buytrip.mvc.model.dto.OfferJoinProductDTO;
+
 
 @Repository
 public class DealDAOImpl implements DealDAO {
@@ -14,14 +20,12 @@ public class DealDAOImpl implements DealDAO {
 	
 	@Override
 	public int offerDeal(OfferDTO offer) {
-		
 		return session.insert("offerDeal", offer);
 	}
 
 	@Override
-	public int deleteDeal() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteDeal(String offerCode) {
+		return session.delete("deleteDeal", offerCode);
 	}
 
 	@Override
@@ -52,6 +56,27 @@ public class DealDAOImpl implements DealDAO {
 	public void readNotifications() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<OfferJoinProductDTO> readDeals(String offerId) {
+		return session.selectList("readDeals", offerId);
+	}
+
+	@Override
+	public int updateProductStateToInDeal(OfferDTO offer) {
+		return session.update("updateProductState", offer);
+	}
+
+	@Override
+	public int countDeal(String offerCode) {
+		List<String> list = new ArrayList<String>();
+		return session.selectList("countDeal", offerCode).size();
+	}
+
+	@Override
+	public int updateProductStateToNoOffer(String offerCode) {
+		return session.update("updateProductStateToNoOffer", offerCode);
 	}
 
 }

@@ -36,7 +36,7 @@
             <div class="form-group">
                 <input type="submit" class="btn btn-default btn-login-submit btn-block m-t-md" value="로그인" />
             </div>
-            <span class='text-center'><a href="/resetting/request" class="text-sm">비밀번호를 잃어버렸나요?</a></span><p>
+            <span class='text-center'><a href="${pageContext.request.contextPath}/user/updatePassword" class="text-sm">비밀번호를 잃어버렸나요?</a></span><p>
             <div  style="margin-top: 30px;"/>
             <div class="form-group">
                 <p class="text-center m-t-xs text-sm">아직 계정이 없나요?</p> 
