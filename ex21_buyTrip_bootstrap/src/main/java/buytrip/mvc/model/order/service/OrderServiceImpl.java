@@ -43,28 +43,26 @@ public class OrderServiceImpl implements OrderService {
 		return orderDAO.deleteOrder(proposerId, productCode);
 	}
 
-	@Override
-	public void completeOrder() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
-	public void readCompletedOrder() {
-		// TODO Auto-generated method stub
+	public List<ProductDTO> completeOrder(String proposerId, String tradeState) {
 
+		return null;
 	}
 
+	
+	public List<ProductDTO> letedOrder(String proposerId) {
+		
+		return orderDAO.letedOrder(proposerId);
+	}
 	@Override
 	public List<ProductDTO> searchTripOrders(String arrivalNation) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void readUserOrder() {
-		// TODO Auto-generated method stub
-
+	public ProductDTO readUserOrder() {
+		return null;
 	}
 
 }

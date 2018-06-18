@@ -12,6 +12,22 @@
 		<result column="notification" property="notification"/>
 		<result column="nation_name" property="nationName"/>
 		<result column="member_img" property="memberImg"/>
+		<result column="countProduct" property="countProduct"/>
+	</resultMap>
+	
+	<resultMap type="productDTO" id="prductMap">
+		<id column="product_code" property="productCode"/>
+		<result column="member_id" property="proposerId"/>
+		<result column="product_name" property="productName"/>
+		<result column="product_img" property="productImg"/>
+		<result column="product_url" property="productUrl"/>
+		<result column="product_qty" property="productQty"/>
+		<result column="product_price" property="productPrice"/>
+		<result column="requested_date" property="requestedDate"/>
+		<result column="deadline_date" property="deadlineDate"/>
+		<result column="depart_nation" property="departNation"/>
+		<result column="arrival_nation" property="arrivalNation"/>
+		<result column="member_img" property="memberImg"/>
 	</resultMap>
 	
 	<resultMap type="offerJoinProductDTO" id="offerListMap">
@@ -40,13 +56,38 @@
 		values('t'||lpad(travel_seq.nextval,4,'0'), #{memberId},#{departNation},#{arrivalNation},#{arrivalDate},#{notification})
 	</insert>
 	
-	<select id="selectTravel" parameterType="string" resultMap="travelMap">
-		select travel_no, member_id, member_img, depart_nation, arrival_nation, arrival_date, notification
-		from member_travel
-		where arrival_date &gt; sysdate
-		order by input_date desc
+	<!-- mypage내에 있는 즐겨찾기 여행목록 -->
+	<select id="selectTravel" parameterType="String" resultMap="travelMap">
+		select travel.member_id, travel.depart_nation, travel.arrival_nation,travel.arrival_date, p.countProduct 
+		from travel,(select arrival_nation, count(*) countProduct
+		from product
+		where deadline_Date &gt; sysdate
+		group by arrival_nation) p
+		where travel.arrival_nation=p.arrival_nation
+		and travel.arrival_date &gt; sysdate
 	</select>
 	
+	
+	<!-- mypage 여행목록 기간만료 여행목록 -->
+	<select id="selectFinishTravel" parameterType="String" resultMap="travelMap">
+		select travel.member_id, travel.depart_nation, travel.arrival_nation,travel.arrival_date, p.countProduct
+		from travel,(select arrival_nation, count(*) countProduct
+		from product
+		where deadline_Date &lt; sysdate
+		group by arrival_nation) p
+		where travel.arrival_nation=p.arrival_nation
+		and travel.arrival_date &lt; sysdate
+	</select>
+	
+	<!-- 여행지 검색 후 상품 List 목록 -->
+	<select id="search" parameterType="string" resultMap="prductMap">
+		select p.product_code, p.product_name,p.product_img,p.product_url,p.product_qty,p.product_price,p.deadline_date,p.requested_date,p.depart_nation,p.arrival_nation,m.member_img
+		from product p join member m
+		on p.proposer_id = m.member_id
+		where arrival_nation=#{_parameter}
+	</select>
+	
+
 	
 	<select id="selectTravelPast" parameterType="string" resultMap="travelMap">
 		select travel_no, member_id, member_img, depart_nation, arrival_nation, arrival_date, notification

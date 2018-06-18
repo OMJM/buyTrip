@@ -63,8 +63,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int withdraw(String memberId, String memberPassword) {
 		UserDTO userDTO = userDAO.selectUserById(memberId);
-		if(userDTO.getmemberPassword().equals(memberPassword)){
-			int re =  userDAO.withdraw(memberId, memberPassword);
+		boolean b = passwordEncoder.matches(memberPassword, userDTO.getmemberPassword());
+		if(passwordEncoder.matches(memberPassword, userDTO.getmemberPassword())){
+			int re =  userDAO.withdraw(memberId, userDTO.getmemberPassword());
+			System.out.println("re : "+ re);
 			if(re==0)throw new RuntimeException("삭제되지 않았습니다.");
 		}else{
 			throw new  RuntimeException ("비밀번호 오류이므로 삭제안됩니다.");

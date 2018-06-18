@@ -82,10 +82,11 @@ $(function(){
 				<br>직구자가 당신의 여행지에서 상품을 기다리고 있습니다.<br> <br>여행지를 검색해보고
 				판매자가 되어보세요.<br>
 			</h5>
-			<form class="form-inline" action="travel/searchList">
+			<form class="form-inline" action="${pageContext.request.contextPath}/travel/searchProductList">
 				<div class="form-group">
 					<label for="">출발지</label> <input type="text" class="form-control"
-						placeholder="출발나라" size="17">
+						name="departNation" id="departNation" placeholder="출발나라" size="17">
+						<div id="suggest"></div>
 				</div>
 				<div class="form-group">
 					<label for="">도착지</label> <input type="text" class="form-control"
@@ -101,82 +102,82 @@ $(function(){
 		</div>
 	</div>
 
-		<div class="row" style="background-color: #f6f6f6;margin-top: 50px; text-align: center; height:auto">
-			<div class="container" style="margin: 25px;">
-				<h1>여행지를 등록해보세요</h1>
-				<h5>
-					<br>
-					<p>여러분의 여행할 장소들을 등록해보세요
-				</h5>
-				<button type="button" class="btn btn-info" style="width:20%;"
-					onclick="location.href='${pageContext.request.contextPath}/travel/addTrip'">여행지 등록</button>
-			</div>
+	<div class="row" style="background-color: #f6f6f6;margin-top: 50px; text-align: center; height:auto">
+		<div style="margin: 25px;">
+			<h1>여행지를 등록해보세요</h1>
+			<h5>
+				<br>
+				<p>여러분의 여행할 장소들을 등록해보세요
+			</h5>
+			<button type="button" class="btn btn-info" style="width:20%;"
+				onclick="location.href='${pageContext.request.contextPath}/travel/addTrip'">여행지 등록</button>
 		</div>
+	</div>
 
 
-		<!-- 거래율이 가장 높은 여행지 -->
-	<div class="container">
-		<div class="row">
-			<div style="text-align: center; margin-top: 50px;">
-				<h1>거래율이 가장 높은 여행지, Top 3</h1>
-				<h5>
-					</br><p>당신의 다음 여행지는 어디인가요?</p>
-					<p>거래율이 가장 높은 여행지는 이곳입니다.</p></br>
-				</h5>
-			</div>
+	<!-- 거래율이 가장 높은 여행지 -->
+	<c:if test="${!empty list}">
 			
-			<!-- 여행지 list -->
-			<div class="col-md-4">
+			<div class="container" style="padding: 40px;">
 				<div class="row">
-					<div class="well well-lg" onclick="location.href='${pageContext.request.contextPath}/detail'"
-					style="background-color: white; margin:10px;">
-						<div class="row">
-							<div class="col-sm-1"></div>
-							<div class="col-sm-11"><h2>한국</h2></div>
-						</div>
-						<img alt="" src="${pageContext.request.contextPath}/resources/images/korea.jpg" style="width: 100%;">
-						<div class="row" style="height: 15px;"></div>
-						<div class="row" style="text-align: center;">
-							<div class="col-md-1"></div>
-							<div class="col-md-3">
-								<span>주문수</span>
-							</div>
-							<div class="col-md-3">
-								<span>체택수</span>
-							</div>
-							<div class="col-md-4">
-								<span>거래율</span>
-							</div>
-							<div class="col-md-1"></div>
-						</div>	
-						<div class="row" style="text-align: center;">
-							<div class="col-md-1"></div>
-							<div class="col-md-3">
-								<h3><span>200</span></h3>
-							</div>
-							<div class="col-md-3">
-								<h3><span>100</span></h3>
-							</div>
-							<div class="col-md-4">
-								<h3><span>50%</span></h3>
-							</div>
-							<div class="col-md-1"></div>
-						</div>	
+					<div style="text-align: center; margin-top: 100px; margin-bottom: 50px">
+						<h1>상품등록수가 가장 높은 여행지, Top 3</h1>
+						<h5>
+							<br><br>
+							<p>당신의 다음 여행지는 어디인가요?</p>
+							<br>
+							<p>상품등록수가 가장 높은 여행지는 이곳입니다!</p>
+						</h5>
 					</div>
 				</div>
-			</div>
-			<!-- / 여행지 list -->
-			
-			<div class="col-md-4">
-				<div class="well">
+				
+				<div class="row">	
+					<!-- 여행지 list -->
+					<c:forEach items="${list}" var="highestDealDTO">
+						<div class="col-md-4">
+							<div class="row">
+								<div class="well well-lg" onclick="location.href='${pageContext.request.contextPath}/detail'"
+								style="background-color: white; margin:10px;">
+									<div class="row">
+										<div class="col-sm-1"></div>
+										<div class="col-sm-11" style="margin: 10px;"><h2>${highestDealDTO.arrivalNation}</h2></div>
+									</div>
+									<div class="row">
+										<img alt="" src="${pageContext.request.contextPath}/resources/images/korea.jpg" style="width: 100%;">
+									</div>
+									<div class="row" style="height: 15px;"></div>
+									<div class="row" style="text-align: center;">
+										<div class="col-xs-4">
+											<span>상품등록수</span>
+										</div>
+										<div class="col-xs-4">
+											<span>완료된 거래수</span>
+										</div>
+										<div class="col-xs-4">
+											<span>거래율</span>
+										</div>
+									</div>	
+									<div class="row" style="text-align: center;">
+										<div class="col-xs-4">
+											<h3><span>${highestDealDTO.orderNumber}</span></h3>
+										</div>
+										<div class="col-xs-4">
+											<h3><span>${highestDealDTO.completedDealNumber}</span></h3>
+										</div>
+										<div class="col-xs-4">
+											<h3><span>${highestDealDTO.deal} %</span></h3>
+										</div>
+									</div>
+									<div class="row" style="height: 15px;"></div>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+					<!-- / 여행지 list -->
+						
 				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="well">
-				</div>
-			</div>
-		</div>
-	</div>	
+			</div>			
+	</c:if>	
 	<!-- / 거래율이 가장 높은 여행지 -->
 	
 	<!-- 여백 -->
@@ -197,49 +198,45 @@ $(function(){
 			</div>
 			<div class="row">
 			
-				<!-- 주문 list -->
-				<div class="col-sm-6">
-					<form method="POST" action="${pageContext.request.contextPath}/deal/offerDeal">
-						<div class="well well-sm"
-							onclick="location.href='${pageContext.request.contextPath}/detail'"
-							style="background-color: white; padding:10px; margin: 10px" >
-							<div class="row">
-								<div class="col-sm-2" style="margin-bottom: 15px;">
-									<img
-										src="${pageContext.request.contextPath}/resources/images/159.jpg"
-										class="avatar img-circle" alt="avatar"
-										style="width: 50px; height: auto;">
-								</div>
-								<div class="col-sm-4">
-									<span>username</span></br>
-									<span>요청날짜 : 2018-06-01</span>
-								</div>
-								<div class="col-sm-6" align="right">
-									<h5>마감날짜 : 2018-07-02</h5>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-3 col-md-3 text-center">
-									<img
-										src="${pageContext.request.contextPath}/resources/images/159.jpg"
-										alt="bootsnipp" class="img-rounded img-responsive"
-										style="width: 189px; height: auto;" />
-								</div>
-								<div class="col-xs-9 col-md-9 section-box" style="align-self: center;">
-									<h2>
-										제품 제목 <a href="http://bootsnipp.com/" target="_blank"><span
-											class="glyphicon glyphicon-new-window"> </span></a>
-									</h2>
-									<div class="well well-sm">
-										<div class="col-sm-6" style="font-size: 15px;">
-											<small>출발지 : </small> 토쿄
+				<c:choose>
+					<c:when test="${empty requestScope.recentList}">
+						<tr>
+							<td colspan="5">
+								<p align="center">
+									<b><span style="font-size: 9pt;">등록된 상품이 없습니다.</span></b>
+								</p>
+							</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${requestScope.recentList}" var="productDTO">
+							<!-- 주문 list -->
+							<div class="col-sm-6">
+								<div class="well well-sm"
+									onclick="location.href='${pageContext.request.contextPath}/detail'"
+									style="background-color: white; padding: 10px; margin: 20px">
+									<div class="row">
+										<div class="col-sm-2" style="margin-bottom: 15px;">
+											<img
+												src="${productDTO.memberImg}"
+												class="avatar img-circle" alt="avatar"
+												style="width: 50px; height: auto;">
 										</div>
-										<small>도착지 : </small>서울<br>
+										<div class="col-sm-4">
+											<span>${productDTO.proposerId}</span></br> <span>요청날짜 :${productDTO.requestedDate}</span>
+										</div>
+										<div class="col-sm-6" align="right">
+											<h5>마감날짜 : ${productDTO.deadlineDate}</h5>
+										</div>
 									</div>
 									<div class="row">
-										<div class="col-sm-7" style="font-size: 20px;">
-											금 액 : 25000 <small>원</small>
+										<div class="col-xs-3 col-md-3 text-center">
+											<img
+												src="${productDTO.productImg}"
+												alt="bootsnipp" class="img-rounded img-responsive"
+												style="width: 189px; height: auto;" />
 										</div>
+<<<<<<< HEAD
 										<div class="col-sm-5" align="right">
 											<input type="hidden" name="offerCode" value="a01"/>
 											<input type="hidden" name="proposerId" value="ydf@buytrip"/>
@@ -247,14 +244,37 @@ $(function(){
 											<input type="hidden" name="productCode" value="p0000000021"/>
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 											<button type="submit" class="btn btn-info">제안하기</button>
+=======
+										<div class="col-xs-9 col-md-9 section-box"
+											style="align-self: center;">
+											<h2>
+												${productDTO.productName} <a href="http://bootsnipp.com/" target="_blank"><span
+													class="glyphicon glyphicon-new-window"> </span></a>
+											</h2>
+											<div class="well well-sm">
+												<div class="col-sm-6" style="font-size: 15px;">
+													<small>출발지 : </small> ${productDTO.arrivalNation}
+												</div>
+												<small>도착지 : </small>${productDTO.departNation}<br>
+											</div>
+											<div class="row">
+												<div class="col-sm-7" style="font-size: 20px;">
+													금 액 : ${productDTO.productPrice} <small>원</small>
+												</div>
+												<div class="col-sm-5" align="right">
+													<button type="button" class="btn btn-info">제안하기</button>
+												</div>
+											</div>
+>>>>>>> branch 'master' of https://github.com/OMJM/buyTrip
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</form> 
-				</div>
-				<!-- / 주문 list -->
+							<!-- / 주문 list -->
+								</c:forEach>
+													</c:otherwise>
+												</c:choose>
+				
 				
 			</div>
 		</div>

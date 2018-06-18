@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+<<<<<<< HEAD
 import buytrip.mvc.model.dto.OfferDTO;
 import buytrip.mvc.model.dto.OfferJoinProductDTO;
 import buytrip.mvc.model.dto.ProductDTO;
 import buytrip.mvc.model.dto.UserDTO;
+=======
+>>>>>>> branch 'master' of https://github.com/OMJM/buyTrip
 import buytrip.mvc.model.deal.service.DealService;
+import buytrip.mvc.model.dto.OfferDTO;
 
 @Controller
 @RequestMapping("/deal")

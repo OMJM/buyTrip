@@ -37,7 +37,7 @@
 				<div class="form-group">
 					<label for="">도착날짜</label> <input name='name' value="" type="date" class="form-control date-picker" data-date-format="yyyy-mm-dd"/>
 				</div>
-				<input type="submit" class="btn btn-default btn-block" value="검색하기">
+				<input type="submit" class="btn btn-default btn-block" value="등록하기">
         </form>
           </div>
     </div>

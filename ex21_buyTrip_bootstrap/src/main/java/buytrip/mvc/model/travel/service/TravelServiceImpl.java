@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import buytrip.mvc.model.dto.ProductDTO;
 import buytrip.mvc.model.dto.TravelDTO;
 import buytrip.mvc.model.travel.dao.TravelDAO;
 
@@ -25,17 +26,34 @@ public class TravelServiceImpl implements TravelService {
 	}
 
 	
-
+	/**
+	 * mypage 여행관리 여행계획부분.
+	 */
 	@Override
 	public List<TravelDTO> selectAll() {
-		
 		return travelDAO.selectAll();
+	}
+	
+	/**
+	 * mypage 여행관리 과거여행 부분.
+	 */
+	public List<TravelDTO> finishAll(){
+		return travelDAO.finishAll();
 	}
 
 	@Override
 	public List<TravelDTO> selectPast() {
 		
 		return travelDAO.selectPast();
+	}
+	
+	/**
+	 * mypage 저장한 여행지 상품 list
+	 * @return
+	 */
+	@Override
+	public List<ProductDTO> searchList(String nation){
+		return travelDAO.searchList(nation);
 	}
 
 
@@ -53,7 +71,6 @@ public class TravelServiceImpl implements TravelService {
 		return travelDAO.suggest(word);
 	
 	}
-
 	
 
 }

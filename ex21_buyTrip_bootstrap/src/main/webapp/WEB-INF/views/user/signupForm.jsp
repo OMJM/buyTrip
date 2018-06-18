@@ -23,7 +23,7 @@
                 data : data,
                 success : function (data) {
                     authNum = data;
-                    alert("인증번호 전송완료.");
+                    alert("인증번호 전송완료."+data);
                     
                     chk = checkNum(authNum);
                     

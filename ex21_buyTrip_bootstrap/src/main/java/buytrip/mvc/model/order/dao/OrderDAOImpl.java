@@ -34,40 +34,34 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Override
 	public ProductDTO readOrderDetail(String productCode) {
-		//Map<String, String> map= new HashMap<>();
-		
-		 
 	
 		return session.selectOne("orderMapper.myDetail", productCode);
 	}
 
 	@Override
-	public int updateOrder(ProductDTO productDTO) {
-		int i=session.update("orderMapper.myUpdate", productDTO);
-		System.out.println(productDTO.getProductCode());
-		return i;
+	public int updateOrder( ProductDTO productDTO) {
+		return session.delete("orderMapper.update", productDTO);
 	}
-		
 
 	@Override
 	public int deleteOrder(String proposerId, String productCode) {
-		Map<String, String> map =new HashMap<>();
+		Map<String, String> map =new HashMap();
 		map.put("proposerId", proposerId);
 		map.put("productCode", productCode);
-		
 		return session.delete("orderMapper.delete", map);
 	}
 
 	@Override
-	public void completeOrder() {
-		// TODO Auto-generated method stub
+	public List<ProductDTO> completeOrder(String proposerId, String tradeState) {
 
+		return null;
 	}
 
-	@Override
-	public void readCompletedOrder() {
-		// TODO Auto-generated method stub
-
+	
+	public List<ProductDTO> letedOrder(String proposerId) {
+	
+		
+		return session.selectList("orderMapper.myDeadline", proposerId);
 	}
 
 	@Override
@@ -76,8 +70,9 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public void readUserOrder() {
-		// TODO Auto-generated method stub
+	public ProductDTO readUserOrder() {
+
+		return null;
 
 	}
 

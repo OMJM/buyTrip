@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import buytrip.mvc.model.dto.OfferDTO;
+<<<<<<< HEAD
 import buytrip.mvc.model.dto.OfferJoinProductDTO;
+=======
+>>>>>>> branch 'master' of https://github.com/OMJM/buyTrip
 
 @Service
 public interface DealService {

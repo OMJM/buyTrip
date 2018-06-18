@@ -9,7 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import buytrip.mvc.model.deal.dao.DealDAO;
 import buytrip.mvc.model.dto.OfferDTO;
+<<<<<<< HEAD
 import buytrip.mvc.model.dto.OfferJoinProductDTO;
+=======
+>>>>>>> branch 'master' of https://github.com/OMJM/buyTrip
 
 @Service
 @Transactional(propagation=Propagation.REQUIRED)

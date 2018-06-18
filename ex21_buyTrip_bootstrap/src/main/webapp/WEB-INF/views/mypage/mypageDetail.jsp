@@ -281,6 +281,25 @@ scale
 }
 
 /*# sourceMappingURL=style.css.map */
+
+/* 다중이미지 */
+.product-details .product-images > li {
+  display: inline-block;
+  width: 64px;
+  height: product-dimenstions(64px);
+  overflow: hidden;
+  margin: 5px;
+}
+.product-details .product-images > li.preview {
+  width: 100%;
+  height: auto;
+  margin: 0;
+}
+.product-details .product-images img {
+  display: block;
+  width: 100%;
+}
+/* # 다중이미지 */
 </style>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -299,9 +318,28 @@ scale
 						<!-- detail 상품 큰 사진. -->
 						<div class="preview-pic tab-content">
 							<div class="tab-pane active">
-								<img src="${pageContext.request.contextPath}/resources/images/sun.jpg" />
+								<!-- 다중 이미지 -->
+						    <div class="section section-gray">
+						        <div class="section-content">
+						            <div class="product-details">
+						                <ul class="product-images">
+						                    <li class="preview">
+						                    	<img src="${pageContext.request.contextPath}/resources/proImg/${imgList[0]}" alt="">
+						                    </li>
+																<c:forEach items="${imgList}" var="img">
+						                    <li>
+						                        <a href="javascript:void(0)">
+						                        <img src="${pageContext.request.contextPath}/resources/proImg/${img}" alt=""></a>
+						                    </li>
+						                    </c:forEach>
+						
+						                </ul>
+						            </div>
+						        </div>
+						    </div>
+   							<!-- / 다중 이미지 -->
 							</div>
-							<h3 class="product-title">${productDTO.productName}</h3>
+							<h3 class="product-title">${ productDTO.productName}</h3>
 							<p class="product-description">${productDTO.productDesc}</p>
 							<div class="well" style="font-size: 15px">
 								<a href="${productDTO.productUrl}" class="link">
@@ -430,5 +468,58 @@ scale
 	</div>
 	<!-- //projects -->
 
+<!-- 다중이미지 동작 -->
+<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script >var Chef = {
+    init: function() {
+        this.productImagePreview();
+        this.menuToggle();
+        this.misc();
+    },
+    
+    productImagePreview: function() {
+        $(document).on('click', '.product-images li', function() {
+            if (!$(this).hasClass('preview')) {
+                var src = $(this).find('img').attr('src');
+                $('.product-images .preview img').attr('src', src);
+            }
+        });
+    },
+    
+    menuToggle: function() {
+        $(document).on('click', '#menu .trigger', function() {
+            // Toggle open and close icons
+            $(this).find('img').each(function() {
+                if ($(this).hasClass('hidden')) {
+                    $(this).removeClass('hidden');
+                } else {
+                    $(this).addClass('hidden');
+                }
+            });
+            
+            // Toggle menu links
+            $(this).siblings('.links').stop(true, true).slideToggle(200);
+            
+            // Toggle open class
+            $('#menu').toggleClass('open');
+       });
+    },
+    
+    misc: function() {
+        // Misc stuff
+        
+        for (var i = 1; i <= 3; i++) {if (window.CP.shouldStopExecution(1)){break;}
+            $('.product').parent().eq(0).clone().appendTo('.product-list');
+        }
+window.CP.exitedLoop(1);
+
+    }
+};
+
+$(function() {
+    Chef.init();
+});
+</script>
 </body>
 </html>

@@ -11,8 +11,25 @@
 	<link href="${pageContext.request.contextPath}/resources/css/login.css" rel="stylesheet" id="bootstrap-css" type="text/css" media="all"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- /css -->
-  <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+   <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+	$("#passWord").click(function() {
+// 		alert(1);
+		var data = {"email": $("#email").val()};
+		alert("가입한 메일을 확인해 보세요.");		
+		$.ajax({
+			url : "emailAuthPass",
+            data : data,
+            success : function(data){
+            }
+            
+		})
+	})
+})
+  
+  </script>
 </head>
 <body>
 
@@ -23,14 +40,14 @@
     </div>
     <div class="col-md-4">
 			<div class="login-box well">
-         <form action="">
+         <form action="${pageContext.request.contextPath}/user/updatePassword">
              <legend>비밀번호 찾기</legend>
              <div class="form-group">
                  <label for="username-email">아이디</label>
-                 <input value='' id="username-email" placeholder="E-mail address" type="text" class="form-control" />
+                 <input value='' id="email" name="memberId" placeholder="E-mail address" type="text" class="form-control" />
              </div>                                              
              <div class="form-group">
-                 <input type="submit" class="btn btn-default btn-login-submit btn-block m-t-md" value="비밀번호 찾기" />
+                 <input type="submit" id ="passWord" class="btn btn-default btn-login-submit btn-block m-t-md" value="비밀번호 찾기" />
              </div>
              <div  style="margin-top: 30px;"/>
              <span class='text-center'><a href="${pageContext.request.contextPath}/" class="text-sm">메인으로 돌아가기</a></span><p>
