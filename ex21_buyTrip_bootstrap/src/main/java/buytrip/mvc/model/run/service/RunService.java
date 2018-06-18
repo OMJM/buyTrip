@@ -3,6 +3,7 @@ package buytrip.mvc.model.run.service;
 import java.util.List;
 
 import buytrip.mvc.model.dto.HighestDealDTO;
+import buytrip.mvc.model.dto.ProductDTO;
 
 public interface RunService {
 
@@ -31,5 +32,10 @@ public interface RunService {
 	 * 회원 강퇴시키기
 	 */
 	public void fire();
+	
+	/**
+	 * travel페이지 에서 최신 등록 상품 TOP4
+	 */
+	public List<ProductDTO> recentTop4();
 	
 }

@@ -2,6 +2,7 @@ package buytrip.mvc.model.travel.dao;
 
 import java.util.List;
 
+import buytrip.mvc.model.dto.ProductDTO;
 import buytrip.mvc.model.dto.TravelDTO;
 
 public interface TravelDAO {
@@ -30,6 +31,16 @@ public interface TravelDAO {
 	 * 여행지 검색 기능 단어 자동완성
 	 */
 	List<String> suggest(String word);
+	
+	/**
+	 * [mypage] 여행관리 기간만료탭
+	 */
+	List<TravelDTO> finishAll();
+	
+	/**
+	 * 여행지 넣으면은 상품list 보기
+	 */
+	List<ProductDTO> searchList(String nation);
 
 
 

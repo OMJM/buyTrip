@@ -11,8 +11,19 @@ public class TravelDTO {
 	private String notification;
 	private String nationName;
 	private String memberImg;
+	private String countProduct;
 	
 	
+	
+
+	
+	public String getCountProduct() {
+		return countProduct;
+	}
+
+	public void setCountProduct(String countProduct) {
+		this.countProduct = countProduct;
+	}
 
 	public String getMemberImg() {
 		return memberImg;

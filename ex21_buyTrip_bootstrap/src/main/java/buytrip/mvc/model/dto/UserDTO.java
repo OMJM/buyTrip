@@ -5,18 +5,18 @@ public class UserDTO {
 	private String memberName;
 	private String memberPassword;
 	private String memberImg;
-	
 	private String mobile;
 	public UserDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public UserDTO(String memberId, String memberName, String memberPassword, String mobile) {
+	public UserDTO(String memberId, String memberName, String memberPassword,String memberImg, String mobile) {
 		super();
 		this.memberId = memberId;
 		this.memberName = memberName;
 		this.memberPassword = memberPassword;
 		this.mobile = mobile;
+		this.memberImg=memberImg;
 	}
 	public String getMemberId() {
 		return memberId;

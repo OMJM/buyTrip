@@ -1,12 +1,18 @@
 package buytrip.mvc.model.deal.dao;
 
+import buytrip.mvc.model.dto.OfferDTO;
 
 public interface DealDAO {
 	
 	/**
 	 * 직구자에게 구매 제안하기 (직구자에게 알림, 자동 메세지 발송)
 	 */
-	public void offerDeal();
+	public int offerDeal(OfferDTO offer);
+	
+	/**
+	 * 직구자에게 제안했던 배달 신청 취소하기
+	 */
+	public int deleteDeal();
 	
 	/**
 	 * 메시지 list 보기
