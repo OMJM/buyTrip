@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +41,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
-
+<script>
+	function logout() {
+		document.getElementById("logoutForm").submit();
+	}
+</script>
 </head>
 <body>
 	<!-- 메뉴바. -->
@@ -70,8 +75,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<li><a href="${pageContext.request.contextPath}/mypage/mypage">주문내역</a></li>
 								<li><a href="${pageContext.request.contextPath}/mypage/mypage">배달내역</a></li>
 							</ul></li>
-						<li ><a href="${pageContext.request.contextPath}/user/signupForm			"><small>회원가입</small></a></li>
-						<li><a href="${pageContext.request.contextPath}/user/loginForm"><small>로그인</small></a></li>
+							
+							<sec:authorize access="isAuthenticated()">
+							<sec:authentication property="principal.memberName" var="currentName" />
+							</sec:authorize>
+							<c:choose>
+								<c:when test="${empty currentName}">
+									<li><a href="${pageContext.request.contextPath}/user/signupForm"><small>회원가입</small></a></li>
+							<li><a href="${pageContext.request.contextPath}/user/loginForm"><small>로그인</small></a></li>
+								</c:when>
+								
+								<c:when test="${not empty currentName}">
+									${currentName} 님 환영합니다.
+								    	<a href="javascript:logout();">로그아웃</a>
+								    <form id="logoutForm" action="${pageContext.request.contextPath}/user/logout" method="post" style="display: none">
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+									</form>
+								</c:when>
+							</c:choose>
+							
 					</ul>
 				</div>
 			</div>

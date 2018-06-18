@@ -4,6 +4,8 @@ public class UserDTO {
 	private String memberId;
 	private String memberName;
 	private String memberPassword;
+	private String memberImg;
+	
 	private String mobile;
 	public UserDTO() {
 		super();
@@ -34,7 +36,12 @@ public class UserDTO {
 	public void setmemberPassword(String memberPassword) {
 		this.memberPassword = memberPassword;
 	}
-
+	public String getMemberImg() {
+		return memberImg;
+	}
+	public void setMemberImg(String memberImg) {
+		this.memberImg = memberImg;
+	}
 	public String getMobile() {
 		return mobile;
 	}

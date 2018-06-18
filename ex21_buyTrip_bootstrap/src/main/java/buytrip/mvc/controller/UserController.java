@@ -78,7 +78,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/updateMemberAction")
-	public ModelAndView updateMemberAction(HttpServletRequest request, UserDTO vo) {
+	private ModelAndView updateMemberAction(HttpServletRequest request, UserDTO vo) {
 		System.out.println("1. MemberVO  :: "+vo);
 		//회원정보 수정위해 Spring Security 세션 회원정보를 반환받는다
 		UserDTO pvo=(UserDTO)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -101,19 +101,13 @@ public class UserController {
 	}
 	
 	/**
-	 * 비밀번호 재설정하기
+	 * 비밀번호 인증 재설정하기
 	 */
 	@RequestMapping("/updatePassword")
-	public void updatePassword() {}
-	
-	/**
-	 * 프로필 보기
-	 */
-	@RequestMapping("/profile")
-	public void profile() {
-		//UserDTO user = dao.selectProfile();
-		//return new ModelAndView("", "user" , user);
+	public void updatePassword() {
+		System.out.println("updatePassword");
 	}
+	
 	
 	//특정 회원 검색하기
 	@RequestMapping("user/findMember")
@@ -172,6 +166,33 @@ public class UserController {
 	    return str;
 	}
 	
+	@RequestMapping(value="/emailAuthPass" , produces="text/plain;charset=utf-8")
+	@ResponseBody
+	public String emailAuthPass(HttpServletRequest request) {
+	    ModelAndView mav = new ModelAndView();
+	        
+	    String email = request.getParameter("email");
+	    String authNum = "";
+	       
+	    System.out.println(email);
+	    authNum = randomNum();
+	    //가입승인에 사용될 인증키 난수 발생
+	    
+	    UserDTO userDTO= userService.findMemberById(email);
+	    System.out.println("비밀번호 찾을 사용자 정보"+userDTO);
+	    
+	    String encodePassword=passwordEncoder.encode(authNum);
+	    userDTO.setmemberPassword(encodePassword);
+	    userService.updateMember(userDTO);
+	    
+	    sendEmail(email, authNum);
+	    //이메일전송
+	    String str = authNum;
+	        
+	        
+	    return str;
+	}
+	
 	private String randomNum() {
 	    StringBuffer buffer = new StringBuffer();
 	        
@@ -189,9 +210,26 @@ public class UserController {
 		System.out.println(authNum);
 		
 	    SimpleMailMessage mailMessage = new SimpleMailMessage();
-	    mailMessage.setSubject("회원가입 안내 .[이메일 제목]");
+	    mailMessage.setSubject("[이메일 제목] 회원가입 안내 .");
 	    mailMessage.setFrom("bytrip@gmail.com");
 	    mailMessage.setText("[이메일 내용]회원가입을 환영합니다. 인증번호를 확인해주세요. [ "+authNum+" ]");
+	    mailMessage.setTo(email);
+	    try {
+	        mailSender.send(mailMessage);
+	    } catch (Exception e) {
+	        System.out.println(e);
+	    }
+	}
+	
+	public void sendEmailPass(String email , String authNum ) {
+	    //이메일 발송 메소드
+		
+		System.out.println(authNum);
+		
+	    SimpleMailMessage mailMessage = new SimpleMailMessage();
+	    mailMessage.setSubject("비밀번호 찾기 .[이메일 제목]");
+	    mailMessage.setFrom("bytrip@gmail.com");
+	    mailMessage.setText("[이메일 내용]임시 비민번호를 보내드립니다. 꼭 비밀번호를 바꿔주세요! 다음에는 까먹지 마세요!!. [ "+authNum+" ]");
 	    mailMessage.setTo(email);
 	    try {
 	        mailSender.send(mailMessage);

@@ -216,7 +216,7 @@ body {
 								<div class="form-group">
 									<label class="col-md-3 control-label">비밀      번호:</label>
 									<div class="col-md-8">
-										<input class="form-control" id="password" name="memberPassword"	type="password">
+										<input class="form-control" id="password" name="memberPassword" value="principal.memberPassword" type="password">
 									</div>
 								</div>
 								<div class="form-group">

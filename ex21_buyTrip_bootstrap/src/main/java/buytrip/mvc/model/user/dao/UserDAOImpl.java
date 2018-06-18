@@ -64,7 +64,7 @@ public class UserDAOImpl implements UserDAO {
 		Map<String, String> map = new HashMap<>();
 		map.put("memberId", memberId);
 		map.put("memberPassword", memberPassword);
-		return session.delete("userMapper.delete");
+		return session.delete("userMapper.delete", map);
 	}
 
 }
