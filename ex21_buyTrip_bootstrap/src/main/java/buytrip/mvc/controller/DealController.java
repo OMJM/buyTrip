@@ -5,19 +5,37 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import buytrip.mvc.model.deal.service.DealService;
+import buytrip.mvc.model.dto.OfferDTO;
 
 @Controller
 @RequestMapping("/deal")
 public class DealController {
 
-	//@Autowired
-	//private DealService dealService;
+	@Autowired
+	private DealService dealService;
 	
 	/**
 	 * 직구자에게 구매 제안하기 (직구자에게 알림, 자동 메세지 발송)
 	 */
+	/*
 	@RequestMapping("/offerDeal")
-	public void offerDeal() {}
+	public String offerDeal(OfferDTO offer) {
+		dealService.offerDeal(offer);
+		return "";
+	}
+	*/
+	@RequestMapping("/offerDeal")
+	public String offerDeal(OfferDTO offer) {
+		System.out.println(offer.getOfferCode());
+		dealService.offerDeal(offer);
+		return "";
+	}
+	
+	/**
+	 * 직구자에게 제안한 배달 신청 취소하기
+	 */
+	@RequestMapping("/deleteDeal")
+	public void deleteDeal() {}
 	
 	/**
 	 * 메시지 list 보기

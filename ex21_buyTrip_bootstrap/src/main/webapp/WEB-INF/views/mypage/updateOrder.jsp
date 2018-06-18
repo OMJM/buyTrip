@@ -90,26 +90,27 @@ input, textarea{
 			</div>
 			<div class="row">	
 				<!-- 상품수정 폼 -->
-				<form action="#" method="post">
+				<form action="${pageContext.request.contextPath}/order/updateOrder?proposerId=${productDTO.proposerId}&productCode=${productDTO.productCode}" method="post">
 					<div class="col-sm-6 contact-left">
 						<p>상품 이미지 (적어도 한장이상)</p>
-						<input type="file" name="" required="required">
+						<input type="file" name="productImg" value="${requestScope.productDTO.productImg}">
 						<p>상품이름</p>
-						<input type="text" name="" required="required">
+						<input type="text" name="productName" value="${requestScope.productDTO.productName}">
 						<p>상품 상세 설명</p>
-						<textarea name="" required="required"></textarea>
+						<textarea name="productDesc">${requestScope.productDTO.productDesc}</textarea>
 						<p>상품 URL</p>
-						<input type="text" name="" required="required">
+						<input type="text" name="productUrl" value="${requestScope.productDTO.productUrl}">
 						<p>상품가격+커미션</p>
-						<input type="number" name="" required="required">
+						<input type="number" name="productQty" value="${requestScope.productDTO.productQty}">
 						<p>상품 수량</p>
-						<input type="number" name="" required="required">
+						<input type="number" name="productPrice" value="${requestScope.productDTO.productPrice}">
 						<p>출발/도착나라</p>
-						<input type="text" name="" required="required">
-						<input type="text" name="" required="required">
+						<input type="text" name="arrivalNation" value="${requestScope.productDTO.arrivalNation}">
+						<input type="text" name="departNation" value="${requestScope.productDTO.departNation}">
 						<p>희망 날짜</p>
-						<input type="date" name="" required="required">
+						<input type="date" name="deadlineDate" value="${requestScope.productDTO.deadlineDate}">
 						<p>요청사항</p>
+						<textarea name="requirement" >${requestScope.productDTO.requirement}</textarea>
 						<input type="submit" value="수정하기">
 					</div>
 					<div class="clearfix"></div>
