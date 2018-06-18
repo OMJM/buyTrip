@@ -3,11 +3,13 @@ package buytrip.mvc.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import buytrip.mvc.model.dto.TravelDTO;
+import buytrip.mvc.model.dto.UserDTO;
 import buytrip.mvc.model.travel.service.TravelService;
 
 
@@ -30,10 +32,10 @@ public class TravelController {
    }*/
    
    @RequestMapping("insert")
-   
    public String insertTravel(TravelDTO travelDTO) {
+	   
 	   travelService.insert(travelDTO);
-      return "travel/addTrip";
+      return "travel/searchList";
  }
    /**
     * [mypage] 등록한 여행일정 삭제하기

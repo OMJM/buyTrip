@@ -1,6 +1,8 @@
 package buytrip.mvc.model.travel.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,8 @@ public class TravelDAOImpl implements TravelDAO {
 	/**
 	 * 여행자 등록
 	 */
-	@Override
 	public int insert(TravelDTO travelDTO) {
-		
+
 		return sqlSession.insert("TravelMapper.insertTravel", travelDTO);
 	}
 

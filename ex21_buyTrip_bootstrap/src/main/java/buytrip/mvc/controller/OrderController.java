@@ -1,6 +1,10 @@
 package buytrip.mvc.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.Principal;
 import java.util.List;
 
@@ -9,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -107,12 +112,13 @@ public class OrderController {
 	 * [mypage] 등록한 상품 수정하기
 	 */
 	@RequestMapping("/updateOrder")
+	@ResponseBody
 	public ModelAndView updateOrder(ProductDTO productDTO) {
-	
-	
+	orderService.updateOrder(productDTO);
 	ProductDTO proDTO=orderService.readOrderDetail(productDTO.getProductCode());
+	
 		
-		return new ModelAndView("mypage/mypageDetail", "proDTO", proDTO);
+		return new ModelAndView("forward:readOrderDetail", "productCode", proDTO.getProductCode());
 	}
 	
 	/**
@@ -150,6 +156,7 @@ public class OrderController {
 	@RequestMapping("/readUserOrder")
 	public void  readUserOrder() {
 	}
+	  
 	
 	
 }

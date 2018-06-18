@@ -90,27 +90,30 @@ input, textarea{
 			</div>
 			<div class="row">	
 				<!-- 상품수정 폼 -->
-				<form action="${pageContext.request.contextPath}/order/updateOrder?proposerId=${productDTO.proposerId}&productCode=${productDTO.productCode}" method="post">
+				<form action="${pageContext.request.contextPath}/order/updateOrder?${_csrf.parameterName}=${_csrf.token}" method="post">
+			    <%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> --%>
+				<input type="hidden" name="productCode" value="${productDTO.productCode}"/> 
+				
 					<div class="col-sm-6 contact-left">
 						<p>상품 이미지 (적어도 한장이상)</p>
-						<input type="file" name="productImg" value="${requestScope.productDTO.productImg}">
+						<input type="file" name="productImg" value="${productDTO.productImg}">
 						<p>상품이름</p>
-						<input type="text" name="productName" value="${requestScope.productDTO.productName}">
+						<input type="text" name="productName" value="${productDTO.productName}">
 						<p>상품 상세 설명</p>
-						<textarea name="productDesc">${requestScope.productDTO.productDesc}</textarea>
+						<textarea name="productDesc">${productDTO.productDesc}</textarea>
 						<p>상품 URL</p>
-						<input type="text" name="productUrl" value="${requestScope.productDTO.productUrl}">
+						<input type="text" name="productUrl" value="${productDTO.productUrl}">
 						<p>상품가격+커미션</p>
 						<input type="number" name="productQty" value="${requestScope.productDTO.productQty}">
 						<p>상품 수량</p>
 						<input type="number" name="productPrice" value="${requestScope.productDTO.productPrice}">
 						<p>출발/도착나라</p>
-						<input type="text" name="arrivalNation" value="${requestScope.productDTO.arrivalNation}">
-						<input type="text" name="departNation" value="${requestScope.productDTO.departNation}">
+						<input type="text" name="departNation" value="${productDTO.departNation}">
+						<input type="text" name="arrivalNation" value="${productDTO.arrivalNation}">
 						<p>희망 날짜</p>
-						<input type="date" name="deadlineDate" value="${requestScope.productDTO.deadlineDate}">
+						<input type="date" name="deadlineDate" value="${productDTO.deadlineDate}">
 						<p>요청사항</p>
-						<textarea name="requirement" >${requestScope.productDTO.requirement}</textarea>
+						<textarea name="requirement" >${productDTO.requirement}</textarea>
 						<input type="submit" value="수정하기">
 					</div>
 					<div class="clearfix"></div>

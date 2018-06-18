@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="sec"  uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html>
@@ -70,6 +71,11 @@ $(function(){
 
 <body>
 <div style="height: 50px;"></div>
+
+<sec:authorize access="isAuthenticated()">
+<sec:authentication property="principal.memberId" var="memberId" />
+</sec:authorize>
+
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-1"></div>
@@ -109,7 +115,7 @@ $(function(){
 					<p>여러분의 여행할 장소들을 등록해보세요
 				</h5>
 				<button type="button" class="btn btn-info" style="width:20%;"
-					onclick="location.href='${pageContext.request.contextPath}/travel/addTrip'">여행지 등록</button>
+					onclick="location.href='${pageContext.request.contextPath}/travel/addTrip?${_csrf.parameterName}=${_csrf.token}'">여행지 등록</button>
 			</div>
 		</div>
 

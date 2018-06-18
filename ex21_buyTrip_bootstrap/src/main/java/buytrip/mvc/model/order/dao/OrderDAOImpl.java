@@ -39,10 +39,10 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public int updateOrder(ProductDTO productDTO) {
-		int i=session.update("orderMapper.myUpdate", productDTO);
-		System.out.println(productDTO.getProductCode());
-		return i;
+	public int updateOrder( ProductDTO productDTO) {
+		
+		
+		return session.update("orderMapper.myUpdate", productDTO);
 	}
 		
 

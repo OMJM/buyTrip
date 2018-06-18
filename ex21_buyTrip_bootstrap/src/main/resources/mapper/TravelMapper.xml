@@ -16,8 +16,8 @@
 	
 
 	<insert id="insertTravel" parameterType="travelDTO" >
-		insert into travel(travel_no, member_id, depart_nation, arrival_nation, arrival_date, notification) 
-		values('t'||lpad(travel_seq.nextval,4,'0'), #{memberId},#{departNation},#{arrivalNation},#{arrivalDate},#{notification})
+		insert into travel(travel_no, member_id, depart_nation, arrival_nation, arrival_date) 
+		values('t'||lpad(travel_seq.nextval,4,'0'), #{memberId},'한국',#{arrivalNation},#{arrivalDate})
 	</insert>
 	
 	<select id="selectTravel" parameterType="string" resultMap="travelMap">
