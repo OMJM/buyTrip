@@ -8,10 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import buytrip.mvc.model.dto.OfferDTO;
-<<<<<<< HEAD
+
 import buytrip.mvc.model.dto.OfferJoinProductDTO;
-=======
->>>>>>> branch 'master' of https://github.com/OMJM/buyTrip
+
 
 @Repository
 public class DealDAOImpl implements DealDAO {

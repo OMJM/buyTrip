@@ -25,7 +25,15 @@ public class OrderController {
 	private OrderService orderService;
 
 	//등록 상품이미지 저장경로 (임다영 폴더 기준)
-	private String savePath = "C:\\Users\\ldy\\git\\buyTrip\\ex21_buyTrip_bootstrap\\src\\main\\webapp\\resources\\proImg";
+	private String savePath = "C:\\Users\\Administrator\\git\\buyTrip2\\ex21_buyTrip_bootstrap\\src\\main\\webapp\\resources\\proImg";
+	
+	/**
+	 * order main 화면 출력
+	 */
+	@RequestMapping("/order")
+	public String mainview() {
+		return "order/order";
+	}
 	
 	/**
 	 * 상품 등록하기 폼 띄우기

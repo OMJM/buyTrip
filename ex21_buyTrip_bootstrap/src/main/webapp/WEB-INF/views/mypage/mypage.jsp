@@ -168,10 +168,9 @@ body {
 						<!-- SIDEBAR MENU -->
 						
 						<div class="profile-usermenu">
-						<
 
 							<ul class="nav">
-								<li class="active"><a href="${pageContext.request.contextPath}/mypage/mypage"  data-toggle="tab"> <i
+								<li class="active"><a href="${pageContext.request.contextPath}/user/mypage"  data-toggle="tab"> <i
 										class="glyphicon glyphicon-home"></i> 회원 수정
 								</a></li>
 								<li><a href="${pageContext.request.contextPath}/travel/select"> <i class="glyphicon glyphicon-user"></i>
@@ -181,14 +180,11 @@ body {
 								 <i class="glyphicon glyphicon-ok"></i>
 								 		주문 관리
 								</a></li>
-<<<<<<< HEAD
 								<li><a href="${pageContext.request.contextPath}/deal/readDeals" > <i
 										class="glyphicon glyphicon-ok"></i> 배달 관리
 								</a></li>
 								<li><a href="${pageContext.request.contextPath}/mypage/chatList"> <i class="glyphicon glyphicon-flag"></i>
-=======
-								<li><a href="${pageContext.request.contextPath}/mypage/myTravelList"> <i class="glyphicon glyphicon-flag"></i>
->>>>>>> branch 'master' of https://github.com/OMJM/buyTrip
+								<li><a href="${pageContext.request.contextPath}/order/readOrders"> <i class="glyphicon glyphicon-flag"></i>
 										메세지
 								</a></li>
 								<li><a href="${pageContext.request.contextPath}/mypage/detail"> <i class="glyphicon glyphicon-flag"></i>

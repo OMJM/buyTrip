@@ -30,6 +30,20 @@ public class UserController {
 	private JavaMailSender mailSender;
 	
 	/**
+	 * mypage view단 출력
+	 * @return
+	 */
+	@RequestMapping("/mypage")
+	public String mypage() {
+		return "mypage/mypage";
+	}
+	
+	@RequestMapping("index")
+	public String index() {
+		return "user/index";
+	}
+	
+	/**
 	 * 회원가입 폼 띄우기
 	 */
 	@RequestMapping("/signup")
@@ -116,6 +130,8 @@ public class UserController {
 		UserDTO userdto=userService.findMemberById(id);
 		return new ModelAndView("user/findMember_result","userdto",userdto);
 	}
+	
+	
 	
 	/**
 	 * 프로필 수정 폼 띄우기

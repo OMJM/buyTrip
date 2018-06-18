@@ -1,13 +1,12 @@
 package buytrip.mvc.model.deal.dao;
 
-<<<<<<< HEAD
+
 import java.util.List;
 
 import buytrip.mvc.model.dto.OfferDTO;
 import buytrip.mvc.model.dto.OfferJoinProductDTO;
-=======
+
 import buytrip.mvc.model.dto.OfferDTO;
->>>>>>> branch 'master' of https://github.com/OMJM/buyTrip
 
 public interface DealDAO {
 	

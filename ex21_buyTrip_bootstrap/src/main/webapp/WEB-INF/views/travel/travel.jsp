@@ -236,15 +236,6 @@ $(function(){
 												alt="bootsnipp" class="img-rounded img-responsive"
 												style="width: 189px; height: auto;" />
 										</div>
-<<<<<<< HEAD
-										<div class="col-sm-5" align="right">
-											<input type="hidden" name="offerCode" value="a01"/>
-											<input type="hidden" name="proposerId" value="ydf@buytrip"/>
-											<input type="hidden" name="offerId" value="jurywnsdud@gmail.com"/>
-											<input type="hidden" name="productCode" value="p0000000021"/>
-											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-											<button type="submit" class="btn btn-info">제안하기</button>
-=======
 										<div class="col-xs-9 col-md-9 section-box"
 											style="align-self: center;">
 											<h2>
@@ -265,7 +256,6 @@ $(function(){
 													<button type="button" class="btn btn-info">제안하기</button>
 												</div>
 											</div>
->>>>>>> branch 'master' of https://github.com/OMJM/buyTrip
 										</div>
 									</div>
 								</div>
@@ -274,7 +264,6 @@ $(function(){
 								</c:forEach>
 													</c:otherwise>
 												</c:choose>
-				
 				
 			</div>
 		</div>

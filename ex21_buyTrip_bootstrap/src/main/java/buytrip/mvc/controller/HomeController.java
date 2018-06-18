@@ -20,6 +20,7 @@ public class HomeController {
 	@RequestMapping("/{url}/{url}")
 	public void url2() {} //WEB-INF/views/{url}.jsp
 	*/
+	
 	@ExceptionHandler
 	public ModelAndView exceptionHandler(Exception e) {
 		ModelAndView mv = new ModelAndView();
