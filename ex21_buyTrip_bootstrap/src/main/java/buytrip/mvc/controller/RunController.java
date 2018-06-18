@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,11 +39,10 @@ public class RunController {
 	 * [main page] 거래성사율 Top3나라 보여주기(등록수 대비 거래완료수)
 	 */
 	@RequestMapping("/travel/travel")
-	public ModelAndView highestDeal(){
-		List<HighestDealDTO> list = runService.highestDeal();
-		
-		System.out.println("list : "+list);
-		return new ModelAndView("travel/travel", "list", list);
+	public String highestDeal(Model model){
+		model.addAttribute("list", runService.highestDeal());
+		model.addAttribute("recentList", runService.recentTop4());
+		return "travel/travel";
 	}
 	
 	/**

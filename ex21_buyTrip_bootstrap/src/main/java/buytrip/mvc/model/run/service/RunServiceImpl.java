@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import buytrip.mvc.model.dto.HighestDealDTO;
+import buytrip.mvc.model.dto.ProductDTO;
 import buytrip.mvc.model.run.dao.RunDAO;
 
 @Service
@@ -41,6 +42,11 @@ public class RunServiceImpl implements RunService {
 	public void fire() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<ProductDTO> recentTop4() {
+		return runDAO.recentTop4();
 	}
 
 }

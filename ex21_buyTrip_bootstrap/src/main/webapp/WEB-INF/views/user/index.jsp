@@ -23,7 +23,7 @@
 					<li>
 						<div class="top-agileits-banner">
 							<div class="agileits-banner-info">
-								<h3>더 저렴하게 직구하세요-heejung 희정</h3>
+								<h3>더 저렴하게 직구하세요</h3>
 							</div>
 							<div class="agileinfo-social-grids">
 								<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i

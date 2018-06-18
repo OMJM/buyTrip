@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import buytrip.mvc.model.dto.HighestDealDTO;
+import buytrip.mvc.model.dto.ProductDTO;
 
 @Repository
 public class RunDAOImpl implements RunDAO {
@@ -41,6 +42,11 @@ public class RunDAOImpl implements RunDAO {
 	public void fire() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<ProductDTO> recentTop4() {
+			return session.selectList("runMapper.recentTop4");
 	}
 
 }

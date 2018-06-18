@@ -154,6 +154,8 @@ body {
 	min-height: 800px;
 }
 </style>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+
 </head>
 <body style="background-color: #F1F3FA;">
 
@@ -189,7 +191,7 @@ body {
 								<li><a href="travel"> <i
 										class="glyphicon glyphicon-home"></i> 회원 수정
 								</a></li>
-								<li class="active"><a href="travelList"> <i
+								<li class="active"><a href="${pageContext.request.contextPath}/travel/select"> <i
 										class="glyphicon glyphicon-user"></i> 여행 관리
 								</a></li>
 								<li><a href="mypageProductList"> <i
@@ -226,46 +228,79 @@ body {
 						<!-- list상세부분. -->
 						<div class="tab-content">
 						
-						
+						<!-- 여행계획(현재 부분) -->
 							<div class="tab-pane fade in active" id="tabb1">
 								<div class="container">
-									<div class="row">
+								
+												
+												<!-- 여행지 폼 -->
+													
+												<c:choose>
+												<c:when test="${empty requestScope.travelList}">
+													<tr>
+														<td colspan="5">
+															<p align="center">
+																<b><span style="font-size: 9pt;">등록된 상품이 없습니다.</span></b>
+															</p>
+														</td>
+													</tr>
+													</c:when>
+													<c:otherwise>
+													<c:forEach items="${requestScope.travelList}" var="travelDTO">
+														<div class="row">
 										<div class="col-md-8">
 											<div class="panel panel-default  panel--styled">
-												<div class="panel-body">
-												<!-- 여행지 폼 -->
+													<div class="panel-body" onclick="location.href='${pageContext.request.contextPath}/travel/mytravelsearchProduct?arrNation=${travelDTO.arrivalNation}&deNation=${travelDTO.departNation }'">
 													<div class="col-md-12 panelTop">
 														<div class="col-md-4">
 															<img class="img-responsive"
 																src="${pageContext.request.contextPath}/resources/images/159.jpg"
-																alt="" width="150px" height="150px" />
+																alt="" />
 														</div>
 														<div class="col-md-8">
-															<h2>Tokyo,Japan - Seoul,Korea</h2>
-															<p>2018.07.01</p>
+															<h2>${travelDTO.arrivalNation} - ${travelDTO.departNation}</h2>
+															<p>${travelDTO.arrivalDate}</p>
 															<hr>
-															등록 된 상품 개수 : <span style="font-size: 10px;">5</span>
+															등록 된 상품 개수 : <span style="font-size: 10px;">${travelDTO.countProduct}</span>
 														</div>
-													</div>
-													<!-- 여행지폼 완료 -->
-
+														</div>	
 												</div>
-											</div>
+												</div>
 										</div>
 									</div>
+													
+													<!-- 여행지폼 완료 -->
+														</c:forEach>
+													</c:otherwise>
+												</c:choose>
+												
+											
 								</div>
 							</div>
 						
 						
 						
-						<!-- list상세부분. -->
+						<!-- list상세부분.(과거여행) -->
 							<div class="tab-pane fade" id="tabb2">
 								<div class="container">
-									<div class="row">
+									<!-- 여행지 폼 -->
+													
+												<c:choose>
+												<c:when test="${empty requestScope.finishList}">
+													<tr>
+														<td colspan="5">
+															<p align="center">
+																<b><span style="font-size: 9pt;">등록된 상품이 없습니다.</span></b>
+															</p>
+														</td>
+													</tr>
+													</c:when>
+													<c:otherwise>
+													<c:forEach items="${requestScope.finishList}" var="travelDTO">
+														<div class="row">
 										<div class="col-md-8">
 											<div class="panel panel-default  panel--styled">
-												<div class="panel-body">
-												<!-- 여행지 폼 -->
+													<div class="panel-body">
 													<div class="col-md-12 panelTop">
 														<div class="col-md-4">
 															<img class="img-responsive"
@@ -273,21 +308,25 @@ body {
 																alt="" width="150px" height="150px" />
 														</div>
 														<div class="col-md-8">
-															<h2>런던, 영국 - Seoul,Korea</h2>
-															<p>2018.07.01</p>
+															<h2>${finishList.arrivalNation} - ${finishList.departNation}</h2>
+															<p>${finishList.arrivalDate}</p>
 															<hr>
-															등록 된 상품 개수 : <span style="font-size: 10px;">5</span>
+															등록 된 상품 개수 : <span style="font-size: 10px;">${finishList.countProduct}</span>
 														</div>
-													</div>
-													<!-- 여행지폼 완료 -->
-
+														</div>	
 												</div>
-											</div>
+												</div>
 										</div>
 									</div>
+													
+													<!-- 여행지폼 완료 -->
+														</c:forEach>
+													</c:otherwise>
+												</c:choose>
+												
+											
 								</div>
 							</div>
-							
 							
 							
 							

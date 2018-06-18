@@ -67,8 +67,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								data-hover="Short Codes">마이페이지</span> <b class="caret"></b></a>
 							<ul class="dropdown-menu agile_short_dropdown">
 								<li><a href="${pageContext.request.contextPath}/mypage/mypage"> 회원수정</a></li>
-								<li><a href="${pageContext.request.contextPath}/mypage/mypage">주문내역</a></li>
-								<li><a href="${pageContext.request.contextPath}/mypage/mypage">배달내역</a></li>
+								<li><a href="${pageContext.request.contextPath}/mypage/myTravelList">주문내역</a></li>
+								<li><a href="${pageContext.request.contextPath}/mypage/myTravelList">여행즐겨찾기</a></li>
 							</ul></li>
 						<li ><a href="${pageContext.request.contextPath}/user/signupForm			"><small>회원가입</small></a></li>
 						<li><a href="${pageContext.request.contextPath}/user/loginForm"><small>로그인</small></a></li>

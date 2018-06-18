@@ -19,6 +19,10 @@ public class ProductDTO {
 	private String arrivalNation;
 	private String tradeState;
 	
+	private String memberImg;
+	
+	private String userDTO;
+	
 	 private String fname;
 	   private int fsize;
 	
@@ -26,6 +30,20 @@ public class ProductDTO {
 	
 	
 	
+	public String getMemberImg() {
+		return memberImg;
+	}
+	public void setMemberImg(String memberImg) {
+		this.memberImg = memberImg;
+	}
+	
+	
+	public String getUserDTO() {
+		return userDTO;
+	}
+	public void setUserDTO(String userDTO) {
+		this.userDTO = userDTO;
+	}
 	public String getFname() {
 		return fname;
 	}

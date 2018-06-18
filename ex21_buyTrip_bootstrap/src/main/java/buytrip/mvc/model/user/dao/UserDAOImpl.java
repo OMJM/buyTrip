@@ -61,7 +61,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public int withdraw(String memberId, String memberPassword) {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap();
 		map.put("memberId", memberId);
 		map.put("memberPassword", memberPassword);
 		return session.delete("userMapper.delete");
