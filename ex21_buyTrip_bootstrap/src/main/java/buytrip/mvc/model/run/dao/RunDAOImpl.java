@@ -1,6 +1,7 @@
 package buytrip.mvc.model.run.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,11 @@ public class RunDAOImpl implements RunDAO {
 	@Override
 	public List<ProductDTO> recentTop4() {
 			return session.selectList("runMapper.recentTop4");
+	}
+	
+	@Override
+	public int updateExchange(Map<String, String> map) {
+		return session.insert("runMapper.updateExchange", map);
 	}
 
 }
