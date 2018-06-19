@@ -88,8 +88,8 @@ public class DealController {
 	/**
 	 * 알림 별 해당페이지 이동하기
 	 */
-	@RequestMapping("/{?}")
-	public void readNotifications() {}
+	/*@RequestMapping("/{?}")
+	public void readNotifications() {}*/
 	
 	
 }

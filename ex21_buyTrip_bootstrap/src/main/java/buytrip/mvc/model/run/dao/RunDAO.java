@@ -1,6 +1,7 @@
 package buytrip.mvc.model.run.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import buytrip.mvc.model.dto.HighestDealDTO;
 import buytrip.mvc.model.dto.ProductDTO;
@@ -37,4 +38,10 @@ public interface RunDAO {
 	 * travel페이지 최근 등록한 상품 TOP4
 	 */
 	List<ProductDTO> recentTop4();
+	
+	/**
+	 * 환율 디비에 저장하기
+	 */
+	int updateExchange(Map<String,String> map);
+
 }

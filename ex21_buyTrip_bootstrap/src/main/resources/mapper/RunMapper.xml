@@ -42,7 +42,11 @@
 		on p.proposer_id = m.member_id
   where rownum &lt;= 4 
 	</select>
-
+	
+	<!-- 환율 API값 update -->
+<update id="updateExchange" parameterType="map">
+	 update currency set exchange_rate=replace(#{'money'},',','') where nation_currency=#{city}
+	</update>
 
 </mapper>
 
