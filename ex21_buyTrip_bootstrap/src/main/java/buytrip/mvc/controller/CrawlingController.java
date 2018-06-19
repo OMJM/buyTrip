@@ -38,7 +38,7 @@ public class CrawlingController {
 		if(url.contains("ebay")) { //이베이
 			title="#itemTitle"; img="#icImg";
 		}else if(url.contains("alibaba")) { //알리바바
-			title=".as-configuration-maintitle"; img="#J-image-icontent .iwrap a img";
+			title=".ma-title"; img="#J-image-icontent .iwrap a img";
 		}
 		
 		try {
