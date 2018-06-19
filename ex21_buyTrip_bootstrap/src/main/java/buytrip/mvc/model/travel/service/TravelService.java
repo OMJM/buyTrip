@@ -22,7 +22,7 @@ public interface TravelService {
 	/**
 	 * [mypage] 등록한 여행일정 중 전체 list 보기
 	 */
-	List<TravelDTO> selectAll();
+	List<TravelDTO> selectAll(String memberId);
 	
 	/**
 	 * [mypage] 등록한 여행일정 중 기한만료된 list 보기
@@ -37,7 +37,7 @@ public interface TravelService {
 	/**
 	 * [mypage] 여행관리 기간만료탭
 	 */
-	List<TravelDTO> finishAll();
+	List<TravelDTO> finishAll(String memberId);
 	
 	/**
 	 * mypage 저장한 여행지 상품 list

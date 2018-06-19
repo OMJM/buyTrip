@@ -20,7 +20,7 @@ public interface TravelDAO {
 	/**
 	 * [mypage] 등록한 여행일정 중 최근 등록 전체 보기
 	 */
-	List<TravelDTO> selectAll();
+	List<TravelDTO> selectAll(String memberId);
 	
 	/**
 	 * [mypage] 등록한 여행일정 중 기간 만료 보기
@@ -35,7 +35,7 @@ public interface TravelDAO {
 	/**
 	 * [mypage] 여행관리 기간만료탭
 	 */
-	List<TravelDTO> finishAll();
+	List<TravelDTO> finishAll(String memberId);
 	
 	/**
 	 * 여행지 넣으면은 상품list 보기

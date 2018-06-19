@@ -61,10 +61,11 @@
 		select travel.member_id, travel.depart_nation, travel.arrival_nation,travel.arrival_date, p.countProduct 
 		from travel,(select arrival_nation, count(*) countProduct
 		from product
-		where deadline_Date &gt; sysdate
+		where 	deadline_Date &gt; sysdate
 		group by arrival_nation) p
 		where travel.arrival_nation=p.arrival_nation
 		and travel.arrival_date &gt; sysdate
+		and travel.member_id=#{_parameter}
 	</select>
 	
 	
@@ -77,6 +78,7 @@
 		group by arrival_nation) p
 		where travel.arrival_nation=p.arrival_nation
 		and travel.arrival_date &lt; sysdate
+		and travel.member_id=#{_parameter}
 	</select>
 	
 	<!-- 여행지 검색 후 상품 List 목록 -->

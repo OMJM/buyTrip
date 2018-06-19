@@ -31,7 +31,7 @@
 			<div class="login-box well">
         <form action="${pageContext.request.contextPath}/travel/insert" method="post">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-      <input type="hidden" name="memberId" value="${memberId}"/>  
+        <input type="hidden" name="memberId" value="${memberId}"/>  
         <img src="${pageContext.request.contextPath}/resources/images/trip.JPG" class="img-responsive" alt="Cinque Terre" width="130px" height="100px"> 
             <legend>여행 추가 </legend>
             
