@@ -292,7 +292,7 @@ scale
 }
 .product-details .product-images > li.preview {
   width: 100%;
-  height: auto;
+  height: 350px;
   margin: 0;
 }
 .product-details .product-images img {
@@ -309,7 +309,6 @@ scale
 	<!-- projects -->
 	<div class="portfolio">
 		<div class="container">
-			
 	<div class="container" style="padding-left: 150px; padding-right: 150px;">
 		<div class="card">
 			<div class="container-fliud">
@@ -324,12 +323,12 @@ scale
 						            <div class="product-details">
 						                <ul class="product-images">
 						                    <li class="preview">
-						                    	<img src="${pageContext.request.contextPath}/resources/proImg/${imgList[0]}" alt="">
+						                    	<img src="${imgList[0]}" alt="">
 						                    </li>
 																<c:forEach items="${imgList}" var="img">
 						                    <li>
 						                        <a href="javascript:void(0)">
-						                        <img src="${pageContext.request.contextPath}/resources/proImg/${img}" alt=""></a>
+						                        <img src="${img}" alt=""></a>
 						                    </li>
 						                    </c:forEach>
 						
@@ -339,8 +338,8 @@ scale
 						    </div>
    							<!-- / 다중 이미지 -->
 							</div>
-							<h3 class="product-title">${ productDTO.productName}</h3>
-							<p class="product-description">${productDTO.productDesc}</p>
+							<h3 class="product-title">${productDTO.productName}</h3>
+							<p class="product-description">${productDTO.productDesc} / ${productDTO.requirement}</p>
 							<div class="well" style="font-size: 15px">
 								<a href="${productDTO.productUrl}" class="link">
 									url 바로가기

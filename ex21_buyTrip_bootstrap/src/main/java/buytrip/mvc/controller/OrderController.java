@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -26,7 +28,7 @@ public class OrderController {
 	private OrderService orderService;
 
 	//등록 상품이미지 저장경로 (임다영 폴더 기준)
-	private String savePath = "C:\\Users\\Administrator\\git\\buyTrip2\\ex21_buyTrip_bootstrap\\src\\main\\webapp\\resources\\proImg";
+	private String savePath = "C:\\Users\\ldy\\git\\buyTrip\\ex21_buyTrip_bootstrap\\src\\main\\webapp\\resources\\proImg";
 	
 	/**
 	 * order main 화면 출력
@@ -51,11 +53,13 @@ public class OrderController {
 	public String insertOrder(ProductDTO productDTO, MultipartHttpServletRequest mtRequest,
 			Model model, Authentication auth) throws Exception {
 		
+		System.out.println("controller 진입");//test
+		
+		//id값 받기
 		UserDTO userDTO = (UserDTO)auth.getPrincipal();
 		String memberId = userDTO.getMemberId();
-		
-		//test
-		System.out.println("memberId : "+memberId); 
+
+		System.out.println("memberId : "+memberId); //test
 		
 		//productDTO에 로그인된 id 저장
 		productDTO.setProposerId(memberId);
@@ -80,6 +84,17 @@ public class OrderController {
 		}
 		//test
 		System.out.println("dto의 fileName : "+fileName); 
+		
+		//url로 유입된 이미지 유무 확인
+		System.out.println("productDTO.getProductImg()"+productDTO.getProductImg());
+		
+		if(productDTO.getProductImg()!=null) {
+			fileName += productDTO.getProductImg();
+		}
+		
+		//test
+		System.out.println("dto의 url이미지 추가한 fileName : "+fileName); 
+				
 		
 		//productDTO에 1개이상의 파일명 저장
 		productDTO.setProductImg(fileName);
@@ -115,19 +130,26 @@ public class OrderController {
 	 * [mypage] 등록한 상품 상세보기 - 다중 이미지
 	 */
 	@RequestMapping("/readOrderDetail")
-	public String readOrderDetail(String productCode, Model model){
-		
+	public String readOrderDetail(String productCode, Model model, HttpServletRequest request){
+		   String contextPath = request.getContextPath();
 			ProductDTO productDTO = orderService.readOrderDetail(productCode);
 
+			String path = contextPath + "/resources/proImg/";
+			
 			//이미지 뿌려주기
 			String imgName = productDTO.getProductImg();
 			System.out.println("imgName"+imgName);
 			
 			String [] imgArr = imgName.split("\\|");
 			List<String> imgList = new ArrayList();  
-			for(String a : imgArr) {
-				System.out.println(a);
-				imgList.add(a);
+			for(String image : imgArr) {
+				if(image.contains("https://")||image.contains(".com")) {
+					imgList.add(image);
+					System.out.println("url의 image : "+image);//test
+				}else {
+					imgList.add(path+image);
+					System.out.println("첨부한 이미지 : "+image);//test
+				}
 			}
 			
 			//test

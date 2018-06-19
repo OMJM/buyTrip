@@ -54,6 +54,44 @@ input, textarea{
 }
 </style>
 
+<!-- url 입력 시 상품이름,이미지 가져와서 뿌려주기 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){		
+		
+		$("#url").change(function(){
+			alert($(this).val());  //url 정보
+			$(this).val();
+			
+			$.ajax({
+				type:"POST",
+				url:"${pageContext.request.contextPath}/crawling",
+				data:"${_csrf.parameterName}=${_csrf.token}&&url="+$(this).val(),
+				dataType:"json",  //이름, 이미지경로, returnData.
+				success:function(result){
+					alert("상품이름"+result.proName+"이미지"+result.image);
+					$("#proName").val(result.proName);
+/* 					$("#productImg").val(result.image); */
+					$('input[name=productImg]').attr('value',result.image);
+					
+				},
+				error:function(xhr,status,error){
+					alert("실패");
+				}
+				
+				//function
+				
+			}); ///ajax
+					
+			/* $("#memberListView").empty();
+			if($("#address").val()==""){
+				return;
+			}*/
+			
+		});//change - url 입력
+	});//jquery
+</script>
+
 </head>
 <body>
 
@@ -106,19 +144,17 @@ input, textarea{
 			action="${pageContext.request.contextPath}/order/insertOrder?${_csrf.parameterName}=${_csrf.token}">
 			  <%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
 				<div class="col-sm-6 contact-left">
-				  <div align="center">
-					<%-- <img src="${pageContext.request.contextPath}/resources/images/159.jpg" class="img-circle" alt="Cinque Terre"> --%>
-					
-					<p>상품 이미지 (적어도 한장이상)</p>
-					<input multiple="multiple" type="file" name="file" required="required">
-					</div>
-					 상품이름 
-					 <input type="text" name="productName" placeholder="상품 이름을 입력해주세요." required="required">
-					<p>상품 상세 설명</p>
-					<textarea name="productDesc" placeholder="상품 상세설명을 입력해주세요.(예. 크기, 색상 등)"
-						required="required"></textarea>
+				
+					<p>상품 이미지 (적어도 한장이상)
+					<input multiple="multiple" type="file" name="file" required="required"></p>
+					<input type="hidden" name="productImg" value="">
 					<p>상품 URL</p>
-					<input type="text" name="productUrl" placeholder="상품 웹 주소를 입력해주세요. (선택사항)">
+					<input type="text" name="productUrl" id="url" placeholder="상품 웹 주소를 입력해주세요.">
+					<p>상품이름</p>
+					<input type="text" name="productName" id="proName" placeholder="상품 이름을 입력해주세요." required="required">
+					<p>상품 상세 설명</p>
+					<textarea name="productDesc" id="image" placeholder="상품 상세설명을 입력해주세요.(예. 크기, 색상 등)"
+						required="required"></textarea>
 					<p>상품가격+커미션</p>
 					<input type="number" name="productPrice" placeholder="상품+커미션 가격을 입력해주세요."
 						required="required">
@@ -132,7 +168,7 @@ input, textarea{
 					<p>요청사항</p>
 					<textarea name="requirement" placeholder="요청사항을 적어주세요."
 						required="required"></textarea>
-					<input type="submit" value="다음" onclick="fileSubmit();">
+					<input type="submit" value="다음">
 				</div>
 				<div class="clearfix"></div>
 			</form>
