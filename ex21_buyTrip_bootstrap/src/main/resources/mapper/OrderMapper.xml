@@ -51,7 +51,7 @@ where product_code=#{productCode}
 </update>
 
 <select id="myDetail" parameterType="String" resultMap="orderSelectMap">
-select product_code, proposer_id, product_name, product_img, product_qty, product_price, product_desc, deadline_date,depart_nation, arrival_nation
+select product_code, proposer_id, product_name, product_img, product_qty, product_price, product_desc, requested_date, deadline_date,depart_nation, arrival_nation
 from product
 where product_code=#{_parameter}
 </select>

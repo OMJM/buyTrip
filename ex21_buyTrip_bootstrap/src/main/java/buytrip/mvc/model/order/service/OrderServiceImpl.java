@@ -32,9 +32,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public int updateOrder(ProductDTO productDTO) {
-		int i=orderDAO.updateOrder(productDTO);
-		System.out.println(i);
-		return i;
+		
+		
+		return orderDAO.updateOrder(productDTO);
 	}
 
 	@Override

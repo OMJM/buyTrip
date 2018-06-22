@@ -3,12 +3,15 @@ package buytrip.mvc.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import buytrip.mvc.model.dto.TravelDTO;
+import buytrip.mvc.model.dto.UserDTO;
 import buytrip.mvc.model.travel.service.TravelService;
 
 
@@ -23,9 +26,15 @@ public class TravelController {
 	 * [mypage] 등록한 여행일정 중 전체 list and 기간이 지난 list를 보기
 	 */
 	@RequestMapping("select")
-	public String selectAll(Model model){
-		model.addAttribute("travelList", travelService.selectAll());
-		model.addAttribute("finishList", travelService.finishAll());
+	public String selectAll(Model model, Authentication auth){
+			UserDTO userDTO = (UserDTO)auth.getPrincipal();
+			String memberId = userDTO.getMemberId();
+			
+			List<TravelDTO> travelList=travelService.selectAll(memberId);
+			List<TravelDTO> finishList=travelService.finishAll(memberId);
+			System.out.println(memberId);
+		model.addAttribute("travelList", travelList);
+		model.addAttribute("finishList", finishList);
 		return "mypage/myTravelList";
 	}
 	
@@ -70,12 +79,13 @@ public class TravelController {
    /**
     * addTrip 폼에 정보 기입하여 여행일정 즐겨찾기 추가하기 (알림기능:메세지,여행지의새상품)
     */
-     @RequestMapping("insert")
-      public String insertTravel(TravelDTO travelDTO) {
-	   travelService.insert(travelDTO);
-      return "travel/addTrip";
- }
    
+   @RequestMapping("insert")
+   public String insertTravel(TravelDTO travelDTO) {
+	   
+	   travelService.insert(travelDTO);
+      return "forward:select";
+ }
    /**
     * [mypage] 등록한 여행일정 삭제하기
     */
@@ -88,6 +98,7 @@ public class TravelController {
       
    }
    
+ 
    @RequestMapping("suggest")
    @ResponseBody
    public List<String> suggest(String keyWord) {
@@ -97,6 +108,14 @@ public class TravelController {
       return list;
       
    }
+   
+   /**
+	 * order main 화면 출력
+	 */
+	@RequestMapping("/addTrip")
+	public String addTrip() {
+		return "travel/addTrip";
+	}
 
    
 }

@@ -40,7 +40,9 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Override
 	public int updateOrder( ProductDTO productDTO) {
-		return session.delete("orderMapper.update", productDTO);
+
+		return session.update("orderMapper.myUpdate", productDTO);
+
 	}
 
 	@Override

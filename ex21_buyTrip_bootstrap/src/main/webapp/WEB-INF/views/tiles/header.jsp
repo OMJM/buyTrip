@@ -67,13 +67,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							href="${pageContext.request.contextPath}/user/index">Home</a></li>
 						<li><a href="${pageContext.request.contextPath}/order/order">주문하기</a></li>
 						<li><a href="${pageContext.request.contextPath}/travel/travel">배달하기</a></li>
-						<li class="dropdown"><a href="${pageContext.request.contextPath}/mypage/mypage" class="dropdown-toggle"
+						<li class="dropdown"><a href="${pageContext.request.contextPath}/user/mypage" class="dropdown-toggle"
 							data-toggle="dropdown" aria-expanded="false"><span
 								data-hover="Short Codes">마이페이지</span> <b class="caret"></b></a>
 							<ul class="dropdown-menu agile_short_dropdown">
-								<li><a href="${pageContext.request.contextPath}/mypage/mypage"> 회원수정</a></li>
-								<li><a href="${pageContext.request.contextPath}/mypage/mypage">주문내역</a></li>
-								<li><a href="${pageContext.request.contextPath}/mypage/mypage">배달내역</a></li>
+								<li><a href="${pageContext.request.contextPath}/user/mypage"> 회원수정</a></li>
+								<li><a href="${pageContext.request.contextPath}/order/readOrders">주문내역</a></li>
+								<li><a href="${pageContext.request.contextPath}/travel/select">여행 관리</a></li>
+								<li><a href="${pageContext.request.contextPath}/deal/readDeals">배달내역</a></li>
 							</ul></li>
 							
 							<sec:authorize access="isAuthenticated()">

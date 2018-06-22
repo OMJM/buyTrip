@@ -2,6 +2,7 @@ package buytrip.mvc.model.travel.dao;
 
 import java.util.List;
 
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,9 +19,8 @@ public class TravelDAOImpl implements TravelDAO {
 	/**
 	 * 여행자 등록
 	 */
-	@Override
 	public int insert(TravelDTO travelDTO) {
-		
+
 		return sqlSession.insert("TravelMapper.insertTravel", travelDTO);
 	}
 
@@ -30,15 +30,15 @@ public class TravelDAOImpl implements TravelDAO {
 	 * mypage내에 있는 여행등록 리스트 출력.
 	 */
 	@Override
-	public List<TravelDTO> selectAll() {
-		return sqlSession.selectList("TravelMapper.selectTravel");
+	public List<TravelDTO> selectAll(String memberId) {
+		return sqlSession.selectList("TravelMapper.selectTravel",  memberId);
 	}
 	
 	/**
 	 * mypage내에 있는 기간 만료 여행등록 리스트 출력.
 	 */
-	public List<TravelDTO> finishAll(){
-		return sqlSession.selectList("TravelMapper.selectFinishTravel");
+	public List<TravelDTO> finishAll(String memberId){
+		return sqlSession.selectList("TravelMapper.selectFinishTravel",  memberId);
 	}
 	
 

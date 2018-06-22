@@ -156,6 +156,7 @@ body {
 	min-height: 800px;
 }
 </style>
+
 </head>
 <body style="background-color: #F1F3FA;">
 
@@ -282,6 +283,7 @@ body {
 															</div>
 														</div>
 														<!-- 상품 한개 템플릿 끝 -->
+
 							</c:forEach>
 							</c:otherwise>
 							</c:choose>

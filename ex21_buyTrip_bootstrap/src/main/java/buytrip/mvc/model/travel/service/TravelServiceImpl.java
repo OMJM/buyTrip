@@ -30,15 +30,15 @@ public class TravelServiceImpl implements TravelService {
 	 * mypage 咯青包府 咯青拌裙何盒.
 	 */
 	@Override
-	public List<TravelDTO> selectAll() {
-		return travelDAO.selectAll();
+	public List<TravelDTO> selectAll(String memberId) {
+		return travelDAO.selectAll(memberId);
 	}
 	
 	/**
 	 * mypage 咯青包府 苞芭咯青 何盒.
 	 */
-	public List<TravelDTO> finishAll(){
-		return travelDAO.finishAll();
+	public List<TravelDTO> finishAll(String memberId){
+		return travelDAO.finishAll(memberId);
 	}
 
 	@Override
