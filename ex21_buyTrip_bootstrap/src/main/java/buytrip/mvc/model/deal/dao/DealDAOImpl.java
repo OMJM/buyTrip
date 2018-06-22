@@ -60,7 +60,7 @@ public class DealDAOImpl implements DealDAO {
 
 	@Override
 	public List<OfferJoinProductDTO> readDeals(String offerId) {
-		return session.selectList("readDeals", offerId);
+		return session.selectList("readDeals", offerId); 
 	}
 
 	@Override
