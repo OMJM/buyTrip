@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import buytrip.mvc.model.dto.UserDTO;
 import buytrip.mvc.model.user.service.UserService;
 
@@ -91,13 +92,18 @@ public class UserController {
 		return "user/updateForm";
 	}
 	
-	@RequestMapping("/updateMemberAction")
-	private ModelAndView updateMemberAction(HttpServletRequest request, UserDTO vo) {
+	@RequestMapping(value="/updateMemberAction")
+	public ModelAndView updateMemberAction(HttpServletRequest request, UserDTO vo) {
+		String password = request.getParameter("password");
+		UserDTO pvo=(UserDTO)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		boolean b=passwordEncoder.matches(password, pvo.getmemberPassword());
+		if(b) {
 		System.out.println("1. MemberVO  :: "+vo);
 		//회원정보 수정위해 Spring Security 세션 회원정보를 반환받는다
-		UserDTO pvo=(UserDTO)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		
 		System.out.println("2. Spring Security 세션 수정 전 회원정보:" + pvo);
+		
 		//변경할 비밀번호를 암호화한다 
 		String encodePassword=passwordEncoder.encode(vo.getmemberPassword());
 		vo.setmemberPassword(encodePassword);
@@ -110,7 +116,10 @@ public class UserController {
 		pvo.setMobile(vo.getMobile());
 		System.out.println("3. Spring Security 세션 수정 후 회원정보:" + pvo);
 				
-		
+		}
+		else {
+			throw new  RuntimeException ("비밀번호 오류이므로 수정안됩니다.");
+		}
 		return new ModelAndView("user/update_result");
 	}
 	
@@ -119,7 +128,6 @@ public class UserController {
 	 */
 	@RequestMapping("/updatePassword")
 	public void updatePassword() {
-		System.out.println("updatePassword");
 	}
 	
 	
@@ -160,6 +168,24 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	/**
+	 * 회원가입 중복체크
+	 * */
+	@RequestMapping("idcheckAjax")
+	@ResponseBody
+	public String idCheckAjax(HttpServletRequest request) {
+		return userService.idCheck(request.getParameter("memberId"));
+	}
+	
+	/**
+	 * 비밀번호 DB체크
+	 * */
+	@RequestMapping("passCheckAjax")
+	@ResponseBody
+	public String passCheckAjax(HttpServletRequest request) {
+		String pass= request.getParameter("pwd");
+		return userService.passCheck(pass);
+	}
 	
 	
 	
@@ -171,16 +197,18 @@ public class UserController {
 	    String email = request.getParameter("email");
 	    String authNum = "";
 	        
-	    System.out.println(email);
 	    authNum = randomNum();
 	    //가입승인에 사용될 인증키 난수 발생    
 	    sendEmail(email, authNum);
 	    //이메일전송
 	    String str = authNum;
 	        
-	        
-	    return str;
+	    return str;    
 	}
+	
+	
+	
+	
 	
 	@RequestMapping(value="/emailAuthPass" , produces="text/plain;charset=utf-8")
 	@ResponseBody
@@ -190,12 +218,10 @@ public class UserController {
 	    String email = request.getParameter("email");
 	    String authNum = "";
 	       
-	    System.out.println(email);
 	    authNum = randomNum();
 	    //가입승인에 사용될 인증키 난수 발생
 	    
 	    UserDTO userDTO= userService.findMemberById(email);
-	    System.out.println("비밀번호 찾을 사용자 정보"+userDTO);
 	    
 	    String encodePassword=passwordEncoder.encode(authNum);
 	    userDTO.setmemberPassword(encodePassword);

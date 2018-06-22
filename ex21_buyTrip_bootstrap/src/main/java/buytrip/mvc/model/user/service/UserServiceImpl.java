@@ -1,6 +1,7 @@
 package buytrip.mvc.model.user.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +46,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void updateMember(UserDTO userDTO) {
+		//입력한 비밀번호랑 비교해서 업데이트가능하게
 		userDAO.updateMember(userDTO);
 	}
 
@@ -63,15 +65,27 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int withdraw(String memberId, String memberPassword) {
 		UserDTO userDTO = userDAO.selectUserById(memberId);
+		
 		boolean b = passwordEncoder.matches(memberPassword, userDTO.getmemberPassword());
 		if(passwordEncoder.matches(memberPassword, userDTO.getmemberPassword())){
 			int re =  userDAO.withdraw(memberId, userDTO.getmemberPassword());
-			System.out.println("re : "+ re);
 			if(re==0)throw new RuntimeException("삭제되지 않았습니다.");
 		}else{
-			throw new  RuntimeException ("비밀번호 오류이므로 삭제안됩니다.");
+			throw new  RuntimeException ("비밀번호 오류이므로 탈퇴안됩니다.");
 		}
 		return 1;
+	}
+	
+	public String idCheck(String memberId) {
+		int chk=userDAO.idCheck(memberId);
+		return (chk==0) ? "ok":"fail"; 	
+	}
+	
+	public String passCheck(String memberPassword) {
+		
+		
+		int chk=userDAO.passCheck(memberPassword);
+		return (chk==0) ? "ok":"fail";
 	}
 
 }

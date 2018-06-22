@@ -40,5 +40,16 @@
   delete from member
   where member_id=#{memberId} and member_password=#{memberPassword}
  </delete>
+ 
+<!--  	회원가입 아이디 중복체크 -->
+	<select id="idcheck" resultType="int">
+		select count(*) from member where member_id=#{value}
+	</select>
+	
+	<!-- 회원 탈퇴 비밀번호 체크 -->
+	<select id="passCheck" resultType="int">
+		select count(*) from member where member_password=#{value}
+	</select>
+	
  	
 </mapper>
