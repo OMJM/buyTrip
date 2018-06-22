@@ -66,5 +66,14 @@ public class UserDAOImpl implements UserDAO {
 		map.put("memberPassword", memberPassword);
 		return session.delete("userMapper.delete", map);
 	}
+	
+	
+	public int idCheck(String memberId) {
+		 return session.selectOne("userMapper.idcheck",memberId);
+	}
+	
+	public int passCheck(String memberPassword) {
+		return session.selectOne("userMapper.passCheck", memberPassword);
+	}
 
 }

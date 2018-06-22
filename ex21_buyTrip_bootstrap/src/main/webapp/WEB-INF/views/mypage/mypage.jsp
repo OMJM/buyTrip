@@ -9,21 +9,59 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 <SCRIPT language=javascript>
    $(function(){
-	   $("input[value=회원정보수정]").click(function(){
+	       $("input[value=회원정보수정]").click(function(){
+	    	   
+	    	   if($("#requestForm :input[id=password]").val().trim()==""){
+	   			alert("현재비밀번호를 입력하세요");				
+	   			return false;
+	   		}
+	   		if($("#requestForm :input[id=newPassword]").val().trim()==""){
+	   			alert("새로운 비밀번호를 입력하세요");				
+	   			return false;
+	   		}
+	   		if($("#requestForm :input[id=CheckNewPassword]").val().trim()==""){
+	   			alert("비밀번호확인을 입력하세요");				
+	   			return false;
+	   		}
+	   		if(chkPass<0){
+	           	alert("패스워드를 확인하세요");
+	   			return false;
+	   		}
+	   		if($("#requestForm :input[name=memberName]").val().trim()==""){
+	   			alert("이름을 입력하세요");				
+	   			return false;
+	   		}
+	   		if($("#requestForm :input[name=mobile]").val().trim()==""){
+	   			alert("전화번호를 입력하세요");				
+	   			return false;
+	   		}
+	    	   
 		   
 		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/user/updateMemberAction");
 		   $("#requestForm").submit();
 	   })
+	    
 	   
-	   
-	   $("input[value=탈퇴하기]").click(function(){
-		   var pwd = prompt("비밀번호를 입력하세요.");
-		   if(pwd){
-	           $("#password").val(pwd);
-			   $("#requestForm").attr("action", "${pageContext.request.contextPath}/user/withdraw");
-			   $("#requestForm").submit();
-		   }
-	   })
+	    $("input[value=탈퇴하기]").click(function(){
+			   var pwd = prompt("비밀번호를 입력하세요.");
+			   if(pwd){
+		           $("#memberPassword").val(pwd);
+				   $("#requestForm").attr("action", "${pageContext.request.contextPath}/user/withdraw");
+				   $("#requestForm").submit();
+			   }
+		   })
+		   
+		   
+	//비밀번호 확인 일치여부
+	$("#CheckNewPassword").keyup(function() {
+		if($("#newPassword").val()==$("#CheckNewPassword").val()){
+			$("#passCheckView").html("비밀번호 일치!").css("color", "blue");
+			chkPass=1;
+		}else{
+			$("#passCheckView").html("비밀번호 불일치!").css("color", "red");
+			chkPass=-1;
+		}
+	})
    })
 </script>
 <style type="text/css">
@@ -135,6 +173,8 @@ body {
 	min-height: 800px;
 
 </style>
+
+
 </head>
 <body style="background-color: #F1F3FA; ">
 
@@ -216,20 +256,31 @@ body {
 								<div class="form-group">
 									<label class="col-md-3 control-label">사용자  아이디 :</label>
 									<div class="col-md-8">
-										<input name="memberId" class="form-control" value="<sec:authentication property="principal.memberId"/>" type="email" readonly>
+										<input id="memberId" name="memberId" class="form-control" value="<sec:authentication property="principal.memberId"/>" type="email" readonly>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-3 control-label">비밀      번호:</label>
+									<label class="col-md-3 control-label">현재 비밀 번호:</label>
 									<div class="col-md-8">
-										<input class="form-control" id="password" name="memberPassword" value="principal.memberPassword" type="password">
+										<input class="form-control" id="password" name="password" value="" type="password">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">새로운 비밀 번호:</label>
+									<div class="col-md-8">
+										<input class="form-control" id="newPassword" name="memberPassword" value="" type="password">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-3 control-label">비밀 번호 확인:</label>
 									<div class="col-md-8">
-										<input class="form-control" value="11111122333"
-											type="password">
+										<input class="form-control" id="CheckNewPassword" value="" type="password">
+									</div>
+									
+								</div>
+								<div class="form-group">
+									<div class="col-md-8" margin>
+										<div id="passCheckView"></div>
 									</div>
 								</div>
 								<div class="form-group">
@@ -252,13 +303,14 @@ body {
 											type="submit"> <span></span> <span></span><input
 											class="btn btn-default" value="Cancel" type="reset">
 									</div>
+									
 									<div class="col-md-8">
 										<input class="btn btn-primary" value="탈퇴하기"
 											id="withdraw" type="button"> <span></span> <span></span><input
 											class="btn btn-default" value="Cancel" type="reset">
 									</div>
 								</div>
-							</form>
+								</form>
 							</sec:authorize>
 						</div>
 					</div>

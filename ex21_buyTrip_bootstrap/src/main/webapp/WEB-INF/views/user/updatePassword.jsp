@@ -15,18 +15,35 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script type="text/javascript">
   $(function() {
-	$("#passWord").click(function() {
+	  
+	//아이디 중복체크
+	 $("#passWord").click(function() {
 // 		alert(1);
-		var data = {"email": $("#email").val()};
-		alert("가입한 메일을 확인해 보세요.");		
-		$.ajax({
-			url : "emailAuthPass",
-            data : data,
-            success : function(data){
-            }
-            
-		})
-	})
+		var data =  $("#memberId").val();
+// 		var data=$(this).val().trim();
+      	$.ajax({
+  			type:"POST",
+  			url:"${pageContext.request.contextPath}/user/idcheckAjax",				
+  			data:"${_csrf.parameterName}=${_csrf.token}&&memberId="+data,	
+  			success:function(data){						
+  				if(data=="fail"){
+  					var data1 =  {"email": $("#memberId").val()}
+  					alert("가입한 메일을 확인해 보세요.");		
+  					$.ajax({
+  						url : "emailAuthPass",
+  			            data : data1,
+  			            success : function(data1){
+  			            }
+  					})
+  				}else{						
+  					alert("입력하신 아이디를 찾을수 없습니다.")
+  					return false;
+  				}					
+  			}//callback			
+  		});//ajax
+		
+		
+	}) 
 })
   
   </script>
@@ -44,7 +61,7 @@
              <legend>비밀번호 찾기</legend>
              <div class="form-group">
                  <label for="username-email">아이디</label>
-                 <input value='' id="email" name="memberId" placeholder="E-mail address" type="text" class="form-control" />
+                 <input value='' id="memberId" name="memberId" placeholder="E-mail address" type="text" class="form-control" />
              </div>                                              
              <div class="form-group">
                  <input type="submit" id ="passWord" class="btn btn-default btn-login-submit btn-block m-t-md" value="비밀번호 찾기" />
