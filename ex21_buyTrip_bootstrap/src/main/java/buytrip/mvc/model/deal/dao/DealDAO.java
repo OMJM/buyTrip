@@ -6,7 +6,6 @@ import java.util.List;
 import buytrip.mvc.model.dto.OfferDTO;
 import buytrip.mvc.model.dto.OfferJoinProductDTO;
 
-import buytrip.mvc.model.dto.OfferDTO;
 
 public interface DealDAO {
 	
@@ -36,9 +35,19 @@ public interface DealDAO {
 	public int updateProductStateToNoOffer(String offerCode);
 	
 	/**
-	 * 마이페이지-내 배달 목록에서 배달 신청 목록 읽어오기
+	 * 마이페이지-내 배달 목록에서 아직 확정되지 않은 배달 신청 목록 읽어오기
 	 */
-	public List<OfferJoinProductDTO> readDeals(String offerId);
+	public List<OfferJoinProductDTO> readDealsYet(String offerId);
+	
+	/**
+	 * 마이페이지-내 배달 목록에서 확정된 배달 신청 목록 읽어오기
+	 */
+	public List<OfferJoinProductDTO> readDealsAccepted(String offerId);
+	
+	/**
+	 * 마이페이지-내 배달 목록에서 기간 만료된 배달 신청 목록 읽어오기
+	 */
+	public List<OfferJoinProductDTO> readDealsExpired(String offerId);
 	
 	/**
 	 * 메시지 list 보기

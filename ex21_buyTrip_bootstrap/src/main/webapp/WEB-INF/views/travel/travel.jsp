@@ -121,7 +121,7 @@ $(function(){
 		</div>
 
 
-		<!-- 거래율이 가장 높은 여행지 -->
+	<!-- 거래율이 가장 높은 여행지 -->
 	<c:if test="${!empty list}">
 			
 			<div class="container" style="padding: 40px;">
@@ -204,74 +204,78 @@ $(function(){
 			</div>
 			<div class="row">
 			
-				<!-- 주문 list -->
-				
-            <c:choose>
-               <c:when test="${empty requestScope.recentList}">
-                  <tr>
-                     <td colspan="5">
-                        <p align="center">
-                           <b><span style="font-size: 9pt;">등록된 상품이 없습니다.</span></b>
-                        </p>
-                     </td>
-                  </tr>
-               </c:when>
-               <c:otherwise>
-                  <c:forEach items="${requestScope.recentList}" var="productDTO">
-                     <!-- 주문 list -->
-                     <div class="col-sm-6">
-                        <div class="well well-sm"
-                           onclick="location.href='${pageContext.request.contextPath}/detail'"
-                           style="background-color: white; padding: 10px; margin: 20px">
-                           <div class="row">
-                              <div class="col-sm-2" style="margin-bottom: 15px;">
-                                 <img
-                                    src="${productDTO.memberImg}"
-                                    class="avatar img-circle" alt="avatar"
-                                    style="width: 50px; height: auto;">
-                              </div>
-                              <div class="col-sm-4">
-                                 <span>${productDTO.proposerId}</span></br> <span>요청날짜 :${productDTO.requestedDate}</span>
-                              </div>
-                              <div class="col-sm-6" align="right">
-                                 <h5>마감날짜 : ${productDTO.deadlineDate}</h5>
-                              </div>
-                           </div>
-                           <div class="row">
-                              <div class="col-xs-3 col-md-3 text-center">
-                                 <img
-                                    src="${productDTO.productImg}"
-                                    alt="bootsnipp" class="img-rounded img-responsive"
-                                    style="width: 189px; height: auto;" />
-                              </div>
-                              <div class="col-xs-9 col-md-9 section-box"
-                                 style="align-self: center;">
-                                 <h2>
-                                    ${productDTO.productName} <a href="http://bootsnipp.com/" target="_blank"><span
-                                       class="glyphicon glyphicon-new-window"> </span></a>
-                                 </h2>
-                                 <div class="well well-sm">
-                                    <div class="col-sm-6" style="font-size: 15px;">
-                                       <small>출발지 : </small> ${productDTO.arrivalNation}
-                                    </div>
-                                    <small>도착지 : </small>${productDTO.departNation}<br>
-                                 </div>
-                                 <div class="row">
-                                    <div class="col-sm-7" style="font-size: 20px;">
-                                       금 액 : ${productDTO.productPrice} <small>원</small>
-                                    </div>
-                                    <div class="col-sm-5" align="right">
-                                       <button type="button" class="btn btn-info">제안하기</button>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- / 주문 list -->
-                        </c:forEach>
-                                       </c:otherwise>
-                                    </c:choose>
+				<c:choose>
+					<c:when test="${empty requestScope.recentList}">
+						<tr>
+							<td colspan="5">
+								<p align="center">
+									<b><span style="font-size: 9pt;">등록된 상품이 없습니다.</span></b>
+								</p>
+							</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${requestScope.recentList}" var="productDTO">
+							<!-- 주문 list -->
+							<form method="POST" action="${pageContext.request.contextPath}/deal/offerDeal">
+							<div class="col-sm-6">
+								<div class="well well-sm"
+									onclick="location.href='${pageContext.request.contextPath}/detail'"
+									style="background-color: white; padding: 10px; margin: 20px">
+									<div class="row">
+										<div class="col-sm-2" style="margin-bottom: 15px;">
+											<img
+												src="${productDTO.memberImg}"
+												class="avatar img-circle" alt="avatar"
+												style="width: 50px; height: auto;">
+										</div>
+										<div class="col-sm-4">
+											<span><c:out value="${productDTO.proposerId}"/></span><br> <span>요청날짜 :${productDTO.requestedDate}</span>
+										</div>
+										<div class="col-sm-6" align="right">
+											<h5>마감날짜 : ${productDTO.deadlineDate}</h5>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xs-3 col-md-3 text-center">
+											<img
+												src="${productDTO.productImg}"
+												alt="bootsnipp" class="img-rounded img-responsive"
+												style="width: 189px; height: auto;" />
+										</div>
+										<div class="col-xs-9 col-md-9 section-box"
+											style="align-self: center;">
+											<h2>
+												${productDTO.productName} <a href="http://bootsnipp.com/" target="_blank"><span
+													class="glyphicon glyphicon-new-window"> </span></a>
+											</h2>
+											<div class="well well-sm">
+												<div class="col-sm-6" style="font-size: 15px;">
+													<small>출발지 : </small> ${productDTO.arrivalNation}
+												</div>
+												<small>도착지 : </small>${productDTO.departNation}<br>
+											</div>
+											<div class="row">
+												<div class="col-sm-7" style="font-size: 20px;">
+													금 액 : ${productDTO.productPrice} <small>원</small>
+												</div>
+												<div class="col-sm-5" align="right">
+													<input type="submit" class="btn btn-info" value="배달하기"/>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<input type="hidden" name="proposerId" value="${productDTO.proposerId}"/>
+							<input type="hidden" name="productCode" value="${productDTO.productCode}"/>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							</form>
+							<!-- / 주문 list -->
+								</c:forEach>
+													</c:otherwise>
+												</c:choose>
 				
 				
 			</div>

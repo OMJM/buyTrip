@@ -2,10 +2,13 @@ package buytrip.mvc.model.deal.service;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import buytrip.mvc.model.dto.OfferDTO;
+
 import buytrip.mvc.model.dto.OfferJoinProductDTO;
+import buytrip.mvc.model.dto.ProductDTO;
 
 @Service
 public interface DealService {
@@ -13,7 +16,7 @@ public interface DealService {
 	/**
 	 * 직구자에게 구매 제안하기 (직구자에게 알림, 자동 메세지 발송)
 	 */
-	public void offerDeal(OfferDTO offer);
+	public void offerDeal(String proposerId, String productCode, Authentication authentication);
 	
 	/**
 	 * 직구자에게 제안했던 배달 신청 취소하기
@@ -21,9 +24,19 @@ public interface DealService {
 	public void deleteDeal(String offerCode);
 	
 	/**
-	 * 마이페이지-내 배달 목록에서 배달 신청 목록 읽어오기
+	 * 마이페이지-내 배달 목록에서 배달 신청 목록 읽어오기, 배달 신청이 아직 확정되지 않은 경우
 	 */
-	public List<OfferJoinProductDTO> readDeals(String offerId);
+	public List<OfferJoinProductDTO> readDealsYet(String offerId);
+	
+	/**
+	 * 마이페이지-내 배달 목록에서 배달 신청 목록 읽어오기, 배달 신청이 확정된 경우
+	 */
+	public List<OfferJoinProductDTO> readDealsAccepted(String offerId);
+	
+	/**
+	 * 마이페이지-내 배달 목록에서 배달 신청 목록 읽어오기, 배달 신청이 만료된 경우
+	 */
+	public List<OfferJoinProductDTO> readDealsExpired(String offerId);
 	
 	/**
 	 * 메시지 list 보기
