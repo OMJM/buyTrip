@@ -20,16 +20,19 @@
 	
 	<!-- 상품등록수 Top3 나라 (상품등록수, 거래완료수, 거래율) -->
 	<select id="highestDeal" resultType="highestDealDTO">
-		select arrivalNation, orderNumber, CompletedDealNumber, deal
-		from (
-		select arrivalNation, orderNumber, CompletedDealNumber, deal, dense_rank() over(order by orderNumber desc) rank
-		from (
-		select arrival_nation arrivalNation, sum(decode(trade_state, 'complete', 1, 0)) CompletedDealNumber,
-		count(*) orderNumber, round(sum(decode(trade_state, 'complete', 1, 0))/count(*)*100) deal
-		from product
-		group by arrival_nation))
-		where rank &lt;= 3
-		order by orderNumber desc
+	select departNation, orderNumber, completedDealNumber, deal, nation_img nationImg
+	from nation,
+	(select departNation, orderNumber, completedDealNumber, deal
+			from (
+			select departNation, orderNumber, completedDealNumber, deal, dense_rank() over(order by orderNumber desc) rank
+			from (
+			select depart_nation departNation, sum(decode(trade_state, 'complete', 1, 0)) completedDealNumber,
+			count(*) orderNumber, round(sum(decode(trade_state, 'complete', 1, 0))/count(*)*100) deal
+			from product
+			group by depart_nation))
+			where rank &lt;= 3
+			order by orderNumber desc) a
+	where nation.nation_name = a.departNation
 	</select>
 
 

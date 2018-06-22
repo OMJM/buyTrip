@@ -1,5 +1,7 @@
 package buytrip.mvc.model.dto;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class ProductDTO {
@@ -23,13 +25,18 @@ public class ProductDTO {
 	
 	private String userDTO;
 	
-	 private String fname;
-	   private int fsize;
+	private String fname;
+	private int fsize;
 	
 	private MultipartFile file;
+	private List<String> imgList;
 	
-	
-	
+	public List<String> getImgList() {
+		return imgList;
+	}
+	public void setImgList(List<String> imgList) {
+		this.imgList = imgList;
+	}
 	public String getMemberImg() {
 		return memberImg;
 	}

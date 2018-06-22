@@ -98,13 +98,13 @@ public class TravelController {
       
    }
    
- 
+   /**
+    * 텍스트박스에 나라 검색 시 ajax로 나라 보여주기
+    */
    @RequestMapping("suggest")
    @ResponseBody
    public List<String> suggest(String keyWord) {
-      
-      List<String> list = travelService.suggest(keyWord);
-      
+      List<String> list = travelService.suggest(keyWord);      
       return list;
       
    }

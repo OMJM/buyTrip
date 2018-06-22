@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!--A Design by W3layouts
 Author: W3layout
@@ -52,50 +53,125 @@ input, textarea{
 	width: 800px;
 	float:none;
 }
+
+#box {
+    position: absolute;
+    z-index: 1;
+    width: 96%;
+    margin: 0px;
+    padding: 10px;
+}
 </style>
 
-<!-- url 입력 시 상품이름,이미지 가져와서 뿌려주기 -->
+<!-- 1. url 입력 시 상품이름,이미지 가져와서 뿌려주기
+2. 출발나라 뿌려주기
+-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function(){		
-		
-		$("#url").change(function(){
-			alert($(this).val());  //url 정보
-			$(this).val();
+$(document).ready(function(){		
 			
-			$.ajax({
-				type:"POST",
-				url:"${pageContext.request.contextPath}/crawling",
-				data:"${_csrf.parameterName}=${_csrf.token}&&url="+$(this).val(),
-				dataType:"json",  //이름, 이미지경로, returnData.
-				success:function(result){
-					alert("상품이름"+result.proName+"이미지"+result.image);
-					$("#proName").val(result.proName);
-/* 					$("#productImg").val(result.image); */
-					$('input[name=productImg]').attr('value',result.image);
-					
-				},
-				error:function(xhr,status,error){
-					alert("실패");
+			/* url 정보 받아서 상품정보,이미지 뿌려주기 */
+			$("#url").change(function(){
+				
+				$.ajax({
+					type:"POST",
+					url:"${pageContext.request.contextPath}/crawling",
+					data:"${_csrf.parameterName}=${_csrf.token}&&url="+$(this).val(),
+					dataType:"json",  //이름, 이미지경로, returnData.
+					success:function(result){
+
+						//url 상품이름 
+						if(result.proName==null)return;
+							$("#proName").val(result.proName);
+
+						//url 이미지
+						if(result.image==null)return;
+						$('input[name=productImg]').attr('value',result.image);
+						
+						//상단에 이미지 띄워주기
+						var data="<input type='image' id='urlImg' src="+result.image+">";
+						$("#fileUploadImage").html(data);
+
+						//url의 이미지 추가될 시 file 첨부 필수 조건 해제
+						$('input[name=file]').removeAttr("required");
+					},
+					error:function(xhr,status,error){
+						console.log("에러 발생 : " + err);
+					}
+				}); //ajax
+			});//change-url 입력
+			
+			//url 입력 후 지울 시 띄워준 상품이름과 이미지도 삭제, file 첨부 필수 조건 적용
+			$("#url").keyup(function(){
+				if($("#url").val()==""){
+					$('#urlImg').remove();
+					$("#proName").val("");
+					$('input[name=file]').attr("required","required");
 				}
-				
-				//function
-				
-			}); ///ajax
-					
-			/* $("#memberListView").empty();
-			if($("#address").val()==""){
-				return;
-			}*/
+			})
 			
-		});//change - url 입력
-	});//jquery
+			/* 출발나라 뿌려주기 */
+		  $("#departNation").keyup(function(){
+			   if($(this).val()==""){
+				   $("#suggest").hide();
+				   return;
+			   }
+			   
+			   $.ajax({
+				   type:"post" ,
+				   url: "${pageContext.request.contextPath}/travel/suggest",
+				   data:"${_csrf.parameterName}=${_csrf.token}&&keyWord="+$(this).val(),
+				   dataType:"json",
+			       success: function(result){//개수|단어,단어,단어,...
+			    	    var str="<div id='box' class='well' style='background-color: #def3f5;'>";
+				          $.each(result,function(index, item){
+				        	  str+="<div style='padding: 5px;'><a href='#none' style='text-decoration: none;'><b>"+item+"</b></a></div>";
+				          });
+			          str+="</div>";
+			          $("#suggest").html(str);
+			          $("#suggest").show();
+			       } , 
+			       error:function(err){ 
+			    	   console.log("에러 발생 : " + err);
+			       }
+			   });
+		   });
+		   $("#suggest").on("click","a" ,function(){
+			   $("#departNation").val($(this).text());
+			   $("#suggest").hide();
+		   });
+});//jquery
+
 </script>
 
 </head>
 <body>
 
 	<!-- contact -->
+	
+	<div class="container-fluid">
+		<div class="row" style="background-color: #f6f6f6; text-align: center; height: auto">
+			<h1><br><b>인기있는 상점에서 주문을 해보세요!</b></h1>
+			<h5>
+				<br>
+				<p/>웹 사이트로 이동하여 제품을 찾고 상품 URL란에 링크를 붙여 넣으십시오!<br><br><br>
+			</h5>
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-3">
+					<a href="https://www.ebay.com/" target="_blank">
+						<img src="${pageContext.request.contextPath}/resources/images/ebay.png">
+					</a>
+				</div>
+				<div class="col-md-3">
+					<a href="https://www.alibaba.com/" target="_blank">
+						<img src="${pageContext.request.contextPath}/resources/images/Alibaba.png">
+					</a><br><br>
+				</div>
+				<div class="col-md-3"></div>
+			</div>
+		</div>
+	</div>					
 	<div class="contact">
 		<div class="container">
 			<div class="w3ls-title">
@@ -145,8 +221,10 @@ input, textarea{
 			  <%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
 				<div class="col-sm-6 contact-left">
 				
-					<p>상품 이미지 (적어도 한장이상)
-					<input multiple="multiple" type="file" name="file" required="required"></p>
+					<p>상품 이미지 (적어도 한장이상)</p>
+					<input multiple="multiple" type="file" name="file" required="required">
+					<div id="fileUpload"></div>
+					<div id="fileUploadImage"></div>
 					<input type="hidden" name="productImg" value="">
 					<p>상품 URL</p>
 					<input type="text" name="productUrl" id="url" placeholder="상품 웹 주소를 입력해주세요.">
@@ -159,10 +237,12 @@ input, textarea{
 					<input type="number" name="productPrice" placeholder="상품+커미션 가격을 입력해주세요."
 						required="required">
 					<p>상품 수량</p>
-					<input type="number" name="productQty" placeholder="1" required="required">
+					<input type="number" name="productQty" placeholder="1" value="1" required="required">
 					<p>출발/도착나라</p>
-					<input type="text" name="arrivalNation" placeholder="출발나라를 입력해주세요." required="required">
-					<input type="text" name="departNation" placeholder="도착나라를 입력해주세요." required="required">
+					<input type="text" id="departNation" name="departNation" placeholder="출발나라를 입력해주세요."
+					required="required" style="margin-bottom: 0px;">
+					<div id="suggest" style="width: auto;"></div>
+					<input type="text" name="arrivalNation" value="한국" style="background-color :#f4f4f4;">
 					<p>희망 날짜</p>
 					<input type="date" name="deadlineDate" required="required">
 					<p>요청사항</p>

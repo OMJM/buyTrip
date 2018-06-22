@@ -41,7 +41,7 @@ public class CrawlingController {
 			title=".ma-title"; img="#J-image-icontent .iwrap a img";
 		}
 		
-		try {
+		try { 
 			
 			//사용자로부터 전달받은 url의 소스 긁어오기
 			Document doc = Jsoup.connect(url).get();
