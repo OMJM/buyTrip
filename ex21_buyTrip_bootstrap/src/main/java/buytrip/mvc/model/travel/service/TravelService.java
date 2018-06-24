@@ -2,6 +2,7 @@ package buytrip.mvc.model.travel.service;
 
 import java.util.List;
 
+import buytrip.mvc.model.dto.PagingVo;
 import buytrip.mvc.model.dto.ProductDTO;
 import buytrip.mvc.model.dto.TravelDTO;
 
@@ -22,7 +23,7 @@ public interface TravelService {
 	/**
 	 * [mypage] 등록한 여행일정 중 전체 list 보기
 	 */
-	List<TravelDTO> selectAll(String memberId);
+	List<TravelDTO> selectAll(String memberId, PagingVo pagingVo);
 	
 	/**
 	 * [mypage] 등록한 여행일정 중 기한만료된 list 보기
@@ -43,8 +44,11 @@ public interface TravelService {
 	 * mypage 저장한 여행지 상품 list
 	 * @return
 	 */
-	public List<ProductDTO> searchList(String nation);
+	public List<ProductDTO> searchList(String nation, PagingVo pagingVo);
 	
 	
+	int selectTotalPaging(String memberId);
+	
+	 int SelectListCnt(String nation);
 
 }

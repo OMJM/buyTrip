@@ -5,8 +5,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<link
+	href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/paging.js"></script>
 <style type="text/css">
 body {
 	margin-top: 20px;
@@ -48,30 +53,34 @@ body {
 <body>
 	<!-- 여행 경로 찾는 키워드 창 -->
 	<div class="container" align="center">
-	<div class="row">
-        <div class="span12">
-            <form method="#" action="/" class="form-inline" >
-               <label for="" style="width: 10%;">출발지</label> <input type="text" class="form-control" placeholder="${requestScope.departNation}" size="30">
-               <i class="fa fa-refresh" style="width: 10%;"></i>
-                <label for="" style="width: 10%;">도착지</label> <input type="text" class="form-control"placeholder="한국"  size="30">
-                <button type="submit" class="btn btn-primary" value="검색하기">검색하기</button>
-            </form>
-        </div>
-    </div>
-</div>
+		<div class="row">
+			<div class="span12">
+				<form method="#" action="/" class="form-inline">
+					<label for="" style="width: 10%;">출발지</label> <input type="text"
+						class="form-control" placeholder="${requestScope.departNation}"
+						size="30"> <i class="fa fa-refresh" style="width: 10%;"></i>
+					<label for="" style="width: 10%;">도착지</label> <input type="text"
+						class="form-control" placeholder="한국" size="30">
+					<button type="submit" class="btn btn-primary" value="검색하기">검색하기</button>
+				</form>
+			</div>
+		</div>
+	</div>
 
 	<!-- /navigation -->
-<div class="container" align="right">
-	<button type="button" class="btn btn-link">최신순</button>/<button type="button" class="btn btn-link">금액별</button>
-	
+	<div class="container" align="right">
+		<button type="button" class="btn btn-link">최신순</button>
+		/
+		<button type="button" class="btn btn-link">금액별</button>
+
 	</div>
 
 	<!-- projects -->
-	<div class="container" >
+	<div class="container">
 		<div class="row" align="center">
 			<div class="col-md-10">
-			
-			<c:choose>
+
+				<c:choose>
 					<c:when test="${empty requestScope.searchProductList}">
 						<tr>
 							<td colspan="5">
@@ -82,7 +91,8 @@ body {
 						</tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach items="${requestScope.searchProductList}" var="productDTO">
+						<c:forEach items="${requestScope.searchProductList}"
+							var="productDTO">
 							<!-- 주문 list -->
 							<div class="col-sm-12">
 								<div class="well well-sm"
@@ -90,13 +100,12 @@ body {
 									style="background-color: white; padding: 10px; margin: 20px">
 									<div class="row">
 										<div class="col-sm-2" style="margin-bottom: 15px;">
-											<img
-												src="${productDTO.memberImg}"
-												class="avatar img-circle" alt="avatar"
-												style="width: 50px; height: auto;">
+											<img src="${productDTO.memberImg}" class="avatar img-circle"
+												alt="avatar" style="width: 50px; height: auto;">
 										</div>
 										<div class="col-sm-4">
-											<span>${productDTO.proposerId}</span></br> <span>요청날짜 :${productDTO.requestedDate}</span>
+											<span>${productDTO.proposerId}</span></br> <span>요청날짜
+												:${productDTO.requestedDate}</span>
 										</div>
 										<div class="col-sm-6" align="right">
 											<h5>마감날짜 : ${productDTO.deadlineDate}</h5>
@@ -104,15 +113,15 @@ body {
 									</div>
 									<div class="row">
 										<div class="col-xs-3 col-md-3 text-center">
-											<img
-												src="${productDTO.productImg}"
-												alt="bootsnipp" class="img-rounded img-responsive"
+											<img src="${productDTO.productImg}" alt="bootsnipp"
+												class="img-rounded img-responsive"
 												style="width: 189px; height: auto;" />
 										</div>
 										<div class="col-xs-9 col-md-9 section-box"
 											style="align-self: center;">
 											<h2>
-												${productDTO.productName} <a href="http://bootsnipp.com/" target="_blank"><span
+												여기가 상품 이름?${productDTO.productName} <a
+													href="http://bootsnipp.com/" target="_blank"><span
 													class="glyphicon glyphicon-new-window"> </span></a>
 											</h2>
 											<div class="well well-sm">
@@ -134,11 +143,40 @@ body {
 								</div>
 							</div>
 							<!-- / 주문 list -->
-								</c:forEach>
-													</c:otherwise>
-												</c:choose>
-				
-				
+						</c:forEach>
+
+						<ul class="pagination">
+							<c:if test="${p.pageStartNum ne 1}">
+								<li><a onclick='pagePre(${p.pageCnt+1},${p.pageCnt});'>&laquo;</a></li>
+								<li><a onclick='pagePre(${p.pageStartNum},${p.pageCnt});'>&lsaquo;</a></li>
+							</c:if>
+
+							<c:forEach var='i' begin="${p.pageStartNum}"
+								end="${p.pageLastNum}" step="1">
+								<li class='pageIndex${i}'><a onclick='pageIndex(${i});'>${i}</a></li>
+							</c:forEach>
+
+							<c:if test="${p.lastChk}">
+								<li><a
+									onclick='pageNext(${p.pageStartNum},${p.total},${p.listCnt},${p.pageCnt});'>&rsaquo;</a></li>
+								<li><a
+									onclick='pageLast(${p.pageStartNum},${p.total},${p.listCnt},${p.pageCnt});'>&raquo;</a></li>
+							</c:if>
+						</ul>
+						<form
+							action="${pageContext.request.contextPath}/travel/searchProductList"
+							method="post" id='frmPaging'>
+							<input type='hidden' name="${_csrf.parameterName}"
+								value="${_csrf.token}"> <input type='hidden'
+								name='departNation' id='departNation'
+								value='${requestScope.departNation}'> <input
+								type='hidden' name='index' id='index' value='${p.index}'>
+							<input type='hidden' name='pageStartNum' id='pageStartNum'
+								value='${p.pageStartNum}'> <input type='hidden'
+								name='listCnt' id='listCnt' value='${p.listCnt}'>
+						</form>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</div>
