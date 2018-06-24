@@ -123,7 +123,7 @@ public class OrderController {
 		model.addAttribute("list", list);
 		model.addAttribute("list2", list2);
 		
-		return "mypage/mypageProductList";
+		return "mypage/mypageProductList_my";
 	}
 	
 	/**
@@ -159,7 +159,7 @@ public class OrderController {
 			model.addAttribute("imgList", imgList);
 			model.addAttribute("productDTO",productDTO);
 			
-		return "mypage/mypageDetail";
+		return "mypage/mypageDetail_my";
 	}
 	
 	/**

@@ -35,7 +35,7 @@ public class UserController {
 	 */
 	@RequestMapping("/mypage")
 	public String mypage() {
-		return "mypage/mypage";
+		return "mypage/mypage_my";
 	}
 	
 	@RequestMapping("index")
@@ -254,7 +254,10 @@ public class UserController {
 	    }
 	}
 	
-	
+	@RequestMapping("notification")
+	public String form() {
+		return "user/notification";
+	}
 	
 	
 }

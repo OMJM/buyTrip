@@ -35,7 +35,7 @@ public class TravelController {
 			System.out.println(memberId);
 		model.addAttribute("travelList", travelList);
 		model.addAttribute("finishList", finishList);
-		return "mypage/myTravelList";
+		return "mypage/myTravelList_my";
 	}
 	
 	/**

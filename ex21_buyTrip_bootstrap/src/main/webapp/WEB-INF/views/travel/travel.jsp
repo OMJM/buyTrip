@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib prefix="sec"  uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
@@ -258,7 +259,7 @@ $(function(){
                                  </div>
                                  <div class="row">
                                     <div class="col-sm-7" style="font-size: 20px;">
-                                       금 액 : ${productDTO.productPrice} <small>원</small>
+                                       금 액 :  <fmt:formatNumber value="${productDTO.productPrice}"/> <small>원</small>
                                     </div>
                                     <div class="col-sm-5" align="right">
                                        <button type="button" class="btn btn-info">제안하기</button>

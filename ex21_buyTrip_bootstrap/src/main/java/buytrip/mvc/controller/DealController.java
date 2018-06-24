@@ -55,7 +55,7 @@ public class DealController {
 		System.out.println(user.getMemberId());
 		List<OfferJoinProductDTO> list = dealService.readDeals(user.getMemberId());
 		mv.addObject("offerJoinProductList", list);
-		mv.setViewName("mypage/myOfferList");
+		mv.setViewName("mypage/myOfferList_my");
 		System.out.println(list.size());
 		
 		return mv;

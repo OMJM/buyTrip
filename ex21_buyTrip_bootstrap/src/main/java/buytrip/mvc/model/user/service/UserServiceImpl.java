@@ -5,8 +5,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import buytrip.mvc.model.dto.AuthorityDTO;
 import buytrip.mvc.model.dto.UserDTO;
 import buytrip.mvc.model.user.dao.UserDAO;
+import buytrip.mvc.security.dao.AuthoritiesDAO;
+import buytrip.mvc.security.util.RoleConstants;
 
 @Transactional
 @Service
@@ -14,6 +17,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserDAO userDAO;
+	
+	@Autowired
+	private AuthoritiesDAO authDAO;
 	
 	@Autowired
     private PasswordEncoder passwordEncoder;
@@ -24,7 +30,11 @@ public class UserServiceImpl implements UserService {
 		//비밀번호를 암호화..
 		userDTO.setmemberPassword(passwordEncoder.encode(userDTO.getmemberPassword()));
 		
-		return userDAO.signup(userDTO);
+		int result = userDAO.signup(userDTO);
+		//권한 등록
+		authDAO.insertAuthority(new AuthorityDTO(userDTO.getMemberId(), RoleConstants.ROLE_MEMBER));
+		
+		return result;
 	}
 
 	@Override
