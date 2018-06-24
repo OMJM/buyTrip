@@ -34,7 +34,7 @@ public class TravelController {
 		model.addAttribute("travelList", travelList);
 		model.addAttribute("p", paging);
 		model.addAttribute("finishList", finishList);
-		return "mypage/myTravelList";
+		return "mypage/myTravelList_my";
 	}
 
 	/**
