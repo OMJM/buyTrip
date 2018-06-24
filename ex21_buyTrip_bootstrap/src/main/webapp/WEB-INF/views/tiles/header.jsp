@@ -42,6 +42,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
+	<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/paging.js"></script>
 <script>
 	function logout() {
 		document.getElementById("logoutForm").submit();
