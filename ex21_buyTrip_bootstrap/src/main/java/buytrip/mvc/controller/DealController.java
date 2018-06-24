@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import buytrip.mvc.model.deal.service.DealService;
 import buytrip.mvc.model.dto.OfferDTO;
 import buytrip.mvc.model.dto.OfferJoinProductDTO;
 import buytrip.mvc.model.dto.ProductDTO;
 import buytrip.mvc.model.dto.UserDTO;
-
+import buytrip.mvc.model.deal.service.DealService;
+import buytrip.mvc.model.dto.OfferDTO;
 
 @Controller
 @RequestMapping("/deal")
@@ -39,6 +39,7 @@ public class DealController {
 	 */
 	@RequestMapping("/deleteDeal")
 	public String deleteDeal(String offerCode) {
+		System.out.println(offerCode);
 		dealService.deleteDeal(offerCode);
 		return "betweenOfferDeal";
 	}
@@ -57,7 +58,7 @@ public class DealController {
 		mv.addObject("offerJoinProductListYet", listYet);
 		mv.addObject("offerJoinProductListAccepted", listAccepted);
 		mv.addObject("offerJoinProductListExpired", listExpired);
-		mv.setViewName("mypage/myOfferList");
+		mv.setViewName("mypage/myOfferList_my");
 		
 		return mv;
 	}
@@ -89,8 +90,8 @@ public class DealController {
 	/**
 	 * 알림 별 해당페이지 이동하기
 	 */
-	@RequestMapping("/{?}")
-	public void readNotifications() {}
+	/*@RequestMapping("/{?}")
+	public void readNotifications() {}*/
 	
 	
 }

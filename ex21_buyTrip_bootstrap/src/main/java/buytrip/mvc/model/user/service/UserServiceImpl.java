@@ -6,8 +6,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import buytrip.mvc.model.dto.AuthorityDTO;
 import buytrip.mvc.model.dto.UserDTO;
 import buytrip.mvc.model.user.dao.UserDAO;
+import buytrip.mvc.security.dao.AuthoritiesDAO;
+import buytrip.mvc.security.util.RoleConstants;
 
 @Transactional
 @Service
@@ -17,15 +20,22 @@ public class UserServiceImpl implements UserService {
 	private UserDAO userDAO;
 	
 	@Autowired
+	private AuthoritiesDAO authDAO;
+	
+	@Autowired
     private PasswordEncoder passwordEncoder;
 
 	@Override
 	@Transactional
 	public int signup(UserDTO userDTO) {
 		//비밀번호를 암호화..
-		userDTO.setmemberPassword(passwordEncoder.encode(userDTO.getmemberPassword()));
+		userDTO.setMemberPassword(passwordEncoder.encode(userDTO.getMemberPassword()));
 		
-		return userDAO.signup(userDTO);
+		int result = userDAO.signup(userDTO);
+		//권한 등록
+		authDAO.insertAuthority(new AuthorityDTO(userDTO.getMemberId(), RoleConstants.ROLE_MEMBER));
+		
+		return result;
 	}
 
 	@Override
@@ -66,9 +76,9 @@ public class UserServiceImpl implements UserService {
 	public int withdraw(String memberId, String memberPassword) {
 		UserDTO userDTO = userDAO.selectUserById(memberId);
 		
-		boolean b = passwordEncoder.matches(memberPassword, userDTO.getmemberPassword());
-		if(passwordEncoder.matches(memberPassword, userDTO.getmemberPassword())){
-			int re =  userDAO.withdraw(memberId, userDTO.getmemberPassword());
+		boolean b = passwordEncoder.matches(memberPassword, userDTO.getMemberPassword());
+		if(passwordEncoder.matches(memberPassword, userDTO.getMemberPassword())){
+			int re =  userDAO.withdraw(memberId, userDTO.getMemberPassword());
 			if(re==0)throw new RuntimeException("삭제되지 않았습니다.");
 		}else{
 			throw new  RuntimeException ("비밀번호 오류이므로 탈퇴안됩니다.");
