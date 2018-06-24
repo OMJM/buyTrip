@@ -119,11 +119,13 @@ body {
 	<!-- projects -->
 					<div class="profile-sidebar">
 						<!-- SIDEBAR USERPIC -->
-						<div class="profile-userpic">
-							<img
-								src="${pageContext.request.contextPath}/resources/images/159.jpg"
-								class="img-responsive" alt="Cinque Terre">
-						</div>
+						<c:if test="${not empty userdto.memberImg}">
+							<div class="profile-userpic">
+								<img
+									src="${pageContext.request.contextPath}/resources/member/${userdto.memberImg}"
+									class="img-responsive" alt="Cinque Terre">
+							</div>
+						</c:if>
 						<!-- END SIDEBAR USERPIC -->
 						<!-- SIDEBAR USER TITLE -->
 						<div class="profile-usertitle">

@@ -55,7 +55,7 @@
 		}else{
 			$("#passCheckView").html("비밀번호 불일치!").css("color", "red");
 			chkPass=-1;
-		}
+		}profile-userpic
 	})
    })
 </script>
@@ -67,7 +67,7 @@
 							<div class="text-center">
 								<img
 									src="${pageContext.request.contextPath}/resources/member/${userdto.memberImg}"
-									class="avatar img-circle" alt="avatar">
+									class="avatar img-circle" alt="avatar" style="width: 150px; height: 150px;">
 							</div>
 						</c:if>
 						
