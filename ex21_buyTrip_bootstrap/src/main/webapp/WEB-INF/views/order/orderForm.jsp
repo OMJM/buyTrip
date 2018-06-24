@@ -218,7 +218,6 @@ $(document).ready(function(){
 			<!-- 다영 -->
 			<form id="fileUploadForm" name="orderForm" method="post" enctype="multipart/form-data"
 			action="${pageContext.request.contextPath}/order/insertOrder?${_csrf.parameterName}=${_csrf.token}">
-			  <%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
 				<div class="col-sm-6 contact-left">
 				
 					<p>상품 이미지 (적어도 한장이상)</p>

@@ -1,17 +1,23 @@
 package buytrip.mvc.controller;
 
+import java.io.File;
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-
 
 import buytrip.mvc.model.dto.UserDTO;
 import buytrip.mvc.model.user.service.UserService;
@@ -32,11 +38,13 @@ public class UserController {
 	
 	/**
 	 * mypage view단 출력
-	 * @return
 	 */
 	@RequestMapping("/mypage")
-	public String mypage() {
-		return "mypage/mypage";
+	public ModelAndView mypage(Authentication auth) {
+		UserDTO userDTO = (UserDTO)auth.getPrincipal();
+		String memberId = userDTO.getMemberId();
+		UserDTO userdto = userService.findMemberById(memberId);
+		return new ModelAndView("mypage/mypage", "userdto", userdto);
 	}
 	
 	@RequestMapping("index")
@@ -92,11 +100,16 @@ public class UserController {
 		return "user/updateForm";
 	}
 	
-	@RequestMapping(value="/updateMemberAction")
-	public ModelAndView updateMemberAction(HttpServletRequest request, UserDTO vo) {
-		String password = request.getParameter("password");
+	/**
+	 * 회원정보 수정하기
+	 */
+	@RequestMapping("/updateMemberAction")
+	public String updateMemberAction(String password, UserDTO vo,
+			MultipartHttpServletRequest mtRequest, HttpSession session, Authentication auth) {
+		
 		UserDTO pvo=(UserDTO)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		boolean b=passwordEncoder.matches(password, pvo.getmemberPassword());
+		boolean b=passwordEncoder.matches(password, pvo.getMemberPassword());
+		System.out.println("password, pvo.getMemberPassword()"+password+ pvo.getMemberPassword());
 		if(b) {
 		System.out.println("1. MemberVO  :: "+vo);
 		//회원정보 수정위해 Spring Security 세션 회원정보를 반환받는다
@@ -105,22 +118,39 @@ public class UserController {
 		System.out.println("2. Spring Security 세션 수정 전 회원정보:" + pvo);
 		
 		//변경할 비밀번호를 암호화한다 
-		String encodePassword=passwordEncoder.encode(vo.getmemberPassword());
-		vo.setmemberPassword(encodePassword);
-		userService.updateMember(vo);
+		String encodePassword=passwordEncoder.encode(vo.getMemberPassword());
+		vo.setMemberPassword(encodePassword);
 		
 		System.out.println("**********************************************");
 		// 수정한 회원정보로 Spring Security 세션 회원정보를 업데이트한다
-		pvo.setmemberPassword(encodePassword);
-		pvo.setmemberName(vo.getmemberName());
+		pvo.setMemberPassword(encodePassword);
+		pvo.setMemberName(vo.getMemberName());
 		pvo.setMobile(vo.getMobile());
 		System.out.println("3. Spring Security 세션 수정 후 회원정보:" + pvo);
-				
 		}
 		else {
 			throw new  RuntimeException ("비밀번호 오류이므로 수정안됩니다.");
 		}
-		return new ModelAndView("user/update_result");
+		
+		//----------------------회원사진 수정----------------------------------
+		//사진 저장 경로 구하기
+		String savePath = session.getServletContext().getRealPath("/resources/member");
+		
+		//회원사진 첨부
+		MultipartFile Img = mtRequest.getFile("file");
+		if(Img.getSize()>0) {
+			//저장할 파일명
+			String memberImg = System.currentTimeMillis()+"_"+Img.getOriginalFilename();
+			vo.setMemberImg(memberImg);
+			try {
+				//지정한 경로에 사진 저장
+				Img.transferTo(new File(savePath+"/"+memberImg));
+			} catch (IllegalStateException | IOException e) {
+				//e.printStackTrace();
+			}
+			userService.updateMember(vo);
+		}
+		return "redirect:/";
 	}
 	
 	/**
@@ -131,7 +161,9 @@ public class UserController {
 	}
 	
 	
-	//특정 회원 검색하기
+	/**
+	 * 특정 회원 검색하기
+	 */
 	@RequestMapping("user/findMember")
 	public ModelAndView findMember(HttpServletRequest request) {
 		String id = request.getParameter("id");
@@ -224,7 +256,7 @@ public class UserController {
 	    UserDTO userDTO= userService.findMemberById(email);
 	    
 	    String encodePassword=passwordEncoder.encode(authNum);
-	    userDTO.setmemberPassword(encodePassword);
+	    userDTO.setMemberPassword(encodePassword);
 	    userService.updateMember(userDTO);
 	    
 	    sendEmail(email, authNum);

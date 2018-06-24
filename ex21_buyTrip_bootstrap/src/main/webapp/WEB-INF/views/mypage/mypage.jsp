@@ -24,7 +24,7 @@
 	   			return false;
 	   		}
 	   		if(chkPass<0){
-	           	alert("패스워드를 확인하세요");
+	        alert("패스워드를 확인하세요");
 	   			return false;
 	   		}
 	   		if($("#requestForm :input[name=memberName]").val().trim()==""){
@@ -35,15 +35,14 @@
 	   			alert("전화번호를 입력하세요");				
 	   			return false;
 	   		}
-	    	   
 		   
-		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/user/updateMemberAction");
+		   $("#requestForm").attr("action", "${pageContext.request.contextPath}/user/updateMemberAction?${_csrf.parameterName}=${_csrf.token}");
 		   $("#requestForm").submit();
 	   })
 	    
 	   
 	    $("input[value=탈퇴하기]").click(function(){
-			   var pwd = prompt("비밀번호를 입력하세요.");
+			   var pwd = prompt("정말 탈퇴하시겠습니까? \n비밀번호를 입력해주세요.");
 			   if(pwd){
 		           $("#memberPassword").val(pwd);
 				   $("#requestForm").attr("action", "${pageContext.request.contextPath}/user/withdraw");
@@ -171,7 +170,11 @@ body {
 	padding: 20px;
 	background: #fff;
 	min-height: 800px;
-
+}
+.avatar{
+	  height: 300px;
+    width: 300px;
+}
 </style>
 
 
@@ -187,15 +190,19 @@ body {
 					<div class="profile-sidebar">
 						<!-- SIDEBAR USERPIC -->
 						<div class="profile-userpic">
-							<img
-								src="${pageContext.request.contextPath}/resources/images/159.jpg"
-								class="img-responsive" alt="Cinque Terre">
+							<c:if test="${not empty userdto.memberImg}">
+								<div class="text-center">
+									<img
+										src="${pageContext.request.contextPath}/resources/member/${userdto.memberImg}"
+										class="avatar img-circle img-responsive" style="width: 180px; height: 180px;">
+								</div>
+							</c:if>
 						</div>
 						<!-- END SIDEBAR USERPIC -->
 						<!-- SIDEBAR USER TITLE -->
 						<div class="profile-usertitle">
-							<div class="profile-usertitle-name">Marcus Doe</div>
-							<div class="profile-usertitle-job">Developer</div>
+							<div class="profile-usertitle-name">${userdto.memberName}</div>
+							<div class="profile-usertitle-job">${userdto.memberId}</div>
 						</div>
 						<!-- END SIDEBAR USER TITLE -->
 						<!-- SIDEBAR BUTTONS -->
@@ -239,23 +246,20 @@ body {
 				<div class="col-md-9">
 					<div class="profile-content">
 						<h1 class="page-header">회원 정보 수정</h1>
-
-						<div class="text-center">
-							<img
-								src="${pageContext.request.contextPath}/resources/images/159.jpg"
-								class="avatar img-circle img-thumbnail" alt="avatar">
-								 <input
-								type="file" class="text-center center-block well well-sm">
-
-						</div>
+						<c:if test="${not empty userdto.memberImg}">
+							<div class="text-center">
+								<img
+									src="${pageContext.request.contextPath}/resources/member/${userdto.memberImg}"
+									class="avatar img-circle" alt="avatar">
+							</div>
+						</c:if>
+						
 						<br><br>
 						<!-- edit form column -->
 						<div>
 						<sec:authorize access="isAuthenticated()">
-							<form class="form-horizontal" name="requestForm" method="post" id="requestForm" role="form" >
-							<input type="hidden" name="command" value="update">
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-
+							<form class="form-horizontal" name="requestForm" method="post" id="requestForm" role="form" enctype="multipart/form-data">
+								<input type="file" name="file" class="text-center center-block well well-sm">
 								<div class="form-group">
 									<label class="col-md-3 control-label">사용자  아이디 :</label>
 									<div class="col-md-8">
@@ -300,17 +304,15 @@ body {
 								</div>
 								
 								<div class="form-group" align="center">
-									<label class="col-md-3 control-label"></label>
-									<div class="col-md-8">
+									<div class="row">
 										<input class="btn btn-primary" value="회원정보수정"
 											type="submit"> <span></span> <span></span><input
 											class="btn btn-default" value="Cancel" type="reset">
 									</div>
-									
-									<div class="col-md-8">
+									<br>
+									<div class="row">
 										<input class="btn btn-primary" value="탈퇴하기"
-											id="withdraw" type="button"> <span></span> <span></span><input
-											class="btn btn-default" value="Cancel" type="reset">
+											id="withdraw" type="button"> <span></span> <span></span>
 									</div>
 								</div>
 								</form>

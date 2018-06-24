@@ -266,6 +266,7 @@ $(function(){
 						<c:otherwise>
 							<c:forEach items="${requestScope.recentList}" var="productDTO">
 								<!-- 주문 list -->
+								<form method="POST" action="${pageContext.request.contextPath}/deal/offerDeal">
 								<div class="col-sm-6">
 									<div class="well well-sm"
 										onclick="location.href='${pageContext.request.contextPath}/detail'"
@@ -276,7 +277,7 @@ $(function(){
 													alt="avatar" style="width: 50px; height: auto;">
 											</div>
 											<div class="col-sm-4">
-												<span>${productDTO.proposerId}</span></br> <span>요청날짜
+												<span><c:out value="${productDTO.proposerId}"/></span><br> <span>요청날짜
 													:${productDTO.requestedDate}</span>
 											</div>
 											<div class="col-sm-6" align="right">
@@ -307,13 +308,18 @@ $(function(){
 														금 액 : ${productDTO.productPrice} <small>원</small>
 													</div>
 													<div class="col-sm-5" align="right">
-														<button type="button" class="btn btn-info">제안하기</button>
+														<input type="submit" class="btn btn-info" value="배달하기"/>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
+								
+								<input type="hidden" name="proposerId" value="${productDTO.proposerId}"/>
+								<input type="hidden" name="productCode" value="${productDTO.productCode}"/>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								</form>
 								<!-- / 주문 list -->
 							</c:forEach>
 						</c:otherwise>
