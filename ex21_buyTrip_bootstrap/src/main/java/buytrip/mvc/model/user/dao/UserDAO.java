@@ -37,6 +37,16 @@ public interface UserDAO {
 	/**
 	 * 회원 탈퇴하기
 	 */
-	public int withdraw(String memberId, String memberPassword);	
+	public int withdraw(String memberId, String memberPassword);
+	
+	/**
+	 * 회원가입 아이디 중복체크
+	 * */
+	public int idCheck(String memberId);
+	
+	/**
+	 * 회원탈퇴 비밀번호 체크
+	 * */
+	public int passCheck(String memberPassword);
 	
 }

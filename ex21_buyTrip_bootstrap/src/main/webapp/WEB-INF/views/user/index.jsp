@@ -1,6 +1,66 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="sec"  uri="http://www.springframework.org/security/tags"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+#box {
+	position: absolute;
+	z-index: 1;
+	width: 97%;
+	margin: 0px;
+	padding: 5px;
+}
+#departNation{
+	margin-bottom: 0px;
+}
+</style>
+<script type="text/javascript">
+$(function(){
+	  $("#departNation").keyup(function(){
+		  
+		   if($(this).val()==""){
+			   $("#suggest").hide();
+			   return;
+		   }
+		   
+		   $.ajax({
+			   type:"post" ,
+			   url: "${pageContext.request.contextPath}/travel/suggest",
+			   data:"${_csrf.parameterName}=${_csrf.token}&&keyWord="+$(this).val(),
+			   dataType:"json",
+		       success: function(result){//개수|단어,단어,단어,...
+		       
+		    	    var str="<div id='box' class='well' style='background-color: #def3f5;'>";
+			          $.each(result,function(index, item){
+			        	  str+="<div style='padding: 5px;'><a href='#none' style='text-decoration: none;'><b>"+item+"</b></a></div>";
+			          });
+		          str+="</div>";
+		          
+		          $("#suggest").html(str);
+		          $("#suggest").show();
+		       } , 
+		       error:function(err){ 
+		    	   console.log("에러 발생 : " + err);
+		       }
+		   });
+	   });
+	   
+	   $("#suggest").on("click","a" ,function(){
+		   
+		   $("#departNation").val($(this).text());
+		   $("#suggest").hide();
+		   
+	   });
+	   
+})
+</script>
+</head>
+<body>
+
 <!-- banner-->
 <div class="w3layouts-banner-slider">
 	<div class="container">
@@ -99,7 +159,7 @@
 		<div class="ser-wthree">
 			<div class="services-agileinfo" style="margin-left: 10%">
 				<div class="col-sm-6 col-xs-6 services-w3grids ">
-					<div class="ser-agile" onclick="location.href='${pageContext.request.contextPath}/order'">
+					<div class="ser-agile" onclick="location.href='${pageContext.request.contextPath}/order/order'">
 						<div class="services-icon hvr-radial-in">
 							<i class="fa fa-anchor" aria-hidden="true"></i>
 						</div>
@@ -109,7 +169,7 @@
 				</div>
 				
 				<div class="col-sm-6 col-xs-6 services-w3grids col-sm-push-2">
-					<div class="ser-agile" location.href='${pageContext.request.contextPath}/travel'>
+					<div class="ser-agile" onclick="location.href='${pageContext.request.contextPath}/travel/travel'">
 						<div class="services-icon hvr-radial-in">
 							<i class="fa fa-line-chart" aria-hidden="true"></i>
 						</div>
@@ -134,25 +194,17 @@
 				<h2 class="agileits-title w3title2">혹시 금방 귀국할 예정인가요?</h2>
 				<h4>여행을 하면서 돈을 벌어 보세요!</h4>
 				<p> 지금 어느 나라에 있나요? </p>
-					<form action="#" method="post">  
-						
 						<div class="col-md-7 form-left">
-							<select class="form-control">
-								<option>일본</option>
-								<option>중국</option>
-								<option>미국</option> 
-								<option>대만</option>
-								<option>베트남</option>
-								<option>그 외 나라들...</option>
-							</select>
+							<input type="text" id="departNation">
+<!-- 							<input type="text" class="form-control" name="departNation"
+								id="departNation" placeholder="출발나라" style="width: 100%;"> -->
+							<div id="suggest" style="width: 100%; vertical-align: middle;"></div>
 						</div>
-					
-						
 						<div class="col-md-5 make">
 							<input type="submit" value="검색하기">
 						</div>
 						<div class="clearfix"> </div>
-					</form> 
+					
 				</div>
 				<div class="clearfix"> </div>
 			</div>

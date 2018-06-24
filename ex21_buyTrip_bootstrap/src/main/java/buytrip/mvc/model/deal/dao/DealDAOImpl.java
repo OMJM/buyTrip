@@ -59,8 +59,18 @@ public class DealDAOImpl implements DealDAO {
 	}
 
 	@Override
-	public List<OfferJoinProductDTO> readDeals(String offerId) {
-		return session.selectList("readDeals", offerId);
+	public List<OfferJoinProductDTO> readDealsYet(String offerId) {
+		return session.selectList("readDealsYet", offerId);
+	}
+	
+	@Override
+	public List<OfferJoinProductDTO> readDealsAccepted(String offerId) {
+		return session.selectList("readDealsAccepted", offerId);
+	}
+	
+	@Override
+	public List<OfferJoinProductDTO> readDealsExpired(String offerId) {
+		return session.selectList("readDealsExpired", offerId);
 	}
 
 	@Override

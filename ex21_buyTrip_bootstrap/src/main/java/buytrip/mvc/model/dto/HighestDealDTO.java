@@ -6,16 +6,16 @@ package buytrip.mvc.model.dto;
  */
 public class HighestDealDTO {
 
-	private String arrivalNation;  //출발나라
+	private String departNation; //출발나라
 	private int completedDealNumber; //완료된 거래수
 	private int orderNumber; //상품등록수
 	private int deal; //거래율
-	
-	public String getArrivalNation() {
-		return arrivalNation;
+	private String nationImg; //나라 이미지
+	public String getDepartNation() {
+		return departNation;
 	}
-	public void setArrivalNation(String arrivalNation) {
-		this.arrivalNation = arrivalNation;
+	public void setDepartNation(String departNation) {
+		this.departNation = departNation;
 	}
 	public int getCompletedDealNumber() {
 		return completedDealNumber;
@@ -35,7 +35,11 @@ public class HighestDealDTO {
 	public void setDeal(int deal) {
 		this.deal = deal;
 	}
-	
+	public String getNationImg() {
+		return nationImg;
+	}
+	public void setNationImg(String nationImg) {
+		this.nationImg = nationImg;
+	}
 
-	
 }

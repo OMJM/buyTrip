@@ -61,7 +61,7 @@
 		select travel.member_id, travel.depart_nation, travel.arrival_nation,travel.arrival_date, p.countProduct 
 		from travel,(select arrival_nation, count(*) countProduct
 		from product
-		where 	deadline_Date &gt; sysdate
+		where deadline_Date &gt; sysdate
 		group by arrival_nation) p
 		where travel.arrival_nation=p.arrival_nation
 		and travel.arrival_date &gt; sysdate
@@ -110,8 +110,8 @@
  	
  	<!-- make an offer -->
  	<insert id="offerDeal" parameterType="offerDTO">
-		insert into offer(offer_code,proposer_id,offer_id,product_code,offer_date)
-		values(#{offerCode},#{proposerId},#{offerId},#{productCode},sysdate)
+		insert into offer(offer_code,proposer_id,offer_id,product_code,offer_date,offer_state)
+		values(#{offerCode},#{proposerId},#{offerId},#{productCode},sysdate,'yet')
 	</insert>
 	
 	<!-- update product state -->
@@ -121,11 +121,27 @@
 		where product_code=#{productCode}
 	</update>
 	
-	<!-- 마이페이지에서 배달 신청 목록 읽어오기 -->
-	<select id="readDeals" parameterType="string" resultMap="offerListMap">
+	<!-- 마이페이지에서 확정되지 않은 배달 신청 목록 읽어오기 -->
+	<select id="readDealsYet" parameterType="string" resultMap="offerListMap">
 		select offer.offer_code as offer_code, deadline_date, product_name, arrival_nation, depart_nation, product_price, offer.product_code
 		from offer join product
-		on offer.product_code=product.product_code and offer_id=#{_parameter}
+		on offer.product_code=product.product_code and offer_id=#{_parameter} and offer_state='yet' and sysdate&lt;deadline_date
+		order by offer_date desc
+	</select>
+	
+	<!-- 마이페이지에서 확정된 배달 신청 목록 읽어오기 -->
+	<select id="readDealsAccepted" parameterType="string" resultMap="offerListMap">
+		select offer.offer_code as offer_code, deadline_date, product_name, arrival_nation, depart_nation, product_price, offer.product_code
+		from offer join product
+		on offer.product_code=product.product_code and offer_id=#{_parameter} and offer_state='accepted'
+		order by offer_date desc
+	</select>
+	
+	<!-- 마이페이지에서 기간 만료된 배달 신청 목록 읽어오기 -->
+	<select id="readDealsExpired" parameterType="string" resultMap="offerListMap">
+		select offer.offer_code as offer_code, deadline_date, product_name, arrival_nation, depart_nation, product_price, offer.product_code
+		from offer join product
+		on offer.product_code=product.product_code and offer_id=#{_parameter} and offer_state='yet' and sysdate>deadline_date
 		order by offer_date desc
 	</select>
 	

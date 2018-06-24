@@ -29,9 +29,9 @@ public class DealController {
 	 */
 
 	@RequestMapping("/offerDeal")
-	public String offerDeal(OfferDTO offer) {
-		dealService.offerDeal(offer);
-		return "mypage/myofferList";
+	public String offerDeal(String proposerId, String productCode, Authentication authentication) {
+		dealService.offerDeal(proposerId, productCode, authentication);
+		return "betweenOfferDeal";
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class DealController {
 	public String deleteDeal(String offerCode) {
 		System.out.println(offerCode);
 		dealService.deleteDeal(offerCode);
-		return "mypage/myOfferList";
+		return "betweenOfferDeal";
 	}
 	
 	/**
@@ -52,11 +52,13 @@ public class DealController {
 		ModelAndView mv = new ModelAndView();
 		
 		UserDTO user = (UserDTO) authentication.getPrincipal();
-		System.out.println(user.getMemberId());
-		List<OfferJoinProductDTO> list = dealService.readDeals(user.getMemberId());
-		mv.addObject("offerJoinProductList", list);
+		List<OfferJoinProductDTO> listYet = dealService.readDealsYet(user.getMemberId());
+		List<OfferJoinProductDTO> listAccepted = dealService.readDealsAccepted(user.getMemberId());
+		List<OfferJoinProductDTO> listExpired = dealService.readDealsExpired(user.getMemberId());
+		mv.addObject("offerJoinProductListYet", listYet);
+		mv.addObject("offerJoinProductListAccepted", listAccepted);
+		mv.addObject("offerJoinProductListExpired", listExpired);
 		mv.setViewName("mypage/myOfferList_my");
-		System.out.println(list.size());
 		
 		return mv;
 	}

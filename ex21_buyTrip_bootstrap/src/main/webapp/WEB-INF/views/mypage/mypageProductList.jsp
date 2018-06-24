@@ -22,13 +22,11 @@
 
 						<!-- list상세부분. -->
 						<div class="tab-content">
-
 							<div class="tab-pane fade in active" id="tabb1">
 								<div class="container">
 									<div class="row">
 										<div class="col-md-8">
-									
-										<c:choose>
+											<c:choose>
 												<c:when test="${empty requestScope.list}">
 													<tr>
 														<td colspan="5">
@@ -37,40 +35,39 @@
 															</p>
 														</td>
 													</tr>
-													</c:when>
-													<c:otherwise>
-													
+												</c:when>
+												<c:otherwise>
 													<c:forEach items="${requestScope.list}" var="productDTO">
-													<form name=mypageProdcutList method=post action="${pageContext.request.contextPath}/order/readOrderDetail">
-													<input type='hidden' name='proposerId' value="${productDTO.proposerId}">
-													<input type='hidden' name='productCode' value="${productDTO.productCode}">
-													
-														<!-- 상품 한개 템플릿 -->
-														<div class="panel panel-default  panel--styled"
-															style="padding: 10px;" 
-															onclick="location.href='${pageContext.request.contextPath}/order/readOrderDetail?productCode=${productDTO.productCode}'">
-															<div align="right">
-																<h4>마감날짜 : ${productDTO.deadlineDate}</h4>
+														<form name=mypageProdcutList method=post
+															action="${pageContext.request.contextPath}/order/readOrderDetail">
+															<input type='hidden' name='proposerId'
+																value="${productDTO.proposerId}"> <input
+																type='hidden' name='productCode'
+																value="${productDTO.productCode}">
+															<!-- 상품 한개 템플릿 -->
+															<div class="panel panel-default  panel--styled"
+																style="padding: 10px;"
+																onclick="location.href='${pageContext.request.contextPath}/order/readOrderDetail?productCode=${productDTO.productCode}'">
+																<div align="right">
+																	<h4>마감날짜 : ${productDTO.deadlineDate}</h4>
 															</div>
 
-															<div class="row">
-																<div class="col-xs-3 col-md-3 text-center">
-																	<img
-																		src="${pageContext.request.contextPath}/resources/images/159.jpg"
-																		alt="bootsnipp" class="img-rounded img-responsive"
-																		style="width: 189px; height: auto;" />
-																</div>
-																<div class="col-xs-9 col-md-9 section-box"
-																	style="align-self: center;">
-																	<h2>
-																		${productDTO.productName} 
-																	</h2>
-																	<div class="well well-sm">
-																		<div class="col-sm-6" style="font-size: 15px;">
-																			<small>출발지 : </small> ${productDTO.arrivalNation}
-																		</div>
-																		<small>도착지 : </small>${productDTO.departNation}<br>
+														<div class="row">
+																	<div class="col-xs-3 col-md-3 text-center">
+																			<img
+																				src="${productDTO.imgList[0]}"
+																				alt="bootsnipp" class="img-rounded img-responsive"
+																				style="width: 189px; height: auto;" />
 																	</div>
+																	<div class="col-xs-9 col-md-9 section-box"
+																		style="align-self: center;">
+																		<h2>${productDTO.productName}</h2>
+																		<div class="well well-sm">
+																			<div class="col-sm-6" style="font-size: 15px;">
+																				<small>출발지 : </small> ${productDTO.arrivalNation}
+																			</div>
+																			<small>도착지 : </small>${productDTO.departNation}<br>
+																		</div>
 																	<div class="row">
 																		<div class="col-sm-5" style="font-size: 20px;">
 																			<fmt:formatNumber value="${productDTO.productPrice}"/><small>원</small>
@@ -82,34 +79,29 @@
 														<!-- 상품 한개 템플릿 끝 -->
 														</form>
 													</c:forEach>
-											
 													</c:otherwise>
 										</c:choose>
 										</div>
 									</div>
 								</div>
 							</div>
-
-
 							<div class="tab-pane fade" id="tabb2">
 								<div class="container">
 									<div class="row">
 										<div class="col-md-8">
-										
-											
 											<!-- 상품 한개 템플릿 -->
-											<div class="panel panel-default  panel--styled" style="padding:10px;">
-													<div align="right">
-														<h4>마감날자 : 2018-07-02</h4>
+											<div class="panel panel-default  panel--styled"
+												style="padding: 10px;">
+												<div align="right">
+													<h4>마감날자 : 2018-07-02</h4>
+												</div>
+												<div class="row">
+													<div class="col-xs-3 col-md-3 text-center">
+														<img
+															src="${pageContext.request.contextPath}/resources/images/159.jpg"
+															alt="bootsnipp" class="img-rounded img-responsive"
+															style="width: 189px; height: auto;" />
 													</div>
-
-													<div class="row">
-														<div class="col-xs-3 col-md-3 text-center">
-															<img
-																src="${pageContext.request.contextPath}/resources/images/159.jpg"
-																alt="bootsnipp" class="img-rounded img-responsive"
-																style="width: 189px; height: auto;" />
-														</div>
 														<div class="col-xs-9 col-md-9 section-box"
 															style="align-self: center;">
 															<h2>
@@ -130,27 +122,18 @@
 																	<button type="button" class="btn btn-info">제안하기</button>
 																</div>
 															</div>
-
 														</div>
 													</div>
 											</div>
 											<!-- 상품 한개 템플릿 끝 -->
-											
-											
-											
 										</div>
 									</div>
 								</div>
 							</div>
-
-
 							<div class="tab-pane fade" id="tabb3">
 								<div class="container">
 									<div class="row">
 										<div class="col-md-8">
-										
-										
-											
 											<!-- 상품 한개 템플릿 -->
 											<div class="panel panel-default  panel--styled" style="padding:10px;">
 													<div align="right">
@@ -189,14 +172,10 @@
 													</div>
 											</div>
 											<!-- 상품 한개 템플릿 끝 -->
-											
 										</div>
 									</div>
 								</div>
 							</div>
-
-
-
 							<div class="tab-pane fade" id="tabb4">
 								<div class="container">
 									<div class="row">
@@ -226,11 +205,11 @@
 
 															<div class="row">
 																<div class="col-xs-3 col-md-3 text-center">
-																	<img
-																		src="${pageContext.request.contextPath}/resources/images/159.jpg"
-																		alt="bootsnipp" class="img-rounded img-responsive"
-																		style="width: 189px; height: auto;" />
-																</div>
+																		<img
+																				src="${productDTO.imgList[0]}"
+																				alt="bootsnipp" class="img-rounded img-responsive"
+																				style="width: 189px; height: auto;" />
+																	</div>
 																<div class="col-xs-9 col-md-9 section-box"
 																	style="align-self: center;">
 																	<h2>
@@ -246,9 +225,7 @@
 																		<div class="col-sm-5" style="font-size: 20px;">
 																			${productDTO.productPrice}<small>원</small>
 																		</div>
-																		
 																	</div>
-
 																</div>
 															</div>
 														</div>
@@ -262,11 +239,6 @@
 									</div>
 								</div>
 							</div>
-
-
-
-
-
 						</div>
 					</div>
 				</div>
