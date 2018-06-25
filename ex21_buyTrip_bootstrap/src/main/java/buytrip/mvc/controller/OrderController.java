@@ -84,8 +84,9 @@ public class OrderController {
 		//등록 상품이미지 저장경로(서버)
 		String savePath = session.getServletContext().getRealPath("/resources/proImg");
 		//파일list가 1이상이라면
-		if(flist.size()>0) {
+		if(flist.size()>1) {
 			for(MultipartFile mpf : flist) {
+				
 				//원본 파일명
 				String fName = System.currentTimeMillis()+"_"+mpf.getOriginalFilename();
 				
@@ -117,10 +118,6 @@ public class OrderController {
 	public String readOrder(Model model, Authentication auth, HttpServletRequest request
 			,HttpSession session) {
 			
-		//server path 구하기
-		String contextPath = request.getContextPath();
-		path = contextPath + "/resources/proImg/";		
-		
 		UserDTO userDTO = (UserDTO)auth.getPrincipal();
 		String memberId = userDTO.getMemberId();
 		
@@ -128,9 +125,6 @@ public class OrderController {
 		List<ProductDTO> list2 =orderService.offer(memberId);
 		List<ProductDTO> list3 =orderService.completeOrder(memberId);
 		List<ProductDTO> list4 =orderService.letedOrder(memberId);
-		
-		
-		
 		
 		for(ProductDTO productDTO : list) {
 			imgList = this.getImage(productDTO);
