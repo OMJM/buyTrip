@@ -81,7 +81,7 @@ ${pageContext.request.contextPath}/resources/
 			
 			
 			
-<c:forEach items="${currentList}" var="list">			
+<c:forEach items="${list}" var="list">			
 			<!-- 최근 등록된 여행계획 필드 -->
 			<div class="col-md-4 w3_agile_services_grid">
 					<div class="well" style="background:white;">
@@ -105,7 +105,7 @@ ${pageContext.request.contextPath}/resources/
 					</div>
 				</div>
 				<!-- 최근 등록된 여행계획 필드 끝 -->
-</c:forEach>			
+</c:forEach>		
 				
 				
 				

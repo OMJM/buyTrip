@@ -85,4 +85,10 @@ public class TravelDAOImpl implements TravelDAO {
 		return sqlSession.selectOne("TravelMapper.selectListCnt", nation);
 	}
 
+	@Override
+	public List<TravelDTO> recentTravelList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("TravelMapper.selectRecentTravel");
+	}
+
 }

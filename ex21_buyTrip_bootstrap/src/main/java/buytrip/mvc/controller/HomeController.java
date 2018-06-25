@@ -1,12 +1,18 @@
 package buytrip.mvc.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import buytrip.mvc.model.message.service.MessageService;
+
 @Controller
 public class HomeController {
+
+	@Autowired
+	private MessageService messageService;
 
 	@RequestMapping("/")
 	public String index() {

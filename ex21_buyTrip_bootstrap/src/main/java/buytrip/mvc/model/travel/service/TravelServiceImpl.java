@@ -79,5 +79,11 @@ public class TravelServiceImpl implements TravelService {
 		return travelDAO.suggest(word);
 
 	}
+	
+	@Override
+	public List<TravelDTO> recentTravelList() {
+		// TODO Auto-generated method stub
+		return travelDAO.recentTravelList();
+	}
 
 }

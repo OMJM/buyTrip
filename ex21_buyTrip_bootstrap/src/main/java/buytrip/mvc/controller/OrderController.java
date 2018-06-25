@@ -18,8 +18,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import buytrip.mvc.model.dto.ProductDTO;
+import buytrip.mvc.model.dto.TravelDTO;
 import buytrip.mvc.model.dto.UserDTO;
 import buytrip.mvc.model.order.service.OrderService;
+import buytrip.mvc.model.travel.service.TravelService;
 
 @Controller
 @RequestMapping("/order")
@@ -27,15 +29,25 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private TravelService travelService;
+	
 	//사진 저장 경로
 	String path="";
 	List<String> imgList = new ArrayList<>();
 	List<String> imgList2 = new ArrayList<>();
+	
 	/**
 	 * order main 화면 출력
 	 */
 	@RequestMapping("/order")
-	public String mainview() {
+	public String mainview(Model model) {
+		
+		List<TravelDTO> list = travelService.recentTravelList();
+		
+		model.addAttribute("list", list);
+		
 		return "order/order";
 	}
 	

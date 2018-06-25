@@ -47,5 +47,7 @@ public interface UserService {
 	 * 회원탈퇴 비밀번호 체크
 	 * */
 	public String passCheck(String memberPassword);
+
+	int UnreadMessage(String memberId);
 	
 }

@@ -1,21 +1,16 @@
 package buytrip.mvc.controller;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import buytrip.mvc.model.dto.OfferDTO;
-import buytrip.mvc.model.dto.OfferJoinProductDTO;
-import buytrip.mvc.model.dto.ProductDTO;
-import buytrip.mvc.model.dto.UserDTO;
 import buytrip.mvc.model.deal.service.DealService;
-import buytrip.mvc.model.dto.OfferDTO;
+import buytrip.mvc.model.dto.OfferJoinProductDTO;
+import buytrip.mvc.model.dto.UserDTO;
 
 @Controller
 @RequestMapping("/deal")

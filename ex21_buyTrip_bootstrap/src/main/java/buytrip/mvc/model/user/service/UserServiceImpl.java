@@ -98,4 +98,10 @@ public class UserServiceImpl implements UserService {
 		return (chk==0) ? "ok":"fail";
 	}
 
+	@Override
+	public int UnreadMessage(String memberId) {
+		// TODO Auto-generated method stub
+		return userDAO.UnreadMessage(memberId);
+	}
+	
 }

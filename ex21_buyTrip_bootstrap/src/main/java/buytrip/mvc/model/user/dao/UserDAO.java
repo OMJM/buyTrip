@@ -48,5 +48,7 @@ public interface UserDAO {
 	 * 회원탈퇴 비밀번호 체크
 	 * */
 	public int passCheck(String memberPassword);
+
+	int UnreadMessage(String memberId);
 	
 }

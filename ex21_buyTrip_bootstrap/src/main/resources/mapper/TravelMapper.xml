@@ -63,28 +63,35 @@
 		resultMap="travelMap">
 		SELECT *
 		FROM ( SELECT ROWNUM RNUM, f.*
-		FROM ( select travel.member_id, travel.depart_nation,
+		FROM ( select
+		travel.member_id, travel.depart_nation,
 		travel.arrival_nation,travel.arrival_date, p.countProduct
 		from travel,
 		(select arrival_nation, count(*) countProduct
 		from product
-		where deadline_Date &gt; sysdate
+		where
+		deadline_Date &gt; sysdate
 		group by arrival_nation) p
-		where travel.arrival_nation=p.arrival_nation
+		where
+		travel.arrival_nation=p.arrival_nation
 		and
-		travel.arrival_date &gt; sysdate
+		travel.arrival_date &gt;
+		sysdate
 		and travel.member_id=#{memberId} ) f )
-		WHERE RNUM BETWEEN #{start} AND #{last}
+		WHERE RNUM BETWEEN
+		#{start} AND #{last}
 	</select>
 
 	<select id="selectTotalPaging" parameterType="String"
 		resultType="java.lang.Integer">
 		select count(*)
 		from travel,
-		(select arrival_nation, count(*) countProduct
+		(select arrival_nation, count(*)
+		countProduct
 		from product
 		where deadline_Date > sysdate
-		group by arrival_nation) p
+		group by
+		arrival_nation) p
 		where travel.arrival_nation=p.arrival_nation
 		and
 		travel.arrival_date > sysdate
@@ -109,6 +116,17 @@
 		and travel.member_id=#{_parameter}
 	</select>
 
+	<!-- order/order page 에 최근 등록한 여행 리스트 -->
+	<select id="selectRecentTravel" parameterType="String"
+		resultMap="travelMap">
+		select travel.member_id, depart_nation, arrival_date, input_date,
+		member_name, member_img
+		from travel, member
+		where travel.member_id = member.member_id
+		and notification = 'yes'
+		order by input_date desc
+	</select>
+	
 	<!-- 여행지 검색 후 상품 List 목록 -->
 	<select id="search" parameterType="map" resultMap="prductMap">
 		SELECT *

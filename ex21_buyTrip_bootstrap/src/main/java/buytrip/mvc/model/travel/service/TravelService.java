@@ -51,4 +51,7 @@ public interface TravelService {
 	
 	 int SelectListCnt(String nation);
 
+
+	List<TravelDTO> recentTravelList();
+
 }

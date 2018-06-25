@@ -47,4 +47,7 @@ public interface TravelDAO {
 
 	int selectTotalPaging(String memberId);
 
+	List<TravelDTO> recentTravelList();
+
+
 }
