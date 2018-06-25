@@ -2,13 +2,14 @@ package buytrip.mvc.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import buytrip.mvc.model.dto.MessageDTO;
 import buytrip.mvc.model.dto.UserDTO;
@@ -21,8 +22,7 @@ public class MessageController {
 	private MessageService messageService;
 
 	@RequestMapping("/chatForm")
-	@ResponseBody
-	public List<MessageDTO> MessageList(Model model, Authentication auth, String userId) {
+	public String MessageList(Model model, Authentication auth, String userId, HttpServletRequest request) {
 
 		UserDTO userDTO = (UserDTO) auth.getPrincipal();
 
@@ -31,11 +31,15 @@ public class MessageController {
 		List<MessageDTO> list = messageService.SelectAll(userId, memberId);
 		
 		messageService.messageState(userId, memberId);
+		
+		int count = messageService.UnreadMessage(memberId);
+		
+		request.getSession().setAttribute("count", count);
 
 		model.addAttribute("list", list);
 		model.addAttribute("userId", userId);
 
-		return list;
+		return "mypage/chatForm";
 	}
 	
 	/*@RequestMapping("message/select")

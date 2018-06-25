@@ -349,12 +349,6 @@ body {
 <script type="text/javascript">
 	$(function() {
 		
-		/* setTimeout(function () {
-            return chatting();
-        }, 0); */
-
-			
-
 	// 채팅치면 DB에 바로 insert
 		$('#btn').click(
 				function(e) {
@@ -409,19 +403,20 @@ body {
 	// 해당하는 두사람간의 채팅 내역 출력
 	 function chatting() {
 		 $.ajax({
-				url : "chatForm",
+				url : "message/select",
 				type : "post",
 				data : "${_csrf.parameterName}=${_csrf.token}",
 				dataType : "json",
 				success : function(result) {
-					$('#listTable tr:gt(0)').empty();
-					var str = "";
-					$.each(result, function(index, item) {
+					
+					var str="";
+					
+					$.each(result.list, function(index, item) {
 						
 						str += '<td>' + item.messageContent + '</td>';
 						
 					});
-					//$('#listTable').append(str);
+					
 				},
 				error : function(request, status, error) {
 				/*	alert("code:" + request.status + "\n" + "message:"
@@ -431,7 +426,6 @@ body {
 	 } 
 	
 	
-	 chatting();
 	
 	});
 </script>
