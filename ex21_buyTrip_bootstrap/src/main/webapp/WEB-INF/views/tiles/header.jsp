@@ -132,7 +132,8 @@ $(function(){
 									
 										<!-- 종소리 모양. -->
 										 <span class="glyphicon glyphicon-bell alertNotificacao" style="zoom:1.25"></span> <!-- 알림갯수. -->
-											<span class='badgeAlert'>${count}</span> <span class="caret"></span></a>
+										 <c:if test="${count != 0 }">
+											<span class='badgeAlert'>${count}</span></c:if> <span class="caret"></span></a>
 										
 										<ul class="list-notificacao dropdown-menu">
 										
