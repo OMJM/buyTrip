@@ -99,6 +99,7 @@
     </beans:property>        
 </beans:bean>
 
+<!-- websocket도와주는 handler -->
 	<beans:bean id="echoHandler" class="buytrip.mvc.websocket.EchoHandler"/>
 	
 	<websocket:handlers>

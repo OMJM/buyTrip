@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
 	<context:component-scan 
-  	base-package="buytrip.mvc.security,buytrip.mvc.model.user.service,buytrip.mvc.model.user.dao"/>
+  	base-package="buytrip.mvc.security,buytrip.mvc.model.user.service,buytrip.mvc.model.user.dao,buytrip.mvc.model.message.service,buytrip.mvc.model.message.dao"/>
   	
   	<bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"
    id="passwordEncoder"/>
@@ -18,10 +18,13 @@
 	<!-- auto-config="true" : 스프링에서 제공하는 login폼으로 이동 설정 use-expressions="true" 
 		: Spring Expression Language(SpEL)을 사용할 수 있도록 설정 -->
 	<security:http auto-config="true" use-expressions="true">
-		<!-- <security:intercept-url pattern="/user/login" access="hasRole('ROLE_USER')"/> -->
-		<!-- <security:intercept-url pattern="/member/**" access="hasRole('ROLE_MEMBER')"/> -->
-		<!-- <security:intercept-url pattern="/run/fire" access="hasRole('ROLE_ADMIN')"/>acess(허용범위)의 
-			값은 개발자의 임의 지정 -->
+		<security:intercept-url pattern="/mypage/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/user/mypage" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/order/readOrders" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/travel/select" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/deal/readDeals" access="isAuthenticated()"/>
+	<!-- 	acess(허용범위)의 값은 개발자의 임의 지정 -->
 
 		<security:form-login 
 			login-page="/user/loginForm"
@@ -29,7 +32,8 @@
 			username-parameter="memberId"
 			password-parameter="memberPassword" 
 			default-target-url="/"
-			authentication-failure-handler-ref="memberAuthenticationFailureHandler" />
+			authentication-success-handler-ref="memberAuthenticationSuccessHandler" 
+			authentication-failure-handler-ref="memberAuthenticationFailureHandler"/>
 		<security:logout 
 		    invalidate-session="true"
 		    delete-cookies="JSESSIONID"

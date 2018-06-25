@@ -47,8 +47,8 @@ public class MemberAuthenticationProvider implements AuthenticationProvider {
 		//2. db에서 사용자 정보를 가져온다.
 		   //(비밀번호는 복호화 해서 비교한다.)
 		String password = (String)auth.getCredentials();
-		if(!passwordEncoder.matches(password, member.getmemberPassword())) {//첫번째 인수는 평문, 두번째 인수 암호화
-			throw new UsernameNotFoundException("패스워드 오류입니다."+"뭐가 나오나 찍어보자"+member.getmemberPassword());
+		if(!passwordEncoder.matches(password, member.getMemberPassword())) {//첫번째 인수는 평문, 두번째 인수 암호화
+			throw new UsernameNotFoundException("패스워드 오류입니다."+"뭐가 나오나 찍어보자"+member.getMemberPassword());
 		}
 		
 		//3. db에 사용자 정보가 없으면 예외발생한다.

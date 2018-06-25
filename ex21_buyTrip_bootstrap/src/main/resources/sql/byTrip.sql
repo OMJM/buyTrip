@@ -8,6 +8,23 @@ desc member;
 show user;
 select * from V$NLS_PARAMETERS;
 
+
+DROP TABLE AUTHORITIES;
+
+select * from AUTHORITIES;
+CREATE TABLE AUTHORITIES(
+	USERNAME VARCHAR2(100) NOT NULL, /* ID*/
+	ROLE VARCHAR(30) NOT NULL,    /**/
+	CONSTRAINT MEMBER_AUTHORITIES_FK FOREIGN KEY(USERNAME) REFERENCES MEMBER(member_id),
+	CONSTRAINT AUTHORITIES_PK PRIMARY KEY(USERNAME,ROLE)
+);
+
+insert into authorities values('admin@buytrip.com', 'ROLE_ADMIN');
+insert into authorities values('nini@buytrip.com', 'ROLE_MEMBER');
+
+commit
+
+
 drop table travel;
 drop table message;
 drop table chat;
@@ -17,6 +34,7 @@ drop table product;
 drop table member cascade constraint;
 drop table nation;
 
+select * from nation;
 create table member(
 member_id varchar2(100) primary key,
 member_name varchar2(50) not null,
@@ -27,9 +45,11 @@ mobile varchar2(13) not null
 
 insert into member values('yd@yd', '조용덕', 'yd', 'http://cfs2.tistory.com/upload_control/download.blog?fhandle=YmxvZzIwNzUxQGZzMi50aXN0b3J5LmNvbTovYXR0YWNoLzEvMTcxLmpwZw==','01087058999');
 insert into member values('dy@gmail.com', '임다영', 'ldy', 'http://cfs2.tistory.com','01011112222');
-
+.
 select * from member;
 
+select * from travel;
+select * from product;
 commit;
 
 create table nation(

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,10 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import buytrip.mvc.model.dto.OfferJoinProductDTO;
 import buytrip.mvc.model.dto.ProductDTO;
+import buytrip.mvc.model.dto.TravelDTO;
 import buytrip.mvc.model.dto.UserDTO;
 import buytrip.mvc.model.order.service.OrderService;
+import buytrip.mvc.model.travel.service.TravelService;
 
 @Controller
 @RequestMapping("/order")
@@ -27,15 +29,25 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
-
-	//등록 상품이미지 저장경로 (임다영 폴더 기준)
-	private String savePath = "C:\\Users\\ldy\\git\\buyTrip\\ex21_buyTrip_bootstrap\\src\\main\\webapp\\resources\\proImg";
+		
+	@Autowired
+	private TravelService travelService;
+	
+	//사진 저장 경로
+	String path="";
+	List<String> imgList = new ArrayList<>();
+	List<String> imgList2 = new ArrayList<>();
 	
 	/**
 	 * order main 화면 출력
 	 */
 	@RequestMapping("/order")
-	public String mainview() {
+	public String mainview(Model model) {
+		
+		List<TravelDTO> list = travelService.recentTravelList();
+		
+		model.addAttribute("list", list);
+		
 		return "order/order";
 	}
 	
@@ -52,16 +64,12 @@ public class OrderController {
 	 */
 	@RequestMapping("/insertOrder")
 	public String insertOrder(ProductDTO productDTO, MultipartHttpServletRequest mtRequest,
-			Model model, Authentication auth) throws Exception {
-		
-		System.out.println("controller 진입");//test
+			Model model, Authentication auth, HttpSession session) throws Exception {
 		
 		//id값 받기
 		UserDTO userDTO = (UserDTO)auth.getPrincipal();
 		String memberId = userDTO.getMemberId();
 
-		System.out.println("memberId : "+memberId); //test
-		
 		//productDTO에 로그인된 id 저장
 		productDTO.setProposerId(memberId);
 
@@ -69,6 +77,8 @@ public class OrderController {
 		List<MultipartFile> flist = mtRequest.getFiles("file");
 		String fileName = "";
 		
+		//등록 상품이미지 저장경로(서버)
+		String savePath = session.getServletContext().getRealPath("/resources/proImg");
 		//파일list가 1이상이라면
 		if(flist.size()>0) {
 			for(MultipartFile mpf : flist) {
@@ -80,30 +90,18 @@ public class OrderController {
 				
 				//productDTO의 ProductImg에 저장할 파일이름(들)
 				fileName += fName+"|";
-
 			}
 		}
-		//test
-		System.out.println("dto의 fileName : "+fileName); 
-		
-		//url로 유입된 이미지 유무 확인
-		System.out.println("productDTO.getProductImg()"+productDTO.getProductImg());
-		
 		if(productDTO.getProductImg()!=null) {
 			fileName += productDTO.getProductImg();
 		}
-		
-		//test
-		System.out.println("dto의 url이미지 추가한 fileName : "+fileName); 
-				
-		
 		//productDTO에 1개이상의 파일명 저장
 		productDTO.setProductImg(fileName);
 		
 		//상품 등록하기
 		orderService.insertOrder(productDTO);
 
-		return "redirect:readOrders";
+		return "redirect:/";
 	}
 		
 
@@ -112,10 +110,14 @@ public class OrderController {
 	 * [mypage] 등록한 상품 list 보기
 	 */
 	@RequestMapping("/readOrders")
-	public String readOrder(Model model, Authentication auth) {
+	public String readOrder(Model model, Authentication auth, HttpServletRequest request
+			,HttpSession session) {
+			
+		//server path 구하기
+		String contextPath = request.getContextPath();
+		path = contextPath + "/resources/proImg/";		
 		
 		UserDTO userDTO = (UserDTO)auth.getPrincipal();
-		
 		String memberId = userDTO.getMemberId();
 		
 		List<ProductDTO> list = orderService.readOrder(memberId);	
@@ -126,13 +128,21 @@ public class OrderController {
 		
 		
 		
+		for(ProductDTO productDTO : list) {
+			imgList = this.getImage(productDTO);
+			productDTO.setImgList(imgList);
+		}
+		for(ProductDTO productDTO : list2) {
+			imgList2 = this.getImage(productDTO);
+			productDTO.setImgList(imgList2);
+		}
 		
 		model.addAttribute("list", list);
 		model.addAttribute("list2", list2);
 		model.addAttribute("list3", list3);
 		model.addAttribute("list4", list4);
 		
-		return "mypage/mypageProductList";
+		return "mypage/mypageProductList_my";
 	}
 	
 	/**
@@ -140,43 +150,46 @@ public class OrderController {
 	 */
 	@RequestMapping("/readOrderDetail")
 	public String readOrderDetail(String productCode, Model model, HttpServletRequest request){
-		System.out.println("code값이란?"+productCode);
 		
-		   String contextPath = request.getContextPath();
-			ProductDTO productDTO = orderService.readOrderDetail(productCode);
-
-			String path = contextPath + "/resources/proImg/";
-			
-			//이미지 뿌려주기
-			String imgName = productDTO.getProductImg();
-			System.out.println("imgName"+imgName);
-			
-			String [] imgArr = imgName.split("\\|");
-			List<String> imgList = new ArrayList();  
-			for(String image : imgArr) {
-				if(image.contains("https://")||image.contains(".com")) {
-					imgList.add(image);
-					System.out.println("url의 image : "+image);//test
-				}else {
-					imgList.add(path+image);
-					System.out.println("첨부한 이미지 : "+image);//test
-				}
-			}
-			
-			//test
-			System.out.println("list 사이즈 : "+imgList.size());
-			
+		//server path 구하기
+		String contextPath = request.getContextPath();
+		path = contextPath + "/resources/proImg/";
+		
+		ProductDTO productDTO = orderService.readOrderDetail(productCode);
+		imgList = this.getImage(productDTO);
+		
+		//이미지list & dto 저장
+		model.addAttribute("imgList", imgList);
+		model.addAttribute("productDTO",productDTO);
 			
 			//offer제안한 list출력
 			List<UserDTO> offerList = orderService.offerList(productCode);
 			
-			//이미지list & dto 저장
-			model.addAttribute("imgList", imgList);
-			model.addAttribute("productDTO",productDTO);
+
 			//offerlist 저장
 			model.addAttribute("offerList", offerList);
 			
 		return "mypage/mypageDetail";
+	}
+
+	/**
+	 * productDTO에서 꺼내온 image를 list에 담기
+	 */
+	public List<String> getImage(ProductDTO productDTO) {
+
+		//이미지 뿌려주기
+		String imgName = productDTO.getProductImg();
+		
+		String [] imgArr = imgName.split("\\|");
+		List<String> imgList = new ArrayList<>();  
+		for(String image : imgArr) {
+			if(image.contains("https://")||image.contains(".com")) {
+				imgList.add(image);
+			}else {
+				imgList.add(path+image);
+			}
+		}
+		return imgList;
 	}
 	
 	/**

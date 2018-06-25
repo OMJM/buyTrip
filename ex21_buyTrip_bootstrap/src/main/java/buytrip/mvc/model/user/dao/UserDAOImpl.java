@@ -76,4 +76,10 @@ public class UserDAOImpl implements UserDAO {
 		return session.selectOne("userMapper.passCheck", memberPassword);
 	}
 
+	@Override
+	public int UnreadMessage(String memberId) {
+		// TODO Auto-generated method stub
+		return session.selectOne("messageMapper.unreadMessage", memberId);
+	}
+
 }
