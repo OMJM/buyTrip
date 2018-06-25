@@ -29,6 +29,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	//사진 저장 경로
+	String path="";
+		
 	//회원정보수정시 비밀번호 암호화처리를 위한 객체를 주입받는다
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
