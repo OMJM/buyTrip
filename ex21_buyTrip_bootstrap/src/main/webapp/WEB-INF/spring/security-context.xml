@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
 	<context:component-scan 
-  	base-package="buytrip.mvc.security,buytrip.mvc.model.user.service,buytrip.mvc.model.user.dao"/>
+  	base-package="buytrip.mvc.security,buytrip.mvc.model.user.service,buytrip.mvc.model.user.dao,buytrip.mvc.model.message.service,buytrip.mvc.model.message.dao"/>
   	
   	<bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"
    id="passwordEncoder"/>
@@ -32,7 +32,8 @@
 			username-parameter="memberId"
 			password-parameter="memberPassword" 
 			default-target-url="/"
-			authentication-failure-handler-ref="memberAuthenticationFailureHandler" />
+			authentication-success-handler-ref="memberAuthenticationSuccessHandler" 
+			authentication-failure-handler-ref="memberAuthenticationFailureHandler"/>
 		<security:logout 
 		    invalidate-session="true"
 		    delete-cookies="JSESSIONID"
