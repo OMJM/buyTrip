@@ -69,6 +69,16 @@ public class TravelController {
 		return "travel/searchList";
 	}
 
+	@RequestMapping("costList")
+	public String costList(String departNation,Model model) {
+		
+		model.addAttribute("departNation", departNation);
+		model.addAttribute("costList", travelService.costList(departNation));
+	
+
+		return "travel/costList";
+	}
+	
 	/**
 	 * 상품리스트에서 detail페이지로 가기.
 	 */

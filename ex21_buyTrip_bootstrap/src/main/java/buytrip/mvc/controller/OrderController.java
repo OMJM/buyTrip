@@ -29,7 +29,7 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
-	
+		
 	@Autowired
 	private TravelService travelService;
 	
@@ -104,13 +104,15 @@ public class OrderController {
 		return "redirect:/";
 	}
 		
+
+	
 	/**
 	 * [mypage] 등록한 상품 list 보기
 	 */
 	@RequestMapping("/readOrders")
 	public String readOrder(Model model, Authentication auth, HttpServletRequest request
 			,HttpSession session) {
-		
+			
 		//server path 구하기
 		String contextPath = request.getContextPath();
 		path = contextPath + "/resources/proImg/";		
@@ -118,8 +120,13 @@ public class OrderController {
 		UserDTO userDTO = (UserDTO)auth.getPrincipal();
 		String memberId = userDTO.getMemberId();
 		
-		List<ProductDTO> list = orderService.readOrder(memberId);
-		List<ProductDTO> list2 = orderService.letedOrder(memberId);
+		List<ProductDTO> list = orderService.readOrder(memberId);	
+		List<ProductDTO> list2 =orderService.offer(memberId);
+		List<ProductDTO> list3 =orderService.completeOrder(memberId);
+		List<ProductDTO> list4 =orderService.letedOrder(memberId);
+		
+		
+		
 		
 		for(ProductDTO productDTO : list) {
 			imgList = this.getImage(productDTO);
@@ -129,8 +136,11 @@ public class OrderController {
 			imgList2 = this.getImage(productDTO);
 			productDTO.setImgList(imgList2);
 		}
+		
 		model.addAttribute("list", list);
 		model.addAttribute("list2", list2);
+		model.addAttribute("list3", list3);
+		model.addAttribute("list4", list4);
 		
 		return "mypage/mypageProductList_my";
 	}
@@ -151,10 +161,17 @@ public class OrderController {
 		//이미지list & dto 저장
 		model.addAttribute("imgList", imgList);
 		model.addAttribute("productDTO",productDTO);
-		
+			
+			//offer제안한 list출력
+			List<UserDTO> offerList = orderService.offerList(productCode);
+			
+
+			//offerlist 저장
+			model.addAttribute("offerList", offerList);
+			
 		return "mypage/mypageDetail";
 	}
-	
+
 	/**
 	 * productDTO에서 꺼내온 image를 list에 담기
 	 */

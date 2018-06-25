@@ -41,13 +41,21 @@ public interface TravelDAO {
 	List<TravelDTO> finishAll(String memberId);
 
 	/**
-	 * 여행지 넣으면은 상품list 보기
+	 * 여행지 넣으면은 상품list 보기 등록순
 	 */
 	List<ProductDTO> searchList(String nation, PagingVo pagingVo);
 
 	int selectTotalPaging(String memberId);
 
+	/**
+	 * 최근 등록된 여행지 list
+	 */
 	List<TravelDTO> recentTravelList();
 
+	/**
+	 * 여행지 넣으면은 상품list 보기 가격순
+	 */
+	
+	List<ProductDTO> costList(String nation);
 
 }

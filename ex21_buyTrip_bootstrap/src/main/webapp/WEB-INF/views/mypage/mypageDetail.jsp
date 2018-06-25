@@ -389,80 +389,63 @@ scale
 		
 		<hr>
 		<h2>제안자 정보</h2>
-		
-		<!-- 제안자 -->
-		<div class="card">
-			<div class="well">
-				<div class="row">
-					<div class="col-lg-2">
-						<img src="${pageContext.request.contextPath}/resources/images/159.jpg" class="avatar img-circle" alt="avatar"
-							style="width: 100px; height: auto;">
-					</div>
-					<div class="col-lg-10">
-						<div class="row">
-							<div class="col-xs-4">
-								<span style="font-size: 20px">userName</span>
-							</div>
-							<div class="col-xs-4">
-								<span style="font-size: 40px;">$50</span>
-							</div>
-							<a href="#" class="btn btn-info" role="button"
-									style="width: 150px;" >메세지 하기</a>
-						</div>
-						<hr>
-						<div class="row">
-							<div class="col-xs-4">
-								<span>출발지 : 일본</span>
-							</div>
-							<div class="col-xs-4">
-								<span>도착날짜 : 2018-07-01</span>
-							</div>
-							<a href="#" class="btn btn-info" role="button"
-									style="width: 150px;" >제안 수락하기</a>
-						</div>		
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- / 제안자 -->
+				<c:choose>
+					<c:when test="${empty requestScope.offerList}">
+						<tr>
+							<td colspan="5">
+								<p align="center">
+									<b><span style="font-size: 9pt;">등록된 상품이 없습니다.</span></b>
+								</p>
+							</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
 
-		<!-- 제안자 -->
-		<div class="card">
-			<div class="well">
-				<div class="row">
-					<div class="col-lg-2">
-						<img src="${pageContext.request.contextPath}/resources/images/159.jpg" class="avatar img-circle" alt="avatar"
-							style="width: 100px; height: auto;">
-					</div>
-					<div class="col-lg-10">
-						<div class="row">
-							<div class="col-xs-4">
-								<span style="font-size: 20px">userName</span>
-							</div>
-							<div class="col-xs-4">
-								<span style="font-size: 40px;">$50</span>
-							</div>
-							<a href="#" class="btn btn-info" role="button"
-									style="width: 150px;" >메세지 하기</a>
-						</div>
-						<hr>
-						<div class="row">
-							<div class="col-xs-4">
-								<span>출발지 : 일본</span>
-							</div>
-							<div class="col-xs-4">
-								<span>도착날짜 : 2018-07-01</span>
-							</div>
-							<a href="#" class="btn btn-info" role="button"
-									style="width: 150px;" >제안 수락하기</a>
-						</div>		
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- / 제안자 -->
+						<c:forEach items="${requestScope.offerList}" var="userDTO">
 
-	</div>
+							<!-- 제안자 -->
+							<div class="card">
+								<div class="well">
+									<div class="row">
+										<div class="col-lg-2">
+											<img
+												src=" ${userDTO.memberImg }"
+												class="avatar img-circle" alt="avatar"
+												style="width: 100px; height: auto;">
+										</div>
+										<div class="col-lg-10">
+											<div class="row">
+												<div class="col-xs-4">
+													<span style="font-size: 20px">${userDTO.memberName }</span>
+												</div>
+												<div class="col-xs-4">
+													<span style="font-size: 40px;">$50</span>
+												</div>
+												<a href="#" class="btn btn-info" role="button"
+													style="width: 150px;">메세지 하기</a>
+											</div>
+											<hr>
+											<div class="row">
+												<div class="col-xs-4">
+													<span>출발지 : 일본</span>
+												</div>
+												<div class="col-xs-4">
+													<span>도착날짜 : 2018-07-01</span>
+												</div>
+												<a href="#" class="btn btn-info" role="button"
+													style="width: 150px;">제안 수락하기</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- / 제안자 -->
+							</c:forEach>
+							</c:otherwise>
+							</c:choose>
+							
+
+			</div>
 		</div>
 	</div>
 	<!-- //projects -->
