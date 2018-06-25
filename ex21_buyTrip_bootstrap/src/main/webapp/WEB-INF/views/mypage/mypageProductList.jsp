@@ -157,6 +157,34 @@ body {
 }
 </style>
 
+<script>
+function getMypageProdcutList(x) {
+	var productIndex = document.getElementById("mypageProdcutList"+x);
+	productIndex.submit();
+
+}
+
+$(function(){
+	   $("#ww").click(function(){
+		   $("#mypageProdcutList2").submit();
+	   })
+})
+
+$(function(){
+	   $("#ee").click(function(){
+		   $("#mypageProdcutList3").submit();
+	   })
+})
+
+$(function(){
+	   $("#rr").click(function(){
+		   $("#mypageProdcutList4").submit();
+	   })
+})
+
+
+</script>
+
 </head>
 <body style="background-color: #F1F3FA;">
 
@@ -191,10 +219,10 @@ body {
 								<li><a href="projects"> <i
 										class="glyphicon glyphicon-home"></i> 회원 수정
 								</a></li>
-								<li><a href="travelList"> <i
+								<li><a href="${pageContext.request.contextPath}/travel/select"> <i
 										class="glyphicon glyphicon-user"></i> 여행 관리
 								</a></li>
-								<li class="active"><a href="mypageProductList"> <i
+								<li class="active"><a href="${pageContext.request.contextPath}/order/readOrderList"> <i
 										class="glyphicon glyphicon-ok"></i> 주문 관리
 								</a></li>
 								<li><a href="#"> <i class="glyphicon glyphicon-flag"></i>
@@ -232,66 +260,64 @@ body {
 								<div class="container">
 									<div class="row">
 										<div class="col-md-8">
-									
-										<c:choose>
+
+											<c:choose>
 												<c:when test="${empty requestScope.list}">
 													<tr>
 														<td colspan="5">
 															<p align="center">
-																<b><span style="font-size: 9pt;">등록된 상품이 없습니다.</span></b>
+																<b><span style="font-size: 9pt;">등록된 상품이
+																		없습니다.</span></b>
 															</p>
 														</td>
 													</tr>
-													</c:when>
-													<c:otherwise>
-													
-													<c:forEach items="${requestScope.list}" var="productDTO">
-													<form name=mypageProdcutList method=post action="${pageContext.request.contextPath}/order/readOrderDetail">
-													<input type='hidden' name='proposerId' value="${productDTO.proposerId}">
-													<input type='hidden' name='productCode' value="${productDTO.productCode}">
-													
-														<!-- 상품 한개 템플릿 -->
-														<div class="panel panel-default  panel--styled"
-															style="padding: 10px;" 
-															onclick="location.href='${pageContext.request.contextPath}/order/readOrderDetail?productCode=${productDTO.productCode}'">
-															<div align="right">
-																<h4>마감날짜 : ${productDTO.deadlineDate}</h4>
-															</div>
-
-															<div class="row">
-																<div class="col-xs-3 col-md-3 text-center">
-																	<img
-																		src="${pageContext.request.contextPath}/resources/images/159.jpg"
-																		alt="bootsnipp" class="img-rounded img-responsive"
-																		style="width: 189px; height: auto;" />
+												</c:when>
+												<c:otherwise>
+													<c:forEach items="${requestScope.list}" var="productDTO" varStatus="state">
+														<form id="mypageProdcutList${state.index}" name="mypageProdcutList"
+															method="post" action="${pageContext.request.contextPath}/order/readOrderDetail">
+															<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+															<input type="hidden" name="proposerId" value="${productDTO.proposerId}"/>
+															<input type="hidden" name="productCode" value="${productDTO.productCode}"/>
+															
+															
+															<!-- 상품 한개 템플릿 -->
+															<div class="panel panel-default  panel--styled"
+																style="padding: 10px;" onclick="getMypageProdcutList(${state.index})">
+																<div align="right">
+																	<h4>마감날짜 : ${productDTO.deadlineDate}</h4>
 																</div>
-																<div class="col-xs-9 col-md-9 section-box"
-																	style="align-self: center;">
-																	<h2>
-																		${productDTO.productName} 
-																	</h2>
-																	<div class="well well-sm">
-																		<div class="col-sm-6" style="font-size: 15px;">
-																			<small>출발지 : </small> ${productDTO.arrivalNation}
-																		</div>
-																		<small>도착지 : </small>${productDTO.departNation}<br>
-																	</div>
-																	<div class="row">
-																		<div class="col-sm-5" style="font-size: 20px;">
-																			${productDTO.productPrice}<small>원</small>
-																		</div>
-																		
-																	</div>
 
+																<div class="row">
+																	<div class="col-xs-3 col-md-3 text-center">
+																		<img
+																			src="${pageContext.request.contextPath}/resources/proImg/${productDTO.productImg}"
+																			class="img-rounded img-responsive"
+																			style="width: 189px; height: auto;" />
+																	</div>
+																	<div class="col-xs-9 col-md-9 section-box"
+																		style="align-self: center;">
+																		<h2>${productDTO.productName}</h2>
+																		<div class="well well-sm">
+																			<div class="col-sm-6" style="font-size: 15px;">
+																				<small>출발지 : </small> ${productDTO.arrivalNation}
+																			</div>
+																			<small>도착지 : </small>${productDTO.departNation}<br>
+																		</div>
+																		<div class="row">
+																			<div class="col-sm-5" style="font-size: 20px;">
+																				${productDTO.productPrice}<small>원</small>
+																			</div>
+																		</div>
+
+																	</div>
 																</div>
 															</div>
-														</div>
-														<!-- 상품 한개 템플릿 끝 -->
+															<!-- 상품 한개 템플릿 끝 -->
 														</form>
-							</c:forEach>
-							
-							</c:otherwise>
-							</c:choose>
+													</c:forEach>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</div>
@@ -304,47 +330,66 @@ body {
 										<div class="col-md-8">
 										
 											
-											<!-- 상품 한개 템플릿 -->
-											<div class="panel panel-default  panel--styled" style="padding:10px;">
-													<div align="right">
-														<h4>마감날자 : 2018-07-02</h4>
-													</div>
+											<c:choose>
+												<c:when test="${empty requestScope.list2}">
+													<tr>
+														<td colspan="5">
+															<p align="center">
+																<b><span style="font-size: 9pt;">등록된 상품이
+																		없습니다.</span></b>
+															</p>
+														</td>
+													</tr>
+												</c:when>
+												<c:otherwise>
 
-													<div class="row">
-														<div class="col-xs-3 col-md-3 text-center">
-															<img
-																src="${pageContext.request.contextPath}/resources/images/159.jpg"
-																alt="bootsnipp" class="img-rounded img-responsive"
-																style="width: 189px; height: auto;" />
-														</div>
-														<div class="col-xs-9 col-md-9 section-box"
-															style="align-self: center;">
-															<h2>
-																제품 제목 <a href="http://bootsnipp.com/" target="_blank"><span
-																	class="glyphicon glyphicon-new-window"> </span></a>
-															</h2>
-															<div class="well well-sm">
-																<div class="col-sm-6" style="font-size: 15px;">
-																	<small>출발지 </small> 런던
-																</div>
-																<small>도착지 : </small>서울<br>
-															</div>
-															<div class="row">
-																<div class="col-sm-5" style="font-size: 20px;">
-																	금 액 : 25000<small>원</small>
-																</div>
-																<div class="col-sm-7" align="right">
-																	<button type="button" class="btn btn-info">제안하기</button>
-																</div>
-															</div>
+													<c:forEach items="${requestScope.list2}" var="productDTO2">
+														<form id="mypageProdcutList2" name="mypageProdcutList"
+															method="post"
+															action="${pageContext.request.contextPath}/order/readOrderDetail">
+															<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+															<input type="hidden" name="proposerId" value="${productDTO2.proposerId}"/>
+															<input type="hidden" name="productCode" value="${productDTO2.productCode}"/>
+															<input type="hidden" name="tradeState" value="${productDTO2.tradeState}"/>
+														
 
-														</div>
-													</div>
-											</div>
-											<!-- 상품 한개 템플릿 끝 -->
-											
-											
-											
+															<!-- 상품 한개 템플릿 -->
+															<div class="panel panel-default  panel--styled"
+																style="padding: 10px;" id="ww">
+																<div align="right">
+																	<h4>마감날짜 : ${productDTO2.deadlineDate}</h4>
+																</div>
+
+																<div class="row">
+																	<div class="col-xs-3 col-md-3 text-center">
+																		<img
+																			src="${pageContext.request.contextPath}/resources/proImg/${productDTO2.productImg}"
+																			class="img-rounded img-responsive"
+																			style="width: 189px; height: auto;" />
+																	</div>
+																	<div class="col-xs-9 col-md-9 section-box"
+																		style="align-self: center;">
+																		<h2>${productDTO2.productName}</h2>
+																		<div class="well well-sm">
+																			<div class="col-sm-6" style="font-size: 15px;">
+																				<small>출발지 : </small> ${productDTO2.arrivalNation}
+																			</div>
+																			<small>도착지 : </small>${productDTO2.departNation}<br>
+																		</div>
+																		<div class="row">
+																			<div class="col-sm-5" style="font-size: 20px;">
+																				${productDTO2.productPrice}<small>원</small>
+																			</div>
+																		</div>
+
+																	</div>
+																</div>
+															</div>
+															<!-- 상품 한개 템플릿 끝 -->
+														</form>
+													</c:forEach>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</div>
@@ -357,46 +402,65 @@ body {
 										<div class="col-md-8">
 										
 										
-											
-											<!-- 상품 한개 템플릿 -->
-											<div class="panel panel-default  panel--styled" style="padding:10px;">
-													<div align="right">
-														<h4>마감날자 : 2018-07-02</h4>
-													</div>
+								<c:choose>
+												<c:when test="${empty requestScope.list3}">
+													<tr>
+														<td colspan="5">
+															<p align="center">
+																<b><span style="font-size: 9pt;">등록된 상품이
+																		없습니다.</span></b>
+															</p>
+														</td>
+													</tr>
+												</c:when>
+												<c:otherwise>
 
-													<div class="row">
-														<div class="col-xs-3 col-md-3 text-center">
-															<img
-																src="${pageContext.request.contextPath}/resources/images/159.jpg"
-																alt="bootsnipp" class="img-rounded img-responsive"
-																style="width: 189px; height: auto;" />
-														</div>
-														<div class="col-xs-9 col-md-9 section-box"
-															style="align-self: center;">
-															<h2>
-																제품 제목 <a href="http://bootsnipp.com/" target="_blank"><span
-																	class="glyphicon glyphicon-new-window"> </span></a>
-															</h2>
-															<div class="well well-sm">
-																<div class="col-sm-6" style="font-size: 15px;">
-																	<small>출발지 </small> 베를린
-																</div>
-																<small>도착지 : </small>서울<br>
-															</div>
-															<div class="row">
-																<div class="col-sm-5" style="font-size: 20px;">
-																	금 액 : 25000<small>원</small>
-																</div>
-																<div class="col-sm-7" align="right">
-																	<button type="button" class="btn btn-info">제안하기</button>
-																</div>
-															</div>
+													<c:forEach items="${requestScope.list3}" var="productDTO3">
+														<form id="mypageProdcutList3" name="mypageProdcutList"
+															method="post"
+															action="${pageContext.request.contextPath}/order/readOrderDetail">
+															<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+															<input type="hidden" name="proposerId" value="${productDTO3.proposerId}"/>
+															<input type="hidden" name="productCode" value="${productDTO3.productCode}"/>
+															<input type="hidden" name="tradeState" value="${productDTO3.tradeState}"/>
 
-														</div>
-													</div>
-											</div>
-											<!-- 상품 한개 템플릿 끝 -->
-											
+															<!-- 상품 한개 템플릿 -->
+															<div class="panel panel-default  panel--styled"
+																style="padding: 10px;" id="ee">
+																<div align="right">
+																	<h4>마감날짜 : ${productDTO3.deadlineDate}</h4>
+																</div>
+
+																<div class="row">
+																	<div class="col-xs-3 col-md-3 text-center">
+																		<img
+																			src="${pageContext.request.contextPath}/resources/proImg/${productDTO3.productImg}"
+																			class="img-rounded img-responsive"
+																			style="width: 189px; height: auto;" />
+																	</div>
+																	<div class="col-xs-9 col-md-9 section-box"
+																		style="align-self: center;">
+																		<h2>${productDTO3.productName}</h2>
+																		<div class="well well-sm">
+																			<div class="col-sm-6" style="font-size: 15px;">
+																				<small>출발지 : </small> ${productDTO3.arrivalNation}
+																			</div>
+																			<small>도착지 : </small>${productDTO3.departNation}<br>
+																		</div>
+																		<div class="row">
+																			<div class="col-sm-5" style="font-size: 20px;">
+																				${productDTO3.productPrice}<small>원</small>
+																			</div>
+																		</div>
+
+																	</div>
+																</div>
+															</div>
+															<!-- 상품 한개 템플릿 끝 -->
+														</form>
+													</c:forEach>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</div>
@@ -409,7 +473,7 @@ body {
 									<div class="row">
 										<div class="col-md-8">
 										<c:choose>
-												<c:when test="${empty requestScope.list2}">
+												<c:when test="${empty requestScope.list4}">
 													<tr>
 														<td colspan="5">
 															<p align="center">
@@ -419,16 +483,21 @@ body {
 													</tr>
 													</c:when>
 													<c:otherwise>
-													<c:forEach items="${requestScope.list2}" var="productDTO">
-													<form name=mypageProdcutList method=post action="${pageContext.request.contextPath}/order/readOrderDetail">
-													<input type='hidden' name='proposerId' value="${productDTO.proposerId}">
-													<input type='hidden' name='productCode' value="${productDTO.productCode}">
+											
+													<c:forEach items="${requestScope.list4}" var="productDTO4">
+														<form id="mypageProdcutList4" name="mypageProdcutList"
+															method="post"
+															action="${pageContext.request.contextPath}/order/readOrderDetail">
+														<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+													    <input type="hidden" name="proposerId" value="${productDTO4.proposerId}"/>
+														<input type="hidden" name="productCode" value="${productDTO4.productCode}"/>
+														<input type="hidden" name="tradeState" value="${productDTO4.tradeState}"/>
+														
 														<!-- 상품 한개 템플릿 -->
 														<div class="panel panel-default  panel--styled"
-															style="padding: 10px;" 
-															onclick="location.href='${pageContext.request.contextPath}/order/readOrderDetail?productCode=${productDTO.productCode}'">
+															style="padding: 10px;" id="rr">
 															<div align="right">
-																<h4>마감날짜 : ${productDTO.deadlineDate}</h4>
+																<h4>마감날짜 : ${productDTO4.deadlineDate}</h4>
 															</div>
 
 															<div class="row">
@@ -441,17 +510,17 @@ body {
 																<div class="col-xs-9 col-md-9 section-box"
 																	style="align-self: center;">
 																	<h2>
-																		${productDTO.productName}
+																		${productDTO4.productName}
 																	</h2>
 																	<div class="well well-sm">
 																		<div class="col-sm-6" style="font-size: 15px;">
-																			<small>출발지 : </small> ${productDTO.arrivalNation}
+																			<small>출발지 : </small> ${productDTO4.arrivalNation}
 																		</div>
-																		<small>도착지 : </small>${productDTO.departNation}<br>
+																		<small>도착지 : </small>${productDTO4.departNation}<br>
 																	</div>
 																	<div class="row">
 																		<div class="col-sm-5" style="font-size: 20px;">
-																			${productDTO.productPrice}<small>원</small>
+																			${productDTO4.productPrice}<small>원</small>
 																		</div>
 																		
 																	</div>
@@ -461,10 +530,9 @@ body {
 														</div>
 														<!-- 상품 한개 템플릿 끝 -->
 														</form>
-							</c:forEach>
-							</c:otherwise>
-							</c:choose>
-											
+													</c:forEach>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</div>

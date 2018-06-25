@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import buytrip.mvc.model.dto.ProductDTO;
+import buytrip.mvc.model.dto.UserDTO;
 import buytrip.mvc.model.order.dao.OrderDAO;
 
 @Service
@@ -64,5 +65,20 @@ public class OrderServiceImpl implements OrderService {
 	public ProductDTO readUserOrder() {
 		return null;
 	}
+
+	@Override
+	public List<UserDTO> offerList(String productCode) {
+		return orderDAO.offerList(productCode);
+	}
+	@Override
+	public List<ProductDTO> offer(String proposerId) {
+		return orderDAO.offer(proposerId);
+	}
+	@Override
+	public List<ProductDTO> completeOrder(String proposerId) {
+
+		return orderDAO.completeOrder(proposerId);
+	}
+
 
 }

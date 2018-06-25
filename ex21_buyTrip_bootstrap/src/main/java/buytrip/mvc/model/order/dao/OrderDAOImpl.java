@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import buytrip.mvc.model.dto.ProductDTO;
+import buytrip.mvc.model.dto.UserDTO;
 
 @Repository
 public class OrderDAOImpl implements OrderDAO {
@@ -26,6 +27,9 @@ public class OrderDAOImpl implements OrderDAO {
 	public List<ProductDTO> readOrder(String proposerId) {
 		
 		List<ProductDTO>list= session.selectList("orderMapper.mySelect", proposerId);
+		for(ProductDTO p:list) {
+			System.out.println(p.getProductCode());
+		}
 		System.out.println(proposerId);
 		return list;
 				
@@ -54,9 +58,9 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public List<ProductDTO> completeOrder(String proposerId, String tradeState) {
+	public List<ProductDTO> completeOrder(String proposerId) {
 
-		return null;
+		return session.selectList("orderMapper.myComplete", proposerId);
 	}
 
 	
@@ -76,6 +80,18 @@ public class OrderDAOImpl implements OrderDAO {
 
 		return null;
 
+	}
+
+
+	@Override
+	public List<UserDTO> offerList(String productCode) {
+		return session.selectList("orderMapper.myUserOffer", productCode);
+	}
+
+	@Override
+	public List<ProductDTO> offer(String proposerId) {
+		
+		return session.selectList("orderMapper.myOffer", proposerId);
 	}
 
 }

@@ -73,4 +73,11 @@ public class TravelDAOImpl implements TravelDAO {
 		return sqlSession.selectList("TravelMapper.search",nation);
 	}
 
+
+
+	@Override
+	public List<ProductDTO> costList(String nation) {		
+		return sqlSession.selectList("TravelMapper.costList",nation);	
+		}
+
 }

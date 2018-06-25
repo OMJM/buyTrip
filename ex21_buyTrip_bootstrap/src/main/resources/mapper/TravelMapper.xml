@@ -86,7 +86,8 @@
 		select p.product_code, p.product_name,p.product_img,p.product_url,p.product_qty,p.product_price,p.deadline_date,p.requested_date,p.depart_nation,p.arrival_nation,m.member_img
 		from product p join member m
 		on p.proposer_id = m.member_id
-		where arrival_nation=#{_parameter}
+		where arrival_nation=#{_parameter} 
+		order by requested_date desc
 	</select>
 	
 
@@ -166,4 +167,18 @@
 		where product_code=
 			(select product_code from offer where offer_code=#{_parameter})
 	</update>
+	
+	
+	
+	<!-- 가격 순 -->
+	
+	<select id="costList" parameterType="string" resultMap="prductMap">
+		select p.product_code, p.product_name,p.product_img,p.product_url,p.product_qty,p.product_price,p.deadline_date,p.requested_date,p.depart_nation,p.arrival_nation,m.member_img
+		from product p join member m
+		on p.proposer_id = m.member_id
+		where arrival_nation=#{_parameter} 
+		order by product_price desc
+		
+		
+	</select>
 </mapper>

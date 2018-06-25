@@ -45,6 +45,12 @@ public interface TravelService {
 	 */
 	public List<ProductDTO> searchList(String nation);
 	
-	
+	/**
+	 *°¡°Ý ¼ø
+	 * @param nation
+	 * 
+	 */
+	List<ProductDTO> costList(String nation);
+
 
 }

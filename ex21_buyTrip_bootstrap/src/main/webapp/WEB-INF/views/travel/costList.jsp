@@ -73,7 +73,7 @@ body {
 			<div class="col-md-10">
 			
 			<c:choose>
-					<c:when test="${empty requestScope.searchProductList}">
+					<c:when test="${empty requestScope.costList}">
 						<tr>
 							<td colspan="5">
 								<p align="center">
@@ -83,48 +83,48 @@ body {
 						</tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach items="${requestScope.searchProductList}" var="productDTO">
+						<c:forEach items="${requestScope.costList}" var="productDTO1">
 							<!-- 주문 list -->
 							<div class="col-sm-12">
 								<div class="well well-sm"
-									onclick="location.href='${pageContext.request.contextPath}/travel/detail?productCode=${productDTO.productCode}'"
+									onclick="location.href='${pageContext.request.contextPath}/travel/detail?productCode=${productDTO1.productCode}'"
 									style="background-color: white; padding: 10px; margin: 20px">
 									<div class="row">
 										<div class="col-sm-2" style="margin-bottom: 15px;">
 											<img
-												src="${productDTO.memberImg}"
+												src="${productDTO1.memberImg}"
 												class="avatar img-circle" alt="avatar"
 												style="width: 50px; height: auto;">
 										</div>
 										<div class="col-sm-4">
-											<span>${productDTO.proposerId}</span></br> <span>요청날짜 :${productDTO.requestedDate}</span>
+											<span>${productDTO1.proposerId}</span></br> <span>요청날짜 :${productDTO1.requestedDate}</span>
 										</div>
 										<div class="col-sm-6" align="right">
-											<h5>마감날짜 : ${productDTO.deadlineDate}</h5>
+											<h5>마감날짜 : ${productDTO1.deadlineDate}</h5>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-xs-3 col-md-3 text-center">
 											<img
-												src="${productDTO.productImg}"
+												src="${productDTO1.productImg}"
 												alt="bootsnipp" class="img-rounded img-responsive"
 												style="width: 189px; height: auto;" />
 										</div>
 										<div class="col-xs-9 col-md-9 section-box"
 											style="align-self: center;">
 											<h2>
-												${productDTO.productName} <a href="http://bootsnipp.com/" target="_blank"><span
+												${productDTO1.productName} <a href="http://bootsnipp.com/" target="_blank"><span
 													class="glyphicon glyphicon-new-window"> </span></a>
 											</h2>
 											<div class="well well-sm">
 												<div class="col-sm-6" style="font-size: 15px;">
-													<small>출발지 : </small> ${productDTO.arrivalNation}
+													<small>출발지 : </small> ${productDTO1.arrivalNation}
 												</div>
-												<small>도착지 : </small>${productDTO.departNation}<br>
+												<small>도착지 : </small>${productDTO1.departNation}<br>
 											</div>
 											<div class="row">
 												<div class="col-sm-7" style="font-size: 20px;">
-													금 액 : ${productDTO.productPrice} <small>원</small>
+													금 액 : ${productDTO1.productPrice} <small>원</small>
 												</div>
 												<div class="col-sm-5" align="right">
 													<button type="button" class="btn btn-info">제안하기</button>

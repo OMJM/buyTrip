@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import buytrip.mvc.model.dto.OfferJoinProductDTO;
 import buytrip.mvc.model.dto.ProductDTO;
 import buytrip.mvc.model.dto.UserDTO;
 import buytrip.mvc.model.order.service.OrderService;
@@ -117,11 +118,19 @@ public class OrderController {
 		
 		String memberId = userDTO.getMemberId();
 		
-		List<ProductDTO> list=orderService.readOrder(memberId);
-		List<ProductDTO> list2=orderService.letedOrder(memberId);
+		List<ProductDTO> list = orderService.readOrder(memberId);	
+		List<ProductDTO> list2 =orderService.offer(memberId);
+		List<ProductDTO> list3 =orderService.completeOrder(memberId);
+		List<ProductDTO> list4 =orderService.letedOrder(memberId);
+		
+		
+		
+		
 		
 		model.addAttribute("list", list);
 		model.addAttribute("list2", list2);
+		model.addAttribute("list3", list3);
+		model.addAttribute("list4", list4);
 		
 		return "mypage/mypageProductList";
 	}
@@ -131,6 +140,8 @@ public class OrderController {
 	 */
 	@RequestMapping("/readOrderDetail")
 	public String readOrderDetail(String productCode, Model model, HttpServletRequest request){
+		System.out.println("code값이란?"+productCode);
+		
 		   String contextPath = request.getContextPath();
 			ProductDTO productDTO = orderService.readOrderDetail(productCode);
 
@@ -155,9 +166,15 @@ public class OrderController {
 			//test
 			System.out.println("list 사이즈 : "+imgList.size());
 			
+			
+			//offer제안한 list출력
+			List<UserDTO> offerList = orderService.offerList(productCode);
+			
 			//이미지list & dto 저장
 			model.addAttribute("imgList", imgList);
 			model.addAttribute("productDTO",productDTO);
+			//offerlist 저장
+			model.addAttribute("offerList", offerList);
 			
 		return "mypage/mypageDetail";
 	}

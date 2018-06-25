@@ -70,7 +70,10 @@ input, textarea{
 	float:none;
 }
 </style>
+<script type="text/javascript">
 
+
+    </script>
 </head>
 <body>
 
@@ -96,9 +99,9 @@ input, textarea{
 				
 					<div class="col-sm-6 contact-left">
 						<p>상품 이미지 (적어도 한장이상)</p>
-						<input type="file" name="productImg" value="${productDTO.productImg}">
+						<input type="file" name="productImg" value="${productDTO.productImg}" >
 						<p>상품이름</p>
-						<input type="text" name="productName" value="${productDTO.productName}">
+						<input type="text" name="productName" value="${productDTO.productName}" disabled="disabled">
 						<p>상품 상세 설명</p>
 						<textarea name="productDesc">${productDTO.productDesc}</textarea>
 						<p>상품 URL</p>
@@ -108,10 +111,10 @@ input, textarea{
 						<p>상품 수량</p>
 						<input type="number" name="productPrice" value="${requestScope.productDTO.productPrice}">
 						<p>출발/도착나라</p>
-						<input type="text" name="departNation" value="${productDTO.departNation}">
 						<input type="text" name="arrivalNation" value="${productDTO.arrivalNation}">
+						<input type="text" name="departNation" value="한국" disabled="disabled">
 						<p>희망 날짜</p>
-						<input type="date" name="deadlineDate" value="${productDTO.deadlineDate}">
+						<input type="date"  id="deadlineDate" name="deadlineDate">
 						<p>요청사항</p>
 						<textarea name="requirement" >${productDTO.requirement}</textarea>
 						<input type="submit" value="수정하기">

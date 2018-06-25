@@ -38,10 +38,14 @@ public interface TravelDAO {
 	List<TravelDTO> finishAll(String memberId);
 	
 	/**
-	 * 여행지 넣으면은 상품list 보기
+	 * 여행지 넣으면은 상품list 보기 등록순
 	 */
 	List<ProductDTO> searchList(String nation);
-
+	/**
+	 * 여행지 넣으면은 상품list 보기 가격순
+	 */
+	
+	List<ProductDTO> costList(String nation);
 
 
 }

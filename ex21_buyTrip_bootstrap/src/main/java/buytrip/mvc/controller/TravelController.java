@@ -63,9 +63,21 @@ public class TravelController {
 	 */
 	@RequestMapping("searchProductList")
 	public String searchProductList(String departNation,Model model) {
+	
 		model.addAttribute("departNation", departNation);
 		model.addAttribute("searchProductList", travelService.searchList(departNation));
+	
 		return "travel/searchList";
+	}
+	
+	@RequestMapping("costList")
+	public String costList(String departNation,Model model) {
+		
+		model.addAttribute("departNation", departNation);
+		model.addAttribute("costList", travelService.costList(departNation));
+	
+
+		return "travel/costList";
 	}
 	
 	/**
@@ -73,7 +85,7 @@ public class TravelController {
 	 */
 	@RequestMapping("detail")
 	public String productDetail(String productCode) {
-		return "order/detail";
+		return "forword : order/readOrderDetail";
 	}
    
    /**

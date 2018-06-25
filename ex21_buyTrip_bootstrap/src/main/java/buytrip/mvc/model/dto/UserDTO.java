@@ -6,6 +6,18 @@ public class UserDTO {
 	private String memberPassword;
 	private String memberImg;
 	private String mobile;
+	
+	private OfferDTO offer;
+	
+	
+	
+	
+	public OfferDTO getOffer() {
+		return offer;
+	}
+	public void setOffer(OfferDTO offer) {
+		this.offer = offer;
+	}
 	public UserDTO() {
 		super();
 		// TODO Auto-generated constructor stub
