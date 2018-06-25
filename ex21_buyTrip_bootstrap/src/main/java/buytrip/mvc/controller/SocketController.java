@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class SocketController {
 	
-	@RequestMapping("/chat")
+	@RequestMapping("/chatting/chat")
 	public String viewChattingPage() {
 		
 		return "chatting/chat";
 	}
 	
-	@RequestMapping("/message")
+	@RequestMapping("chatting/message")
 	public String viewMessagePage() {
 		
 		return "chatting/message";

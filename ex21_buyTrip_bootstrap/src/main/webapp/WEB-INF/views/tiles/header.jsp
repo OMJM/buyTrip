@@ -31,6 +31,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/colorbox.css"
 	type="text/css" media="all" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <!--// css -->
 <!-- font -->
 <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">

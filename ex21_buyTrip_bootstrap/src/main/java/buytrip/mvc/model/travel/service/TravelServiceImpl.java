@@ -79,6 +79,12 @@ public class TravelServiceImpl implements TravelService {
 		return travelDAO.suggest(word);
 
 	}
+
+//°¡°Ý¼ø
+	@Override
+	public List<ProductDTO> costList(String nation) {
+		return travelDAO.costList(nation);
+	}
 	
 	@Override
 	public List<TravelDTO> recentTravelList() {

@@ -19,6 +19,16 @@
   <result column="trade_state" property="tradeState"/> 
 </resultMap>
 
+<resultMap type="userDTO" id="userMap">
+  <id column="member_id" property="memberId"/>
+  <result column="member_name" property="memberName"/>
+  <result column="member_img" property="memberImg"/>
+	<association property="offer" javaType="offerDTO">
+		<id column="offer_code" property="offerCode" />
+		<result column="offer_Id" property="offerId" />
+		</association>
+</resultMap>
+
 <insert id="insert" parameterType="productDTO">
 	insert into product(
 	product_code, proposer_id, product_name, product_img,
@@ -62,5 +72,26 @@ select product_code, proposer_id, product_name, product_img, product_price, dead
 where proposer_id=#{_parameter} and deadline_date &lt; sysdate
 </select>
 
+<!-- 거래중 -->
+<select id="myOffer" resultMap="orderSelectMap" parameterType="String">
+select product_code, proposer_id, product_name, product_img, product_price, deadline_date, depart_nation, arrival_nation, trade_state
+ from product
+where proposer_id=#{_parameter} and deadline_date &gt; sysdate and trade_state='in deal'
+</select>
+
+<!-- 거래완료 -->
+<select id="myComplete" resultMap="orderSelectMap" parameterType="String">
+select product_code, proposer_id, product_name, product_img, product_price, deadline_date, depart_nation, arrival_nation, trade_state
+ from product
+where proposer_id=#{_parameter} and trade_state='complete'
+</select>
+
+<!-- offer 사용자 list -->
+<select id="myUserOffer" parameterType="String" resultMap="userMap">
+	select m.member_id, m.member_img,m.member_name,o.offer_id ,o.offer_code
+	from offer o join member m
+	on  o.offer_id=m.member_id
+	where o.product_code=#{_parameter}
+	</select>
 
 </mapper>

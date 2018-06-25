@@ -68,12 +68,9 @@ body {
 	</div>
 
 	<!-- /navigation -->
-	<div class="container" align="right">
-		<button type="button" class="btn btn-link">최신순</button>
-		/
-		<button type="button" class="btn btn-link">금액별</button>
-
-	</div>
+<div class="container" align="right">
+	<button id="button1" class="btn btn-link"  onclick="location.href=' ${pageContext.request.contextPath}/travel/searchProductList?departNation=${requestScope.departNation}'">최신순</button>/<button id="button2" class="btn btn-link"  onclick="location.href=' ${pageContext.request.contextPath}/travel/costList?departNation=${requestScope.departNation}'">가격순</button>
+</div>
 
 	<!-- projects -->
 	<div class="container">

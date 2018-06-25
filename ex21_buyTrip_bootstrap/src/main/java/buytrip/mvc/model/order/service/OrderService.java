@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import buytrip.mvc.model.dto.ProductDTO;
+import buytrip.mvc.model.dto.UserDTO;
 import buytrip.mvc.model.order.dao.OrderDAO;
 
 
@@ -58,5 +59,22 @@ public interface OrderService {
 	 * 직구자가 등록한 상품 상세보기 (1.상품정보, 2.직구자정보, 3.여행자의 제안정보)
 	 */
 	public ProductDTO readUserOrder();
+	
+	/**
+	 *[mypage]offerlist
+	 */
+	public List<UserDTO> offerList(String productCode);
+	
+	/**
+	 * 마이페이지 거래중
+	 */
+	public List<ProductDTO> offer(String proposerId);
+	
+	/**
+	 * [mypage] 등록한 상품 거래완료 처리하기
+	 */
+	
+	public List<ProductDTO> completeOrder(String proposerId);
+	
 	
 }

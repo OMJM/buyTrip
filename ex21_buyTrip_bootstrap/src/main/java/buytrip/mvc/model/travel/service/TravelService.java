@@ -53,5 +53,11 @@ public interface TravelService {
 
 
 	List<TravelDTO> recentTravelList();
+	
+	/**
+	 *°¡°Ý ¼ø
+	 */
+	List<ProductDTO> costList(String nation);
+	
 
 }

@@ -3,6 +3,7 @@ package buytrip.mvc.model.order.dao;
 import java.util.List;
 
 import buytrip.mvc.model.dto.ProductDTO;
+import buytrip.mvc.model.dto.UserDTO;
 
 public interface OrderDAO {
 
@@ -31,10 +32,7 @@ public interface OrderDAO {
 	 */
 	public int deleteOrder(String proposerId, String productCode);
 	
-	/**
-	 * [mypage] 등록한 상품 거래완료 처리하기
-	 */
-	public List<ProductDTO> completeOrder(String proposerId, String tradeState);
+
 	
 
 	/**
@@ -52,4 +50,15 @@ public interface OrderDAO {
 	 */
 	public ProductDTO readUserOrder();
 	
+	/**
+	 *offerlist
+	 */
+	public List<UserDTO> offerList(String productCode);
+	
+	/**
+	 * [mypage] 등록한 상품 거래완료 처리하기
+	 */
+	public List<ProductDTO> completeOrder(String proposerId);
+	
+	public List<ProductDTO> offer(String proposerId);
 }
