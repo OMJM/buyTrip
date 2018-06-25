@@ -22,6 +22,7 @@ import buytrip.mvc.model.dto.TravelDTO;
 import buytrip.mvc.model.dto.UserDTO;
 import buytrip.mvc.model.order.service.OrderService;
 import buytrip.mvc.model.travel.service.TravelService;
+import buytrip.mvc.model.user.service.UserService;
 
 @Controller
 @RequestMapping("/order")
@@ -32,6 +33,9 @@ public class OrderController {
 		
 	@Autowired
 	private TravelService travelService;
+	
+	@Autowired
+	private UserService userService;
 	
 	//사진 저장 경로
 	String path="";
@@ -149,7 +153,13 @@ public class OrderController {
 	 * [mypage] 등록한 상품 상세보기 - 다중 이미지
 	 */
 	@RequestMapping("/readOrderDetail")
-	public String readOrderDetail(String productCode, Model model, HttpServletRequest request){
+	public String readOrderDetail(String productCode, Model model, HttpServletRequest request,
+			Authentication auth){
+		//id값 받기
+		UserDTO userDTO = (UserDTO)auth.getPrincipal();
+		String memberId = userDTO.getMemberId();
+		System.out.println("디테일 memberId : "+memberId);		
+		UserDTO userdto = userService.findMemberById(memberId);
 		
 		//server path 구하기
 		String contextPath = request.getContextPath();
@@ -161,6 +171,7 @@ public class OrderController {
 		//이미지list & dto 저장
 		model.addAttribute("imgList", imgList);
 		model.addAttribute("productDTO",productDTO);
+		model.addAttribute("userDto",userdto);
 			
 			//offer제안한 list출력
 			List<UserDTO> offerList = orderService.offerList(productCode);

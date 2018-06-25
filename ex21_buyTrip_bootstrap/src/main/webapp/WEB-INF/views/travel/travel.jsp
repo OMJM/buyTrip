@@ -185,7 +185,7 @@ $(function(){
 									</div>
 									<div class="row" style="margin: 0px;">
 										<img alt=""
-											src="${highestDealDTO.nationImg}"
+											src="${pageContext.request.contextPath}/resources/nation/${highestDealDTO.nationImg}"
 											style="width: 100%;">
 									</div>
 									<div class="row" style="height: 15px;"></div>

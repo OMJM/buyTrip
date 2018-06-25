@@ -79,38 +79,39 @@ $(function(){
 															<input type="hidden" name="productCode" value="${productDTO.productCode}"/>
 															
 															
-															<!-- 상품 한개 템플릿 -->
-															<div class="panel panel-default  panel--styled"
-																style="padding: 10px;" onclick="getMypageProdcutList(${state.index})">
-																<div align="right">
-																	<h4>마감날짜 : ${productDTO.deadlineDate}</h4>
+												<!-- 상품 한개 템플릿 -->
+												<div class="panel panel-default  panel--styled"
+													style="padding: 10px;"
+													onclick="getMypageProdcutList(${state.index})">
+													<div align="right">
+														<h4>마감날짜 : ${productDTO.deadlineDate}</h4>
+													</div>
+													<div class="row">
+														<div class="col-xs-3 col-md-3 text-center">
+															<img src="${productDTO.imgList[0]}" alt="bootsnipp"
+																class="img-rounded img-responsive"
+																style="width: 189px; height: auto;" />
+														</div>
+														<div class="col-xs-9 col-md-9 section-box"
+															style="align-self: center;">
+															<h2>${productDTO.productName}</h2>
+															<div class="well well-sm">
+																<div class="col-sm-6" style="font-size: 15px;">
+																	<small>출발지 : </small> ${productDTO.arrivalNation}
 																</div>
-
-														<div class="row">
-																	<div class="col-xs-3 col-md-3 text-center">
-																			<img
-																				src="${productDTO.imgList[0]}"
-																				alt="bootsnipp" class="img-rounded img-responsive"
-																				style="width: 189px; height: auto;" />
-																	</div>
-																	<div class="col-xs-9 col-md-9 section-box"
-																		style="align-self: center;">
-																		<h2>${productDTO.productName}</h2>
-																		<div class="well well-sm">
-																			<div class="col-sm-6" style="font-size: 15px;">
-																				<small>출발지 : </small> ${productDTO.arrivalNation}
-																			</div>
-																			<small>도착지 : </small>${productDTO.departNation}<br>
-																		</div>
-																		<div class="row">
-																		<div class="col-sm-5" style="font-size: 20px;">
-																			<fmt:formatNumber value="${productDTO.productPrice}"/><small>원</small>
-																		</div>
-
-																	</div>
-																</div>
+																<small>도착지 : </small>${productDTO.departNation}<br>
 															</div>
-															<!-- 상품 한개 템플릿 끝 -->
+															<div class="row">
+																<div class="col-sm-5" style="font-size: 20px;">
+																	<fmt:formatNumber value="${productDTO.productPrice}" />
+																	<small>원</small>
+																</div>
+
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- 상품 한개 템플릿 끝 -->
 														</form>
 													</c:forEach>
 												</c:otherwise>

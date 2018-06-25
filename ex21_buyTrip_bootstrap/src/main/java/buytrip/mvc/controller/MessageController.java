@@ -42,16 +42,16 @@ public class MessageController {
 		return "mypage/chatForm";
 	}
 	
-	/*@RequestMapping("message/select")
+	@RequestMapping("message/select")
 	@ResponseBody
-	public ModelAndView messageList(Authentication auth, String userId){
+	public List<MessageDTO> messageList(Authentication auth, String userId){
 		
 		UserDTO userDTO = (UserDTO) auth.getPrincipal();
 
 		String memberId = userDTO.getMemberId();
 		
-		return new ModelAndView("mypage/chatForm", "userId", userId);
-	}*/
+		return messageService.SelectAll(userId, memberId);
+	}
 	
 	
 

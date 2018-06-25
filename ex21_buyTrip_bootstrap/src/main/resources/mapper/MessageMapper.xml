@@ -50,7 +50,7 @@ order by case when unread != 0 then 0 else 1 end, send_time desc
 	</select>
 	
 	<insert id="insertMessage" parameterType="messageDTO">
-		insert into message values(#{memberId}, #{userId}, #{messageContent}, sysdate, 'unread')
+		insert into message values(#{memberId}, #{userId}, #{messageContent}, sysdate, null)
 	</insert>
 	
 	<update id="updateState" parameterType="MessageDTO">

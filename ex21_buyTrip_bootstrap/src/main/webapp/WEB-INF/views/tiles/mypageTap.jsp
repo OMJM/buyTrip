@@ -129,8 +129,8 @@ body {
 						<!-- END SIDEBAR USERPIC -->
 						<!-- SIDEBAR USER TITLE -->
 						<div class="profile-usertitle">
-							<div class="profile-usertitle-name">Marcus Doe</div>
-							<div class="profile-usertitle-job">Developer</div>
+							<div class="profile-usertitle-name">${userdto.memberName}</div>
+							<div class="profile-usertitle-job">${userdto.memberId}</div>
 						</div>
 						<!-- END SIDEBAR USER TITLE -->
 						<!-- SIDEBAR BUTTONS -->

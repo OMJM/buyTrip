@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -351,9 +352,9 @@ scale
 					<!-- 상품 상세 -->
 					<div class="details col-md-6">
 						<div style="align-self: center;">
-							<img src="${pageContext.request.contextPath}/resources/images/159.jpg" class="avatar img-circle" alt="avatar"
-								style="width: 80px; height: auto;">
-						</div>
+							<img src="${pageContext.request.contextPath}/resources/member/${userDto.memberImg}" class="avatar img-circle" alt="avatar"
+								style="width: 100px; height: 100px;">
+						</div><br>
 						<div style="align-self: center;">
 							<p class="product-description">${productDTO.proposerId}</p>
 						</div>
@@ -365,7 +366,7 @@ scale
 						<br>
 
 						<h3 class="price product-title">
-											제안 금액 <span>${productDTO.productPrice}</span>
+											제안 금액 <span><fmt:formatNumber value="${productDTO.productPrice}"/>원</span>
 						</h3>
 						<p><h4>갯수 <strong>${productDTO.productQty} </strong></h4></p>
 						<br>
